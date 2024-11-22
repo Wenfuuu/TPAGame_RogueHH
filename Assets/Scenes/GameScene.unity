@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: -1580535799172915004, guid: 2d5f03b010c94894eba4fafd05bb0a62, type: 3}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -383,11 +383,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 134512829445688732, guid: 74cb062c626c13f48bedede29a492dac, type: 3}
   corridorPrefab: {fileID: 134512829445688732, guid: 74cb062c626c13f48bedede29a492dac, type: 3}
+  decorPrefab1: {fileID: 7067885458622928763, guid: 747748686b8c99f449f98a0220698841, type: 3}
+  decorPrefab2: {fileID: 0}
+  decorPrefab3: {fileID: 0}
+  decorPrefab4: {fileID: 0}
   gridWidth: 40
   gridHeight: 40
   numberOfRooms: 5
   buffer: 3
   tileSize: 2
+  grid: {fileID: 372436545}
 --- !u!4 &995433107
 Transform:
   m_ObjectHideFlags: 0

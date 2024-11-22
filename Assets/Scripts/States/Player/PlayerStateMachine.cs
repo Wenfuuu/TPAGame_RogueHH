@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,12 +53,17 @@ public class PlayerStateMachine : MonoBehaviour
             Vector3 startPos = transform.position;
             Vector3 targetPos = GetMapPosition();
 
-            pathfinding.FindPath(startPos, targetPos);
-            highlightPath = pathfinding.grid.path;
-
-            if (highlightPath != null && !isClicked)
+            Node dest = pathfinding.grid.NodeFromWorldPoint(targetPos);
+            //Debug.Log(dest.isWalkable);
+            if (dest.isWalkable == true)
             {
-                ChangeColor();
+                pathfinding.FindPath(startPos, targetPos);
+                highlightPath = pathfinding.grid.path;
+
+                if (highlightPath != null && !isClicked)
+                {
+                    ChangeColor();
+                }
             }
         }
         else if(Input.mousePosition != null && _isMoving)// highlight 1 tile
@@ -75,13 +81,17 @@ public class PlayerStateMachine : MonoBehaviour
             Vector3 startPos = transform.position;
             Vector3 targetPos = GetMapPosition();
 
-            pathfinding.FindPath(startPos, targetPos);
-            path = pathfinding.grid.path;
-
-            if (path != null && path.Count > 0)
+            Node dest = pathfinding.grid.NodeFromWorldPoint(targetPos);
+            if (dest.isWalkable == true)
             {
-                //ChangeColor();
-                StartCoroutine(FollowPath());
+                pathfinding.FindPath(startPos, targetPos);
+                path = pathfinding.grid.path;
+
+                if (path != null && path.Count > 0)
+                {
+                    //ChangeColor();
+                    StartCoroutine(FollowPath());
+                }
             }
         }
         else if(Input.GetMouseButtonDown(0) && _isMoving)

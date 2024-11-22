@@ -17,6 +17,7 @@ public class DungeonCreator : MonoBehaviour
     public int numberOfRooms = 5; // Number of rooms to generate
     public int buffer = 2; // Minimum buffer spacing between rooms
     public float tileSize = 2.0f; // Tile size for world coordinates
+    public Grid grid;
 
     public Node[,] dungeonGrid; // 2D grid representing the dungeon layout
     private List<Vector2Int> roomCenters = new List<Vector2Int>(); // Center positions of rooms
@@ -26,13 +27,6 @@ public class DungeonCreator : MonoBehaviour
     private List<Node> decoratedTiles = new List<Node>();
 
     private int totalTiles = 0;
-
-    public Node GetNodeFromWorldPosition(Vector3 position)
-    {
-        int x = Mathf.RoundToInt(position.x / tileSize);
-        int z = Mathf.RoundToInt(position.z / tileSize);
-        return dungeonGrid[x, z];
-    }
 
     public List<Vector3> GetAllTileWorldPositions()
     {
@@ -60,29 +54,27 @@ public class DungeonCreator : MonoBehaviour
         dungeonGrid = new Node[gridWidth, gridHeight];
         GenerateRooms();
         ConnectRooms();
-        //foreach(Node node in atEntrance)
-        //{
-        //    Debug.Log(node.worldPosition);
-        //}
+    }
 
-        Debug.Log(totalTiles);
-        // generate decorations
+    void Start()
+    {
         GenerateDecorations();
     }
 
     void GenerateDecorations()
     {
+        //Debug.Log("test");
         int totalDecorations = Mathf.RoundToInt(totalTiles * 0.2f);
         int decor = 0;
         while(decor < totalDecorations)
         {
-            bool checkBuffer = false;
+            bool checkBuffer = true;
 
-            int a = Random.Range(0, gridWidth);
-            int b = Random.Range(0, gridHeight);
+            int a = Random.Range(0, gridHeight);
+            int b = Random.Range(0, gridWidth);
 
             Node node = dungeonGrid[a, b];
-            if(node != null && !corridors.Contains(node) && !atEntrance.Contains(node))
+            if(node != null && !corridors.Contains(node) && !atEntrance.Contains(node) && !decoratedTiles.Contains(node))
             {
                 //cek buffer
                 for (int x = -1; x <= 1; x++)
@@ -94,22 +86,31 @@ public class DungeonCreator : MonoBehaviour
                         int index1 = a + x;
                         int index2 = b + y;
                         if (index1 < 0 || index2 < 0 || index1 >= gridWidth || index2 >= gridHeight) continue;
-                        Node temp = dungeonGrid[a + x, b + y];
-                        if(!decoratedTiles.Contains(temp))
+                        Node temp = dungeonGrid[index1, index2];
+                        //if(temp != null) Debug.Log("temp: " + temp.worldPosition);
+
+                        if(temp != null && decoratedTiles.Contains(temp))
                         {
-                            checkBuffer = true;
+                            Debug.Log("ngecek di " + node.worldPosition + " neighbor sudah decorated di pos: " + temp.worldPosition);
+                            checkBuffer = false;
                         }
                     }
+                    if (!checkBuffer) break;
                 }
 
                 if(checkBuffer)
                 {
                     // add to list
                     decoratedTiles.Add(node);
-                    // spawn decor & set to unwalkable
+
+                    //set to unwalkable
+                    Node unwalk = grid.NodeFromWorldPoint(node.worldPosition);
+                    if (unwalk != null) unwalk.isWalkable = false;
+
+                    // spawn decor 
                     node.worldPosition.y = 1;
-                    Instantiate(decorPrefab1, node.worldPosition, Quaternion.identity);
-                    dungeonGrid[a, b].isWalkable = false;
+                    float randomRotation = 90f * Random.Range(1, 4);
+                    Instantiate(decorPrefab1, node.worldPosition, Quaternion.Euler(0, randomRotation, 0));
                     decor++;
                 }
             } 
