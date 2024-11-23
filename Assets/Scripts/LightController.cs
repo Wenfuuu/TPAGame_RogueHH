@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class LightController : MonoBehaviour
 {
-    public Transform target;
+    public Vector3 offset;
+    public Transform player;
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = target.position;
+        transform.position = player.position + offset;
     }
 }

@@ -7,30 +7,34 @@ public class PlayerSpawner : MonoBehaviour
     public GameObject playerPrefab;
 
     private List<Vector3> availableTiles = new List<Vector3>();
+    private bool spawned = false;
+    private DungeonCreator dungeonCreator;
 
     void Start()
     {
         // Find the DungeonCreator and get available tiles
-        DungeonCreator dungeonCreator = FindObjectOfType<DungeonCreator>();
+        dungeonCreator = GetComponent<DungeonCreator>();
         if (dungeonCreator != null)
         {
             availableTiles = dungeonCreator.GetAllTileWorldPositions();
-            SpawnPlayerAtRandomTile();
+            SpawnPlayer();
         }
     }
 
-    void SpawnPlayerAtRandomTile()
+    void SpawnPlayer()
     {
-        if (availableTiles.Count > 0)
+        while (!spawned)
         {
-            // Choose a random tile
             int randomIndex = Random.Range(0, availableTiles.Count);
             Vector3 spawnPosition = availableTiles[randomIndex];
-            spawnPosition.y = 1;
-            //Debug.Log(spawnPosition);
+            Debug.Log(spawnPosition);
 
-            // Spawn the player at the chosen position
+            Node spawnTile = dungeonCreator.grid.NodeFromWorldPoint(spawnPosition);
+            if (!spawnTile.isWalkable) continue;
+
+            spawned = true;
+            spawnPosition.y = 1;
             playerPrefab.transform.position = spawnPosition;
-        }
+        };
     }
 }

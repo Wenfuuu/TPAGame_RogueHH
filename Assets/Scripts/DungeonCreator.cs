@@ -12,6 +12,9 @@ public class DungeonCreator : MonoBehaviour
     public GameObject decorPrefab3;
     public GameObject decorPrefab4;
 
+    public GameObject EnemyPrefab1;
+    public int EnemyCount = 5;
+
     public int gridWidth = 30; // Width of the dungeon grid
     public int gridHeight = 30; // Height of the dungeon grid
     public int numberOfRooms = 5; // Number of rooms to generate
@@ -28,7 +31,7 @@ public class DungeonCreator : MonoBehaviour
 
     private int totalTiles = 0;
 
-    public List<Vector3> GetAllTileWorldPositions()
+    public List<Vector3> GetAllTileWorldPositions()// untuk spawn player & enemy
     {
         List<Vector3> tileWorldPositions = new List<Vector3>();
 
@@ -39,7 +42,7 @@ public class DungeonCreator : MonoBehaviour
                 Node currentNode = dungeonGrid[x, z];
 
                 // Check if this node is part of the dungeon (occupied)
-                if (currentNode != null)
+                if (currentNode != null && !corridors.Contains(currentNode))
                 {
                     tileWorldPositions.Add(currentNode.worldPosition);
                 }
@@ -59,6 +62,34 @@ public class DungeonCreator : MonoBehaviour
     void Start()
     {
         GenerateDecorations();
+        SpawnEnemy();
+    }
+
+    void SpawnEnemy()
+    {
+        List<Vector3> availableTiles = GetAllTileWorldPositions();
+        bool spawned = false;
+
+        int count = 0;
+        while (count < EnemyCount)
+        {
+            spawned = false;
+            while (!spawned)
+            {
+                int randomIndex = Random.Range(0, availableTiles.Count);
+                //Debug.Log(randomIndex);
+                Vector3 spawnPosition = availableTiles[randomIndex];
+                Debug.Log(spawnPosition);
+
+                Node spawnTile = grid.NodeFromWorldPoint(spawnPosition);
+                if (!spawnTile.isWalkable) continue;
+
+                spawned = true;
+                spawnPosition.y = 1;
+                Instantiate(EnemyPrefab1, spawnPosition, Quaternion.identity);
+            };
+            count++;
+        }
     }
 
     void GenerateDecorations()
@@ -91,7 +122,7 @@ public class DungeonCreator : MonoBehaviour
 
                         if(temp != null && decoratedTiles.Contains(temp))
                         {
-                            Debug.Log("ngecek di " + node.worldPosition + " neighbor sudah decorated di pos: " + temp.worldPosition);
+                            //Debug.Log("ngecek di " + node.worldPosition + " neighbor sudah decorated di pos: " + temp.worldPosition);
                             checkBuffer = false;
                         }
                     }
