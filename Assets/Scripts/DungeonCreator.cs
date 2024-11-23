@@ -28,6 +28,7 @@ public class DungeonCreator : MonoBehaviour
     private List<Node> corridors = new List<Node>();
     private List<Node> atEntrance = new List<Node>();
     private List<Node> decoratedTiles = new List<Node>();
+    private List<Node> enemyTiles = new List<Node>();
 
     private int totalTiles = 0;
 
@@ -41,8 +42,7 @@ public class DungeonCreator : MonoBehaviour
             {
                 Node currentNode = dungeonGrid[x, z];
 
-                // Check if this node is part of the dungeon (occupied)
-                if (currentNode != null && !corridors.Contains(currentNode))
+                if (currentNode != null && !corridors.Contains(currentNode) && !decoratedTiles.Contains(currentNode) && !enemyTiles.Contains(currentNode))
                 {
                     tileWorldPositions.Add(currentNode.worldPosition);
                 }
@@ -85,6 +85,7 @@ public class DungeonCreator : MonoBehaviour
                 if (!spawnTile.isWalkable) continue;
 
                 spawned = true;
+                enemyTiles.Add(spawnTile);
                 spawnPosition.y = 1;
                 Instantiate(EnemyPrefab1, spawnPosition, Quaternion.identity);
             };

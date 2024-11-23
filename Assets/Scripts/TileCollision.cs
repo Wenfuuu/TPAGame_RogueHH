@@ -13,9 +13,9 @@ public class TileCollision : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if (collision.collider.CompareTag("Enemy") || collision.collider.CompareTag("Player"))
         {
-            Debug.Log("ada enemy di " + transform.position);
+            //Debug.Log("ada enemy di " + transform.position);
 
             Node temp = gridRef.NodeFromWorldPoint(transform.position);
             gridRef.grid[temp.gridX, temp.gridY].isWalkable = false;
@@ -24,9 +24,9 @@ public class TileCollision : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if (collision.collider.CompareTag("Enemy") || collision.collider.CompareTag("Player"))
         {
-            Debug.Log("ada enemy cabut di " + transform.position);
+            if (collision.collider.CompareTag("Enemy")) Debug.Log("ada enemy cabut di " + transform.position);
 
             Node temp = gridRef.NodeFromWorldPoint(transform.position);
             gridRef.grid[temp.gridX, temp.gridY].isWalkable = true;
