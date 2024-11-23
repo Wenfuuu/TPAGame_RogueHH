@@ -40,9 +40,24 @@ public class DungeonCreator : MonoBehaviour
         {
             for (int z = 0; z < gridWidth; z++)
             {
+                bool nearDecor = false;
                 Node currentNode = dungeonGrid[x, z];
+                for (int i = -1; i <= 1; i++)// cek kalo ada neighbor decorations (skip diagonal)
+                {
+                    for (int j = -1; j <= 1; j++)
+                    {
+                        if (Mathf.Abs(i) == Mathf.Abs(j)) continue;
 
-                if (currentNode != null && !corridors.Contains(currentNode) && !decoratedTiles.Contains(currentNode) && !enemyTiles.Contains(currentNode))
+                        int index1 = x + i;
+                        int index2 = z + j;
+                        if (index1 < 0 || index2 < 0 || index1 >= gridWidth || index2 >= gridHeight) continue;
+                        Node temp = dungeonGrid[index1, index2];
+                        if(decoratedTiles.Contains(temp)) nearDecor = true;
+                    }
+                    if (nearDecor) break;
+                }
+
+                if (currentNode != null && !corridors.Contains(currentNode) && !decoratedTiles.Contains(currentNode) && !enemyTiles.Contains(currentNode) && !nearDecor)
                 {
                     tileWorldPositions.Add(currentNode.worldPosition);
                 }
@@ -96,7 +111,7 @@ public class DungeonCreator : MonoBehaviour
     void GenerateDecorations()
     {
         //Debug.Log("test");
-        int totalDecorations = Mathf.RoundToInt(totalTiles * 0.2f);
+        int totalDecorations = Mathf.RoundToInt(totalTiles * 0.1f);
         int decor = 0;
         while(decor < totalDecorations)
         {
