@@ -103,6 +103,8 @@ public class DungeonCreator : MonoBehaviour
                 enemyTiles.Add(spawnTile);
                 spawnPosition.y = 1;
                 Instantiate(EnemyPrefab1, spawnPosition, Quaternion.identity);
+
+                EnemyStateMachine enemy = EnemyPrefab1.GetComponent<EnemyStateMachine>();
             };
             count++;
         }

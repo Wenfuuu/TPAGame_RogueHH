@@ -60,10 +60,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\States\Player\PlayerBaseState.cs" />
     <Compile Include="Assets\Scripts\PathFinding.cs" />
+    <Compile Include="Assets\Scripts\Commands\PlayerMoveCommand.cs" />
     <Compile Include="Assets\Scripts\AStar.cs" />
+    <Compile Include="Assets\Scripts\Commands\ICommand.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\States\Enemy\EnemyIdleState.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyStateMachine.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerStateFactory.cs" />
     <Compile Include="Assets\Scripts\StartMenu.cs" />
@@ -72,10 +75,17 @@
     <Compile Include="Assets\Scripts\States\Player\PlayerRunState.cs" />
     <Compile Include="Assets\Scripts\DungeonCreator.cs" />
     <Compile Include="Assets\Scripts\Grid.cs" />
+    <Compile Include="Assets\Scripts\Commands\EnemyMoveCommand.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerAttackState.cs" />
+    <Compile Include="Assets\Scripts\Commands\TurnInvoker.cs" />
+    <Compile Include="Assets\Scripts\Commands\GameManager.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\TileCollision.cs" />
+    <Compile Include="Assets\Scripts\States\Enemy\EnemyBaseState.cs" />
     <Compile Include="Assets\Scripts\LightController.cs" />
+    <Compile Include="Assets\Scripts\States\Enemy\EnemyAggroState.cs" />
+    <Compile Include="Assets\Scripts\States\Enemy\EnemyRunState.cs" />
+    <Compile Include="Assets\Scripts\States\Enemy\EnemyStateFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

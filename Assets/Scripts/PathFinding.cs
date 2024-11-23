@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PathFinding : MonoBehaviour
 {
+    public static PathFinding Instance;
 
     public Transform seeker;
     Transform target;
@@ -11,6 +12,15 @@ public class PathFinding : MonoBehaviour
 
     void Awake()
     {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         grid = GetComponent<Grid>();
     }
 

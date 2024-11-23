@@ -30,7 +30,7 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
 
-    bool _isMoving = false;
+    private bool _isMoving = false;
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool IsMoving { get { return _isMoving; } }
@@ -82,27 +82,17 @@ public class PlayerStateMachine : MonoBehaviour
             ChangeOneColor();
         }
 
-        //if (highlightPath != null && !isClicked)
-        //{
-        //    ChangeColor();
-        //}
-
-        if (Input.GetMouseButtonDown(0) && !_isMoving)
+        if (Input.GetMouseButtonDown(0) && !_isMoving)// implement command
         {
-            Vector3 startPos = transform.position;
+            //Vector3 startPos = transform.position;
             Vector3 targetPos = GetMapPosition();
 
             Node dest = pathfinding.grid.NodeFromWorldPoint(targetPos);
-            if (dest.isWalkable == true)
+            if (dest.isWalkable)
             {
-                pathfinding.FindPath(startPos, targetPos);
-                path = pathfinding.grid.path;
-
-                if (path != null && path.Count > 0)
-                {
-                    //ChangeColor();
-                    StartCoroutine(FollowPath());
-                }
+                PlayerMoveCommand moveCommand = new PlayerMoveCommand(this, targetPos);
+                GameManager manager = GameManager.Instance;
+                manager.QueueCommand(moveCommand);
             }
         }
         else if(Input.GetMouseButtonDown(0) && _isMoving)
@@ -111,18 +101,20 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("pos di " + transform.position);
-    //    if (collision.collider.CompareTag("Ground"))
-    //    {
-    //        Debug.Log("ada ground di " + transform.position);
+    public void MoveTo(Vector3 targetPosition)
+    {
+        Node dest = pathfinding.grid.NodeFromWorldPoint(targetPosition);
+        if (dest.isWalkable)
+        {
+            pathfinding.FindPath(transform.position, targetPosition);
+            path = pathfinding.grid.path;
 
-    //        //Node temp = gridRef.NodeFromWorldPoint(transform.position);
-
-    //        //gridRef.grid[temp.gridX, temp.gridY].isWalkable = false;
-    //    }
-    //}
+            if (path != null && path.Count > 0)
+            {
+                StartCoroutine(FollowPath());
+            }
+        }
+    }
 
     void HandleRotation(Vector3 targetPosition)
     {
