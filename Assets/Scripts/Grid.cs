@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Grid : MonoBehaviour
 {
+    public static Grid Instance;
 
     public LayerMask walkableMask;
     public Vector2 gridWorldSize;
@@ -17,6 +18,15 @@ public class Grid : MonoBehaviour
 
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
@@ -68,7 +78,6 @@ public class Grid : MonoBehaviour
 
     public Node NodeFromWorldPoint(Vector3 worldPosition)
     {
-        Debug.Log(worldPosition);
         float percentX = worldPosition.x / gridWorldSize.x;
         float percentY = worldPosition.z / gridWorldSize.y;
         percentX = Mathf.Clamp01(percentX);
@@ -76,7 +85,7 @@ public class Grid : MonoBehaviour
 
         int x = Mathf.RoundToInt((gridSizeX) * percentX);
         int y = Mathf.RoundToInt((gridSizeY) * percentY);
-        Debug.Log("x: " + x + ", " + y);
+        //Debug.Log("x: " + x + ", " + y);
         return grid[x, y];
     }
 

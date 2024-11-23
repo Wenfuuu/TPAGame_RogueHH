@@ -27,7 +27,7 @@ public class PlayerSpawner : MonoBehaviour
         {
             int randomIndex = Random.Range(0, availableTiles.Count);
             Vector3 spawnPosition = availableTiles[randomIndex];
-            Debug.Log(spawnPosition);
+            //Debug.Log(spawnPosition);
 
             Node spawnTile = dungeonCreator.grid.NodeFromWorldPoint(spawnPosition);
             if (!spawnTile.isWalkable) continue;

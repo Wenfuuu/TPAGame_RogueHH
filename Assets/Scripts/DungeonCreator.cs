@@ -79,7 +79,7 @@ public class DungeonCreator : MonoBehaviour
                 int randomIndex = Random.Range(0, availableTiles.Count);
                 //Debug.Log(randomIndex);
                 Vector3 spawnPosition = availableTiles[randomIndex];
-                Debug.Log(spawnPosition);
+                //Debug.Log(spawnPosition);
 
                 Node spawnTile = grid.NodeFromWorldPoint(spawnPosition);
                 if (!spawnTile.isWalkable) continue;

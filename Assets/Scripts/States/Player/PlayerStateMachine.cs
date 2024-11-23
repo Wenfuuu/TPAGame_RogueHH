@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class PlayerStateMachine : MonoBehaviour
 {
+    public static PlayerStateMachine Instance;
+
     public Camera cam;
     public PathFinding pathfinding;
 
@@ -35,6 +37,15 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         // Get animator component
         _animator = GetComponent<Animator>();
 
@@ -99,6 +110,19 @@ public class PlayerStateMachine : MonoBehaviour
             currentTargetIndex = path.Count;
         }
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log("pos di " + transform.position);
+    //    if (collision.collider.CompareTag("Ground"))
+    //    {
+    //        Debug.Log("ada ground di " + transform.position);
+
+    //        //Node temp = gridRef.NodeFromWorldPoint(transform.position);
+
+    //        //gridRef.grid[temp.gridX, temp.gridY].isWalkable = false;
+    //    }
+    //}
 
     void HandleRotation(Vector3 targetPosition)
     {
