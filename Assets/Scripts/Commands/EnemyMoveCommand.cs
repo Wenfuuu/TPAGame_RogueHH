@@ -13,6 +13,11 @@ public class EnemyMoveCommand : ICommand
 
     public void Execute()
     {
-        _enemy.MoveToPlayer();
+
+    }
+
+    public IEnumerator ExecuteCoroutine()
+    {
+        yield return _enemy.MoveToPlayer();
     }
 }

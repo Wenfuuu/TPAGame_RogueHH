@@ -32,8 +32,10 @@ public class PathFinding : MonoBehaviour
         }
     }
 
-    public void FindPath(Vector3 startPos, Vector3 targetPos)
+    public List<Node> FindPath(Vector3 startPos, Vector3 targetPos)
     {
+        List<Node> result = new List<Node>();
+
         Node startNode = grid.NodeFromWorldPoint(startPos);
         Node targetNode = grid.NodeFromWorldPoint(targetPos);
         //Debug.Log("start: " + startNode.worldPosition.x + " " + startNode.worldPosition.z);
@@ -61,8 +63,8 @@ public class PathFinding : MonoBehaviour
             if (node == targetNode)
             {
                 //Debug.Log("retrace here");
-                RetracePath(startNode, targetNode);
-                return;
+                result = RetracePath(startNode, targetNode);
+                return result;
             }
 
             foreach (Node neighbour in grid.GetNeighbours(node))
@@ -84,9 +86,10 @@ public class PathFinding : MonoBehaviour
                 }
             }
         }
+        return result;
     }
 
-    void RetracePath(Node startNode, Node endNode)
+    List<Node> RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
@@ -99,6 +102,7 @@ public class PathFinding : MonoBehaviour
         path.Reverse();
 
         grid.path = path;
+        return path;
     }
 
     int GetDistance(Node nodeA, Node nodeB)

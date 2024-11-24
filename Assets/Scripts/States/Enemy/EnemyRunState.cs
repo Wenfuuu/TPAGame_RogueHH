@@ -10,7 +10,7 @@ public class EnemyRunState : EnemyBaseState
 
     public override void EnterState()
     {
-        Debug.Log("enemy running");
+        //Debug.Log("enemy running");
         _context._animator.SetBool("IsMoving", true);
     }
 

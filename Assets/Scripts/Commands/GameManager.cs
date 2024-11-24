@@ -7,10 +7,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private TurnInvoker invoker;
 
-    //private bool isPlayerTurn = true;
+    public static bool isEnemyTurn = false;
+    //public static bool isPlayerTurn = true;
+    private bool executing = false;
 
-    public List<EnemyStateMachine> enemies;
+    private List<EnemyStateMachine> enemies = new List<EnemyStateMachine>();
+    private HashSet<EnemyStateMachine> aggroEnemies = new HashSet<EnemyStateMachine>();
     private PlayerStateMachine player;
+
 
     void Awake()
     {
@@ -30,48 +34,70 @@ public class GameManager : MonoBehaviour
     {
         CheckTurn();
 
-        invoker.ExecuteAll();
+        //Debug.Log("turn count is: " + invoker.GetTurnCount());
     }
 
-    private void CheckTurn()// bakal ngecek skrng turn player / enemies (plural)
+    private void CheckTurn()// bakal ngecek skrng turn player / enemies
     {
-        // cek player idle / alerted (dikejar) / in battle / ready to attack
-        if (invoker.IsTurnQueueEmpty() && !player.IsMoving)// kalo empty brti turn enemy
+        if(isEnemyTurn)
         {
-            StartEnemyTurn();// masukin semua command enemy ke invoker
+            Debug.Log("turn enemy");
+        }
+        else
+        {
+            Debug.Log("turn player");
+        }
+
+        if (!player.IsMoving && isEnemyTurn)// kalo player ga gerak & lagi turn enemy
+        {
+            if (executing) return;
+            //StartEnemyTurn();// masukin semua command enemy ke invoker
+            AddEnemyCommand();
+            StartCoroutine(StartEnemyTurn());
         }
     }
 
-    //private void StartPlayerTurn()
-    //{
-    //    Debug.Log("Player's Turn");
-    //    isPlayerTurn = false;
-    //}
-
-    private void StartEnemyTurn()
+    private void AddEnemyCommand()
     {
-        foreach (EnemyStateMachine enemy in enemies)
+        executing = true;
+        foreach (EnemyStateMachine enemy in aggroEnemies)
         {
-            //Debug.Log("aggro enemy di pos: " + enemy.transform.position + " " + enemy.IsAggro);
-            if (enemy.IsAggro)
-            {
-                Debug.Log("Enemy's Turn");
-                EnemyMoveCommand moveCommand = new EnemyMoveCommand(enemy);
-                invoker.AddTurn(moveCommand);
-                //invoker.ExecuteNextTurn();
-            }
+            EnemyMoveCommand moveCommand = new EnemyMoveCommand(enemy);
+            invoker.AddTurn(moveCommand);
         }
+    }
 
-        //isPlayerTurn = true;
+    private IEnumerator StartEnemyTurn()
+    {
+        //Debug.Log("turn count is: " + invoker.GetTurnCount());
+        // Execute all enemy commands sequentially
+        yield return invoker.ExecuteAllCoroutines();
+
+        executing = false;
     }
 
     public void QueueCommand(ICommand command)
     {
         if (command is PlayerMoveCommand moveCommand)
         {
-            Debug.Log("langsung exec");
+            //Debug.Log("langsung exec");
             moveCommand.Execute(); // Execute immediately
         }
-        else invoker.AddTurn(command);
+        //else invoker.AddTurn(command);
+    }
+
+    public void AddEnemy(EnemyStateMachine enemy)
+    {
+        enemies.Add(enemy);
+    }
+
+    public void AddAggro(EnemyStateMachine enemy)
+    {
+        aggroEnemies.Add(enemy);
+    }
+
+    public bool CheckAggro()
+    {
+        return (aggroEnemies.Count > 0);
     }
 }

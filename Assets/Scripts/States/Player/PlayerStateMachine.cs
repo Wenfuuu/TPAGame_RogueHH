@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,7 @@ public class PlayerStateMachine : MonoBehaviour
     private List<Node> highlightPath;
     private int currentTargetIndex = 0;
     private bool isClicked = false;
+    private GameManager manager;
 
     public Animator _animator;
 
@@ -58,6 +60,13 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         _currentState.UpdateStates();
+        manager = GameManager.Instance;
+
+        if (Input.GetKeyDown(KeyCode.Space))// skip turn
+        {
+            Debug.Log("skipping turn");
+            GameManager.isEnemyTurn = true;
+        }
 
         if (Input.mousePosition != null && !_isMoving)// show highlight path
         {
@@ -68,8 +77,7 @@ public class PlayerStateMachine : MonoBehaviour
             //Debug.Log(dest.isWalkable);
             if (dest.isWalkable == true)
             {
-                pathfinding.FindPath(startPos, targetPos);
-                highlightPath = pathfinding.grid.path;
+                highlightPath = pathfinding.FindPath(startPos, targetPos);
 
                 if (highlightPath != null && !isClicked)
                 {
@@ -82,22 +90,39 @@ public class PlayerStateMachine : MonoBehaviour
             ChangeOneColor();
         }
 
+        if (Input.GetMouseButtonDown(0) && _isMoving)
+        {
+            currentTargetIndex = path.Count;
+        }
+
+        if (GameManager.isEnemyTurn) return;
         if (Input.GetMouseButtonDown(0) && !_isMoving)// implement command
         {
             //Vector3 startPos = transform.position;
             Vector3 targetPos = GetMapPosition();
 
             Node dest = pathfinding.grid.NodeFromWorldPoint(targetPos);
-            if (dest.isWalkable)
+            targetPos.y = 1;
+            Vector3 currPos = new Vector3();
+            currPos.x = Mathf.RoundToInt(transform.position.x);
+            currPos.y = Mathf.RoundToInt(transform.position.y);
+            currPos.z = Mathf.RoundToInt(transform.position.z);
+            targetPos.x = Mathf.RoundToInt(targetPos.x);
+            targetPos.y = Mathf.RoundToInt(targetPos.y);
+            targetPos.z = Mathf.RoundToInt(targetPos.z);
+
+            if (dest.isWalkable && (currPos != targetPos))
             {
                 PlayerMoveCommand moveCommand = new PlayerMoveCommand(this, targetPos);
-                GameManager manager = GameManager.Instance;
                 manager.QueueCommand(moveCommand);
+
+                // kalo ada enemy aggro & player brsn gerak
+                if (manager.CheckAggro())
+                {
+                    GameManager.isEnemyTurn = true;
+                    Debug.Log("ada enemy aggro");
+                }
             }
-        }
-        else if(Input.GetMouseButtonDown(0) && _isMoving)
-        {
-            currentTargetIndex = path.Count;
         }
     }
 
@@ -106,8 +131,7 @@ public class PlayerStateMachine : MonoBehaviour
         Node dest = pathfinding.grid.NodeFromWorldPoint(targetPosition);
         if (dest.isWalkable)
         {
-            pathfinding.FindPath(transform.position, targetPosition);
-            path = pathfinding.grid.path;
+            path = pathfinding.FindPath(transform.position, targetPosition);
 
             if (path != null && path.Count > 0)
             {

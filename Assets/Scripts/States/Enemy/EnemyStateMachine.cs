@@ -36,6 +36,8 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void Awake()
     {
+        //_isAggro = true;
+
         player = PlayerStateMachine.Instance;
         pathfinding = PathFinding.Instance;
 
@@ -47,7 +49,7 @@ public class EnemyStateMachine : MonoBehaviour
         _currentState = _states.Idle();
         _currentState.EnterState();
 
-        GameManager.Instance.enemies.Add(this);
+        GameManager.Instance.AddEnemy(this);
     }
 
     void Update()
@@ -72,59 +74,56 @@ public class EnemyStateMachine : MonoBehaviour
                 if (checkPos == player.transform.position)
                 {
                     _isAggro = true;
+                    GameManager.Instance.AddAggro(this);
+                    Debug.Log("adding aggro");
                 }
             }
             if (_isAggro) break;
         }
     }
 
-    public void MoveToPlayer()
+    public IEnumerator MoveToPlayer()
     {
+        if (!IsAggro) yield break;
+
         Vector3 targetPosition = player.transform.position;
         Node dest = pathfinding.grid.NodeFromWorldPoint(targetPosition);
-        Debug.Log("moving to player");
-        //if (dest.isWalkable)
-        //{
-            pathfinding.FindPath(transform.position, targetPosition);
-            path = pathfinding.grid.path;
 
-            if (path != null && path.Count > 0)
-            {
-                StartCoroutine(FollowPath());
-            }
-        //}
-    }
-
-    void HandleRotation(Vector3 targetPosition)
-    {
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        direction.y = 0;
-
-        if (direction != Vector3.zero)
+        if (dest.isWalkable)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            path = pathfinding.FindPath(transform.position, targetPosition);
 
-            transform.rotation = targetRotation;
+            if (path != null && path.Count > 1)// klo 1 brti uda dkt player jadi skip
+            {
+                yield return StartCoroutine(FollowPath());
+            }
         }
     }
 
     IEnumerator FollowPath()
     {
-        Debug.Log("following player");
+        //Debug.Log("following player");
+        if (_isMoving) yield break;
+
         _isMoving = true;
         currentTargetIndex = 0;
 
-        while (currentTargetIndex < path.Count - 1)// berhenti 1 tile sblm player
+        if (currentTargetIndex < path.Count)// berhenti 1 tile sblm player
         {
             //Debug.Log("curr idx: " + currentTargetIndex);
             Node targetNode = path[currentTargetIndex];
             Vector3 targetPosition = targetNode.worldPosition;
+
+            //cek next walkable (ada enemy jadi unwalkable)
+            Node temp = Grid.Instance.NodeFromWorldPoint(targetPosition);
+            if (!temp.isWalkable)
+            {
+                _isMoving = false;
+                yield break;
+            }
+
             targetPosition.y = 1;
-
-            // Calculate the direction needed to move on X and Z
             Vector3 currentPosition = transform.position;
-
-            // handle rotation
             HandleRotation(targetPosition);
 
             float travelPercent = 0f;
@@ -141,4 +140,18 @@ public class EnemyStateMachine : MonoBehaviour
         path.Clear(); // Clear the path once the target is reached
         _isMoving = false;
     }
+
+    void HandleRotation(Vector3 targetPosition)
+    {
+        Vector3 direction = (targetPosition - transform.position).normalized;
+        direction.y = 0;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            transform.rotation = targetRotation;
+        }
+    }
+
 }

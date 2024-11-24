@@ -7,7 +7,7 @@ public class PlayerRunState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("running");
+        //Debug.Log("running");
         _context._animator.SetBool("IsMoving", true);
     }
 

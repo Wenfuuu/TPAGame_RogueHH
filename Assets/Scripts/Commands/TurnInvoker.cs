@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class TurnInvoker
 {
@@ -9,26 +11,25 @@ public class TurnInvoker
         turnsQueue.Enqueue(command);
     }
 
-    //public void ExecuteNextTurn()
-    //{
-    //    if (turnsQueue.Count > 0)
-    //    {
-    //        ICommand command = turnsQueue.Dequeue();
-    //        command.Execute();
-    //    }
-    //}
-
-    public void ExecuteAll()
+    public IEnumerator ExecuteAllCoroutines()
     {
         while (turnsQueue.Count > 0)
         {
+            //Debug.Log("queue count: " +  turnsQueue.Count);
             ICommand command = turnsQueue.Dequeue();
-            command.Execute();
+
+            if (command is EnemyMoveCommand enemyMoveCommand)
+            {
+                // Execute the coroutine for enemy movement
+                yield return enemyMoveCommand.ExecuteCoroutine();
+            }
         }
+
+        GameManager.isEnemyTurn = false;
     }
 
-    public bool IsTurnQueueEmpty()
+    public int GetTurnCount()
     {
-        return turnsQueue.Count == 0;
+        return turnsQueue.Count;
     }
 }

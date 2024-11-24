@@ -10,7 +10,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void EnterState()
     {
-        Debug.Log("enemy idle");
+        //Debug.Log("enemy idle");
         _context._animator.SetBool("IsMoving", false);
     }
 

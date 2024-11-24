@@ -9,7 +9,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState()
     {
-        Debug.Log("idle");
+        //Debug.Log("idle");
         _context._animator.SetBool("IsMoving", false);
     }
 
