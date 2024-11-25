@@ -39,14 +39,14 @@ public class GameManager : MonoBehaviour
 
     private void CheckTurn()// bakal ngecek skrng turn player / enemies
     {
-        if(isEnemyTurn)
-        {
-            Debug.Log("turn enemy");
-        }
-        else
-        {
-            Debug.Log("turn player");
-        }
+        //if(isEnemyTurn)
+        //{
+        //    Debug.Log("turn enemy");
+        //}
+        //else
+        //{
+        //    Debug.Log("turn player");
+        //}
 
         if (!player.IsMoving && isEnemyTurn)// kalo player ga gerak & lagi turn enemy
         {
@@ -62,8 +62,17 @@ public class GameManager : MonoBehaviour
         executing = true;
         foreach (EnemyStateMachine enemy in aggroEnemies)
         {
-            EnemyMoveCommand moveCommand = new EnemyMoveCommand(enemy);
-            invoker.AddTurn(moveCommand);
+            if (!enemy.IsNearPlayer)
+            {
+                EnemyMoveCommand moveCommand = new EnemyMoveCommand(enemy);
+                invoker.AddTurn(moveCommand);
+            }
+            else
+            {
+                Debug.Log("giving attack command to enemy");
+                EnemyAttackCommand atkCommand = new EnemyAttackCommand(enemy);
+                invoker.AddTurn(atkCommand);
+            }
         }
     }
 
@@ -99,5 +108,10 @@ public class GameManager : MonoBehaviour
     public bool CheckAggro()
     {
         return (aggroEnemies.Count > 0);
+    }
+
+    public HashSet<EnemyStateMachine> getAggroEnemies()
+    {
+        return aggroEnemies;
     }
 }

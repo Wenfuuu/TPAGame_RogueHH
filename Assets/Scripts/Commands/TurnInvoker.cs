@@ -22,6 +22,11 @@ public class TurnInvoker
             {
                 // Execute the coroutine for enemy movement
                 yield return enemyMoveCommand.ExecuteCoroutine();
+                yield return new WaitForSeconds(0.1f);// delay buat prevent collision enemy
+            }else if(command is EnemyAttackCommand enemyAttackCommand)
+            {
+                yield return enemyAttackCommand.ExecuteCoroutine();
+                yield return new WaitForSeconds(0.1f);
             }
         }
 

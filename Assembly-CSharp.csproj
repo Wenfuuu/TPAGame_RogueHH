@@ -76,6 +76,7 @@
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\SimpleStateMachine.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Idle.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCollision.cs" />
+    <Compile Include="Assets\Scripts\Commands\EnemyAttackCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\PlayerMoveCommand.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\WeaponGroupings.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Extensions\CollectionExtensions.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCollisionType.cs" />
     <Compile Include="Assets\Scripts\MouseInput.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerRunState.cs" />
+    <Compile Include="Assets\Scripts\States\Enemy\EnemyReadyState.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Jump.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Weapon\SwitchWeapon.cs" />
     <Compile Include="Assets\Scripts\DungeonCreator.cs" />

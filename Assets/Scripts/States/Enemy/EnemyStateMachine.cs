@@ -29,15 +29,15 @@ public class EnemyStateMachine : MonoBehaviour
 
     private bool _isMoving = false;
     private bool _isAggro = false;
+    private bool _isNearPlayer = false;
 
     public EnemyBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool IsMoving { get { return _isMoving; } }
     public bool IsAggro {  get { return _isAggro; } }
+    public bool IsNearPlayer {  get { return _isNearPlayer; } }
 
     private void Awake()
     {
-        //_isAggro = true;
-
         player = PlayerStateMachine.Instance;
         pathfinding = PathFinding.Instance;
 
@@ -54,14 +54,43 @@ public class EnemyStateMachine : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("ready atk: " + _isNearPlayer);
         _currentState.UpdateStates();
         // jika dkt player jadi aggro & ngejar
         CheckPlayer();
+        CheckReadyToAttack();
+
+
+    }
+
+    void CheckReadyToAttack()
+    {
+        if (_isMoving) return;
+
+        _isNearPlayer = false;
+        Vector3 currPos = transform.position;
+        for (int i = -2; i <= 2; i += 2)
+        {
+            for (int j = -2; j <= 2; j += 2)
+            {
+                if (i == 0 && j == 0) continue;
+                if(Mathf.Abs(i) ==  Mathf.Abs(j)) continue;
+
+                Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
+                if (checkPos == player.transform.position)
+                {
+                    _isNearPlayer = true;
+                    HandleRotation(checkPos);
+                }
+            }
+            if (_isNearPlayer) break;
+        }
     }
 
     void CheckPlayer()
     {
         //Debug.Log("cek player di: " + player.transform.position);
+        if (_isAggro) return;
         Vector3 currPos = transform.position;
         for(int i = -4; i <= 4; i+=2)
         {
@@ -75,11 +104,17 @@ public class EnemyStateMachine : MonoBehaviour
                 {
                     _isAggro = true;
                     GameManager.Instance.AddAggro(this);
-                    Debug.Log("adding aggro");
+                    //Debug.Log("adding aggro");
                 }
             }
             if (_isAggro) break;
         }
+    }
+
+    public IEnumerator AttackPlayer()
+    {
+        Debug.Log("attacking player");
+        yield return new WaitForSeconds(1f);
     }
 
     public IEnumerator MoveToPlayer()
@@ -98,6 +133,7 @@ public class EnemyStateMachine : MonoBehaviour
                 yield return StartCoroutine(FollowPath());
             }
         }
+        HandleRotation(player.transform.position);
     }
 
     IEnumerator FollowPath()

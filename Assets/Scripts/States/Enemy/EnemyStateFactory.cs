@@ -21,4 +21,9 @@ public class EnemyStateFactory
     {
         return new EnemyAggroState(_context, this);
     }
+
+    public EnemyBaseState ReadyToAttack()
+    {
+        return new EnemyReadyState(_context, this);
+    }
 }

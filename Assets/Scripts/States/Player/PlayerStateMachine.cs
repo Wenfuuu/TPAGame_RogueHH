@@ -22,6 +22,7 @@ public class PlayerStateMachine : MonoBehaviour
     private List<Node> highlightPath;
     private int currentTargetIndex = 0;
     private bool isClicked = false;
+    private bool hitEnemy = false;
     private GameManager manager;
 
     public Animator _animator;
@@ -33,9 +34,13 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerStateFactory _states;
 
     private bool _isMoving = false;
+    private bool _inBattle = false;
+    private bool _isNearEnemy = false;
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool IsMoving { get { return _isMoving; } }
+    public bool InBattle { get { return _inBattle; } }// untuk batasin gerak 1 tile
+    public bool NearEnemy { get { return _isNearEnemy; } }// untuk cek ready to attack
 
     private void Awake()
     {
@@ -61,6 +66,14 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _currentState.UpdateStates();
         manager = GameManager.Instance;
+        if(manager.CheckAggro())
+        {
+            _inBattle = true;
+        }else _inBattle = false;
+
+        if (_isNearEnemy) Debug.Log("near enemy ready to attack");
+
+        CheckReadyToAttack();
 
         if (Input.GetKeyDown(KeyCode.Space))// skip turn
         {
@@ -96,10 +109,21 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         if (GameManager.isEnemyTurn) return;
-        if (Input.GetMouseButtonDown(0) && !_isMoving)// implement command
+        if (Input.GetMouseButtonDown(0) && !_isMoving)// any clickable player action
         {
             //Vector3 startPos = transform.position;
             Vector3 targetPos = GetMapPosition();
+
+            if (_isNearEnemy)// kalo lagi deket musuh cek tile yang diklik ada musuh atau tidak
+            {
+                //hitEnemy = false;
+                CheckHitEnemy(targetPos);
+                if (hitEnemy)
+                {
+                    hitEnemy = false;
+                    return;
+                }
+            }
 
             Node dest = pathfinding.grid.NodeFromWorldPoint(targetPos);
             targetPos.y = 1;
@@ -123,6 +147,81 @@ public class PlayerStateMachine : MonoBehaviour
                     Debug.Log("ada enemy aggro");
                 }
             }
+        }
+    }
+
+    void CheckHitEnemy(Vector3 targetPos)
+    {
+        //cek targetPos yang diklik itu ada enemy atau tidak
+        targetPos.y = 1;
+        targetPos.x = Mathf.RoundToInt(targetPos.x);
+        targetPos.y = Mathf.RoundToInt(targetPos.y);
+        targetPos.z = Mathf.RoundToInt(targetPos.z);
+        HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
+        foreach (EnemyStateMachine enemy in enemies)
+        {
+            //Debug.Log("hitting in " + targetPos);
+            //Debug.Log("enemy in " + enemy.transform.position);
+            if(targetPos == enemy.transform.position)
+            {
+                //Debug.Log("hitting enemy");// works tinggal tambahin animasi atk buat player
+                HandleRotation(targetPos);
+                StartCoroutine(HandleAttack());
+                return;
+                //hitEnemy = true;
+            }
+            //if (hitEnemy) break;
+        }
+    }
+
+    IEnumerator HandleAttack()
+    {
+        yield return StartCoroutine(HitEnemy());
+
+        // Switch to the enemy turn after the attack finishes
+        Debug.Log("Attack finished. Switching to enemy turn.");
+        GameManager.isEnemyTurn = true;
+    }
+
+    IEnumerator HitEnemy()
+    {
+        Debug.Log("start hitting enemy");
+        _animator.SetBool("IsAttacking", true);
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("finished hitting enemy");
+        _animator.SetBool("IsAttacking", false);
+        hitEnemy = true;
+    }
+
+    void Hit()
+    {
+        Debug.Log("test hit");
+    }
+
+    void CheckReadyToAttack()
+    {
+        if (_isMoving) return;
+
+        _isNearEnemy = false;
+        Vector3 currPos = transform.position;
+        for (int i = -2; i <= 2; i += 2)
+        {
+            for (int j = -2; j <= 2; j += 2)
+            {
+                if (i == 0 && j == 0) continue;
+                if (Mathf.Abs(i) == Mathf.Abs(j)) continue;
+
+                HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
+                foreach(EnemyStateMachine enemy in enemies)
+                {
+                    Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
+                    if (checkPos == enemy.transform.position)
+                    {
+                        _isNearEnemy = true;
+                    }
+                }
+            }
+            if (_isNearEnemy) break;
         }
     }
 
@@ -180,6 +279,8 @@ public class PlayerStateMachine : MonoBehaviour
             }
 
             currentTargetIndex++;
+
+            if (_inBattle) break;
         }
 
         path.Clear(); // Clear the path once the target is reached

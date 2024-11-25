@@ -22,7 +22,11 @@ public class EnemyAggroState : EnemyBaseState
 
     public override void UpdateState()
     {
-        if(_context.IsMoving)
+        if (_context.IsNearPlayer)
+        {
+            SwitchStates(_states.ReadyToAttack());
+        }
+        if (_context.IsMoving)
         {
             SwitchStates(_states.Run());
         }

@@ -393,7 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb91bf97aa868d4fb264346775ad1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
 --- !u!4 &620964668
 Transform:
   m_ObjectHideFlags: 0
@@ -446,9 +445,9 @@ MonoBehaviour:
   decorPrefab3: {fileID: 0}
   decorPrefab4: {fileID: 0}
   EnemyPrefab1: {fileID: 5807284121954939437, guid: 3f40420569fc2264fbf002cc96afe019, type: 3}
-  EnemyCount: 2
-  gridWidth: 40
-  gridHeight: 40
+  EnemyCount: 3
+  gridWidth: 30
+  gridHeight: 30
   numberOfRooms: 3
   buffer: 3
   tileSize: 2
