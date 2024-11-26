@@ -27,8 +27,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public Animator _animator;
 
-    public float attackTime = 1f;
-
     // States variables
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
@@ -64,6 +62,15 @@ public class PlayerStateMachine : MonoBehaviour
 
     void Update()
     {
+        if (_isNearEnemy)
+        {
+            Debug.Log("deket enemy");
+        }
+        else
+        {
+            Debug.Log("gak deket enemy");
+        }
+
         _currentState.UpdateStates();
         manager = GameManager.Instance;
         if(manager.CheckAggro())
@@ -71,7 +78,7 @@ public class PlayerStateMachine : MonoBehaviour
             _inBattle = true;
         }else _inBattle = false;
 
-        if (_isNearEnemy) Debug.Log("near enemy ready to attack");
+        //if (_isNearEnemy) Debug.Log("near enemy ready to attack");
 
         CheckReadyToAttack();
 
@@ -144,7 +151,7 @@ public class PlayerStateMachine : MonoBehaviour
                 if (manager.CheckAggro())
                 {
                     GameManager.isEnemyTurn = true;
-                    Debug.Log("ada enemy aggro");
+                    //Debug.Log("ada enemy aggro");
                 }
             }
         }
@@ -160,9 +167,13 @@ public class PlayerStateMachine : MonoBehaviour
         HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
         foreach (EnemyStateMachine enemy in enemies)
         {
-            //Debug.Log("hitting in " + targetPos);
-            //Debug.Log("enemy in " + enemy.transform.position);
-            if(targetPos == enemy.transform.position)
+            Vector3 enemyPos;
+            enemyPos.x = Mathf.RoundToInt(enemy.transform.position.x);
+            enemyPos.y = Mathf.RoundToInt(enemy.transform.position.y);
+            enemyPos.z = Mathf.RoundToInt(enemy.transform.position.z);
+            Debug.Log("hitting in " + targetPos);
+            Debug.Log("enemy in " + enemyPos);
+            if (targetPos == enemyPos)
             {
                 //Debug.Log("hitting enemy");// works tinggal tambahin animasi atk buat player
                 HandleRotation(targetPos);
@@ -178,8 +189,8 @@ public class PlayerStateMachine : MonoBehaviour
     {
         yield return StartCoroutine(HitEnemy());
 
-        // Switch to the enemy turn after the attack finishes
-        Debug.Log("Attack finished. Switching to enemy turn.");
+        //// Switch to the enemy turn after the attack finishes
+        //Debug.Log("Attack finished. Switching to enemy turn.");
         GameManager.isEnemyTurn = true;
     }
 
@@ -204,25 +215,38 @@ public class PlayerStateMachine : MonoBehaviour
 
         _isNearEnemy = false;
         Vector3 currPos = transform.position;
-        for (int i = -2; i <= 2; i += 2)
-        {
-            for (int j = -2; j <= 2; j += 2)
-            {
-                if (i == 0 && j == 0) continue;
-                if (Mathf.Abs(i) == Mathf.Abs(j)) continue;
 
-                HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
-                foreach(EnemyStateMachine enemy in enemies)
-                {
-                    Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
-                    if (checkPos == enemy.transform.position)
-                    {
-                        _isNearEnemy = true;
-                    }
-                }
+        HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
+        foreach(EnemyStateMachine enemy in enemies)
+        {
+            float distance = Vector3.Distance(currPos, enemy.transform.position);
+
+            if (distance <= 2.2f) // Adjust the distance threshold as needed (e.g., 2 units)
+            {
+                _isNearEnemy = true;
             }
-            if (_isNearEnemy) break;
+            if(_isNearEnemy) break;
         }
+
+        //for (int i = -2; i <= 2; i += 2)
+        //{
+        //    for (int j = -2; j <= 2; j += 2)
+        //    {
+        //        if (i == 0 && j == 0) continue;
+        //        if (Mathf.Abs(i) == Mathf.Abs(j)) continue;
+
+        //        HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
+        //        foreach(EnemyStateMachine enemy in enemies)
+        //        {
+        //            Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
+        //            if (checkPos == enemy.transform.position)
+        //            {
+        //                _isNearEnemy = true;
+        //            }
+        //        }
+        //    }
+        //    if (_isNearEnemy) break;
+        //}
     }
 
     public void MoveTo(Vector3 targetPosition)

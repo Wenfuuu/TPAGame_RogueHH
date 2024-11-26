@@ -21,8 +21,6 @@ public class EnemyStateMachine : MonoBehaviour
 
     public Animator _animator;
 
-    public float attackTime = 1f;
-
     // States variables
     EnemyBaseState _currentState;
     EnemyStateFactory _states;
@@ -54,13 +52,12 @@ public class EnemyStateMachine : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("ready atk: " + _isNearPlayer);
-        _currentState.UpdateStates();
+        Debug.Log("ready atk: " + _isNearPlayer);
         // jika dkt player jadi aggro & ngejar
         CheckPlayer();
         CheckReadyToAttack();
 
-
+        _currentState.UpdateStates();
     }
 
     void CheckReadyToAttack()
@@ -69,22 +66,16 @@ public class EnemyStateMachine : MonoBehaviour
 
         _isNearPlayer = false;
         Vector3 currPos = transform.position;
-        for (int i = -2; i <= 2; i += 2)
-        {
-            for (int j = -2; j <= 2; j += 2)
-            {
-                if (i == 0 && j == 0) continue;
-                if(Mathf.Abs(i) ==  Mathf.Abs(j)) continue;
 
-                Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
-                if (checkPos == player.transform.position)
-                {
-                    _isNearPlayer = true;
-                    HandleRotation(checkPos);
-                }
-            }
-            if (_isNearPlayer) break;
+        float distance = Vector3.Distance(currPos, player.transform.position);
+
+        // Set _isNearPlayer to true if the enemy is within range to attack
+        if (distance <= 2.2f) // Adjust the distance threshold as needed (e.g., 2 units)
+        {
+            _isNearPlayer = true;
+            HandleRotation(player.transform.position);
         }
+        //if(_isNearPlayer) Debug.Log("distance to player: " + distance);
     }
 
     void CheckPlayer()
@@ -113,7 +104,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     public IEnumerator AttackPlayer()
     {
-        Debug.Log("attacking player");
+        //Debug.Log("attacking player");
         yield return new WaitForSeconds(1f);
     }
 

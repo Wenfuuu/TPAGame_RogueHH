@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         //{
         //    Debug.Log("turn player");
         //}
+        if (!isEnemyTurn) return;
 
         if (!player.IsMoving && isEnemyTurn)// kalo player ga gerak & lagi turn enemy
         {
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
         {
             if (!enemy.IsNearPlayer)
             {
+                Debug.Log("giving move command to enemy");
                 EnemyMoveCommand moveCommand = new EnemyMoveCommand(enemy);
                 invoker.AddTurn(moveCommand);
             }
