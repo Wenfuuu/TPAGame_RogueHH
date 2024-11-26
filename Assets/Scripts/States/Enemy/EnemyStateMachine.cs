@@ -33,6 +33,7 @@ public class EnemyStateMachine : MonoBehaviour
     public bool IsMoving { get { return _isMoving; } }
     public bool IsAggro {  get { return _isAggro; } }
     public bool IsNearPlayer {  get { return _isNearPlayer; } }
+    public PlayerStateMachine GetPlayer { get { return player; } }
 
     private void Awake()
     {
@@ -105,7 +106,22 @@ public class EnemyStateMachine : MonoBehaviour
     public IEnumerator AttackPlayer()
     {
         //Debug.Log("attacking player");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+        //bikin animasi player gethit
+        //player._animator.SetBool("IsHit", true);
+    }
+
+    public void PlayerRotate()
+    {
+        Vector3 direction = (transform.position - player.transform.position).normalized;
+        direction.y = 0;
+
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            player.transform.rotation = targetRotation;
+        }
     }
 
     public IEnumerator MoveToPlayer()

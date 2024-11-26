@@ -35,6 +35,8 @@ public class PlayerStateMachine : MonoBehaviour
     private bool _inBattle = false;
     private bool _isNearEnemy = false;
 
+    public GameObject sword;
+
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool IsMoving { get { return _isMoving; } }
     public bool InBattle { get { return _inBattle; } }// untuk batasin gerak 1 tile
@@ -185,9 +187,26 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
+    Transform FindChildByName(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child;
+
+            // Recursively check in the child's children
+            Transform result = FindChildByName(child, name);
+            if (result != null)
+                return result;
+        }
+        return null; // Return null if no child is found with the specified name
+    }
+
     IEnumerator HandleAttack()
     {
+        sword.SetActive(true);
         yield return StartCoroutine(HitEnemy());
+        sword.SetActive(false);
 
         //// Switch to the enemy turn after the attack finishes
         //Debug.Log("Attack finished. Switching to enemy turn.");
@@ -198,7 +217,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Debug.Log("start hitting enemy");
         _animator.SetBool("IsAttacking", true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         Debug.Log("finished hitting enemy");
         _animator.SetBool("IsAttacking", false);
         hitEnemy = true;
