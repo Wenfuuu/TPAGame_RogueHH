@@ -227,7 +227,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 288efeff
       m_LastClickedID: 0
       m_ExpandedIDs: 38fbffff
       m_RenameOverlay:
@@ -272,8 +272,8 @@ MonoBehaviour:
     y: 0
     width: 399.19998
     height: 469.6
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
@@ -887,22 +887,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Blink/Art/Characters/LowPoly/Demo_FREE_LowPolyCharacter
+    - Assets/Animations
     m_Globs: []
     m_OriginalText: gethit
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Blink/Art/Characters/LowPoly/Demo_FREE_LowPolyCharacter
+  - Assets/Animations
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\bertr\TPA_Game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 91.80002}
-    m_SelectedIDs: c86b0000
-    m_LastClickedID: 27592
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: 9c6b0000
+    m_LastClickedID: 27548
     m_ExpandedIDs: 00000000c45e0000c65e0000c85e0000ca5e0000cc5e0000ce5e0000d05e0000d25e00009a6b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -956,8 +956,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 288efeff
+    m_LastClickedInstanceID: -94680
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300009e760000
     m_RenameOverlay:

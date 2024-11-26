@@ -179,7 +179,7 @@ public class PlayerStateMachine : MonoBehaviour
             {
                 //Debug.Log("hitting enemy");// works tinggal tambahin animasi atk buat player
                 HandleRotation(targetPos);
-                StartCoroutine(HandleAttack());
+                StartCoroutine(HandleAttack(enemy));
                 return;
                 //hitEnemy = true;
             }
@@ -202,22 +202,29 @@ public class PlayerStateMachine : MonoBehaviour
         return null; // Return null if no child is found with the specified name
     }
 
-    IEnumerator HandleAttack()
+    IEnumerator HandleAttack(EnemyStateMachine enemy)
     {
         sword.SetActive(true);
-        yield return StartCoroutine(HitEnemy());
+        yield return StartCoroutine(HitEnemy(enemy));
         sword.SetActive(false);
+        //enemy._animator.SetBool("IsHit", true);
+        //yield return new WaitForSeconds(0.3f);
+        //enemy._animator.SetBool("IsHit", false);
 
         //// Switch to the enemy turn after the attack finishes
         //Debug.Log("Attack finished. Switching to enemy turn.");
         GameManager.isEnemyTurn = true;
     }
 
-    IEnumerator HitEnemy()
+    IEnumerator HitEnemy(EnemyStateMachine enemy)
     {
         Debug.Log("start hitting enemy");
         _animator.SetBool("IsAttacking", true);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.2f);
+        enemy._animator.SetBool("IsHit", true);
+        yield return new WaitForSeconds(0.3f);
+        enemy._animator.SetBool("IsHit", false);
+        yield return new WaitForSeconds(0.1f);
         Debug.Log("finished hitting enemy");
         _animator.SetBool("IsAttacking", false);
         hitEnemy = true;
