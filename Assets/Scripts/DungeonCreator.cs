@@ -25,6 +25,8 @@ public class DungeonCreator : MonoBehaviour
     public Node[,] dungeonGrid; // 2D grid representing the dungeon layout
     private List<Vector2Int> roomCenters = new List<Vector2Int>(); // Center positions of rooms
 
+    private PlayerStateMachine player;
+
     private List<Node> corridors = new List<Node>();
     private List<Node> atEntrance = new List<Node>();
     private List<Node> decoratedTiles = new List<Node>();
@@ -76,6 +78,7 @@ public class DungeonCreator : MonoBehaviour
 
     void Start()
     {
+        player = PlayerStateMachine.Instance;
         GenerateDecorations();
         SpawnEnemy();
     }
@@ -97,14 +100,13 @@ public class DungeonCreator : MonoBehaviour
                 //Debug.Log(spawnPosition);
 
                 Node spawnTile = grid.NodeFromWorldPoint(spawnPosition);
-                if (!spawnTile.isWalkable) continue;
+                Node playerTile = grid.NodeFromWorldPoint(player.transform.position);
+                if (!spawnTile.isWalkable || (spawnTile == playerTile)) continue;
 
                 spawned = true;
                 enemyTiles.Add(spawnTile);
                 spawnPosition.y = 1;
                 Instantiate(EnemyPrefab1, spawnPosition, Quaternion.identity);
-
-                EnemyStateMachine enemy = EnemyPrefab1.GetComponent<EnemyStateMachine>();
             };
             count++;
         }

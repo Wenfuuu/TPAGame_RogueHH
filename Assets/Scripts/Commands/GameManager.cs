@@ -107,6 +107,13 @@ public class GameManager : MonoBehaviour
         aggroEnemies.Add(enemy);
     }
 
+    public void EnemyDeath(EnemyStateMachine enemy)
+    {
+        enemies.Remove(enemy);
+        aggroEnemies.Remove(enemy);
+        Destroy(enemy.gameObject);
+    }
+
     public bool CheckAggro()
     {
         return (aggroEnemies.Count > 0);

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +22,7 @@ public class PlayerStateMachine : MonoBehaviour
     private int currentTargetIndex = 0;
     private bool isClicked = false;
     private bool hitEnemy = false;
+    private bool executing = false;
     private GameManager manager;
 
     public Animator _animator;
@@ -126,6 +126,7 @@ public class PlayerStateMachine : MonoBehaviour
             if (_isNearEnemy)// kalo lagi deket musuh cek tile yang diklik ada musuh atau tidak
             {
                 //hitEnemy = false;
+                if (executing) return;
                 CheckHitEnemy(targetPos);
                 if (hitEnemy)
                 {
@@ -178,6 +179,7 @@ public class PlayerStateMachine : MonoBehaviour
             if (targetPos == enemyPos)
             {
                 //Debug.Log("hitting enemy");// works tinggal tambahin animasi atk buat player
+                //if (executing) return;
                 HandleRotation(targetPos);
                 StartCoroutine(HandleAttack(enemy));
                 return;
@@ -187,26 +189,13 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    Transform FindChildByName(Transform parent, string name)
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name)
-                return child;
-
-            // Recursively check in the child's children
-            Transform result = FindChildByName(child, name);
-            if (result != null)
-                return result;
-        }
-        return null; // Return null if no child is found with the specified name
-    }
-
     IEnumerator HandleAttack(EnemyStateMachine enemy)
     {
+        executing = true;
         sword.SetActive(true);
         yield return StartCoroutine(HitEnemy(enemy));
         sword.SetActive(false);
+        executing = false;
         //enemy._animator.SetBool("IsHit", true);
         //yield return new WaitForSeconds(0.3f);
         //enemy._animator.SetBool("IsHit", false);
@@ -218,16 +207,45 @@ public class PlayerStateMachine : MonoBehaviour
 
     IEnumerator HitEnemy(EnemyStateMachine enemy)
     {
+        int attackType = Random.Range(1, 4);
+        string attackAnimation = $"IsAttacking{attackType}";
+
         Debug.Log("start hitting enemy");
-        _animator.SetBool("IsAttacking", true);
+        _animator.SetBool(attackAnimation, true);
         yield return new WaitForSeconds(0.2f);
-        enemy._animator.SetBool("IsHit", true);
-        yield return new WaitForSeconds(0.3f);
-        enemy._animator.SetBool("IsHit", false);
-        yield return new WaitForSeconds(0.1f);
+        //enemy._animator.SetBool("IsHit", true);
+        //kasi damage
+        enemy.GetComponent<EnemyDamageable>().DecreaseHealth(40);
+        if (enemy.GetComponent<EnemyDamageable>().enemyStats.CurrentHP > 0)
+        {
+            enemy._animator.SetBool("IsHit", true);
+            yield return new WaitForSeconds(0.3f);
+            enemy._animator.SetBool("IsHit", false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        else
+        {
+            enemy._animator.SetBool("IsDead", true);
+            // set tile to walkable again
+            Node temp = Grid.Instance.NodeFromWorldPoint(enemy.transform.position);
+            temp.isWalkable = true;
+            HandleEnemyDrop(enemy);
+            yield return new WaitForSeconds(1.2f);
+            HandleEnemyDeath(enemy);
+        }
         Debug.Log("finished hitting enemy");
-        _animator.SetBool("IsAttacking", false);
+        _animator.SetBool(attackAnimation, false);
         hitEnemy = true;
+    }
+
+    void HandleEnemyDrop(EnemyStateMachine enemy)
+    {
+
+    }
+
+    void HandleEnemyDeath(EnemyStateMachine enemy)
+    {
+        manager.EnemyDeath(enemy);
     }
 
     void Hit()

@@ -167,6 +167,10 @@
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCharacterController.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyStateFactory.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperGround.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyDamageable.cs" />
+    <Compile Include="Assets\Scripts\Billboard.cs" />
+    <Compile Include="Assets\Scripts\NameGenerator.cs" />
+    <Compile Include="Assets\Scripts\EnemyStats.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
