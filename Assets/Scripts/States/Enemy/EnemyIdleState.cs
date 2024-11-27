@@ -21,9 +21,9 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void UpdateState()
     {
-        if (_context.IsAggro)
+        if (_context.IsAlert)
         {
-            SwitchStates(_states.Aggro());
+            SwitchStates(_states.Alert());
         }
     }
 }

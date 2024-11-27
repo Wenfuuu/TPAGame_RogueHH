@@ -17,6 +17,11 @@ public class EnemyStateFactory
         return new EnemyRunState(_context, this);
     }
 
+    public EnemyBaseState Alert()
+    {
+        return new EnemyAlertState(_context, this);
+    }
+
     public EnemyBaseState Aggro()
     {
         return new EnemyAggroState(_context, this);

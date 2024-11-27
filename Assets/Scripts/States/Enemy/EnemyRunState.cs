@@ -16,13 +16,14 @@ public class EnemyRunState : EnemyBaseState
 
     public override void ExitState()
     {
-
+        _context._animator.SetBool("IsMoving", false);
     }
 
     public override void UpdateState()
     {
         if (!_context.IsMoving)
         {
+            ExitState();
             SwitchStates(_states.Aggro());
         }
     }

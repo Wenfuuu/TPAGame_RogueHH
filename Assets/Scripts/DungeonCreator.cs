@@ -13,6 +13,7 @@ public class DungeonCreator : MonoBehaviour
     public GameObject decorPrefab2;
     public GameObject decorPrefab3;
     public GameObject decorPrefab4;
+    public GameObject emptyPrefab;
 
     public GameObject EnemyPrefab1;
     public int EnemyCount = 5;
@@ -87,6 +88,23 @@ public class DungeonCreator : MonoBehaviour
         player = PlayerStateMachine.Instance;
         GenerateDecorations();
         SpawnEnemy();
+        GenerateEmptyTiles();
+    }
+
+    void GenerateEmptyTiles()
+    {
+        for (int x = 0; x < gridWidth; x++)
+        {
+            for (int z = 0; z < gridHeight; z++)
+            {
+                Node node = dungeonGrid[x, z];
+                if (node == null)
+                {
+                    Vector3 position = new Vector3(x * tileSize, 1, z * tileSize);
+                    Instantiate(emptyPrefab, position, Quaternion.identity);
+                }
+            }
+        }
     }
 
     void SpawnEnemy()

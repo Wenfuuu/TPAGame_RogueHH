@@ -17,4 +17,9 @@ public class PlayerMoveCommand : ICommand
     {
         _player.MoveTo(_targetPosition);
     }
+
+    public IEnumerator ExecuteCoroutine()
+    {
+        yield return null;
+    }
 }

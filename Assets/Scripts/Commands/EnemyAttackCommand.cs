@@ -22,6 +22,7 @@ public class EnemyAttackCommand : ICommand
         yield return new WaitForSeconds(0.3f);
         _enemy.PlayerRotate();
         _enemy.GetPlayer._animator.SetBool("IsHit", true);
+        DamagePopUpGenerator.Instance.CreatePopUp(10, false, _enemy.GetPlayer.transform.position);
         yield return _enemy.AttackPlayer();
         _enemy._animator.SetBool("IsAttacking", false);
         _enemy.GetPlayer._animator.SetBool("IsHit", false);

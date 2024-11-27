@@ -11,8 +11,8 @@ public class EnemyAggroState : EnemyBaseState
     public override void EnterState()
     {
         //Debug.Log("enemy aggro");
-        _context._animator.SetBool("IsMoving", false);
         _context._animator.SetBool("IsAggro", true);
+        _context.GetComponent<EnemyIndicator>().OnAggro();
     }
 
     public override void ExitState()

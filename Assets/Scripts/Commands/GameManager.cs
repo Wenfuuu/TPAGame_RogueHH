@@ -63,11 +63,22 @@ public class GameManager : MonoBehaviour
         executing = true;
         foreach (EnemyStateMachine enemy in aggroEnemies)
         {
-            if (!enemy.IsNearPlayer)
+            if(enemy.IsAggro)
+            {
+                Debug.Log("uda msk aggro");
+            }
+
+            if (!enemy.IsNearPlayer && enemy.IsAggro)
             {
                 Debug.Log("giving move command to enemy");
                 EnemyMoveCommand moveCommand = new EnemyMoveCommand(enemy);
                 invoker.AddTurn(moveCommand);
+            }
+            else if (enemy.IsAlert && !enemy.IsAggro)
+            {
+                Debug.Log("giving LOS command to enemy");
+                EnemyLOSCommand LOSCommand = new EnemyLOSCommand(enemy);
+                invoker.AddTurn(LOSCommand);
             }
             else
             {
@@ -92,9 +103,8 @@ public class GameManager : MonoBehaviour
         if (command is PlayerMoveCommand moveCommand)
         {
             //Debug.Log("langsung exec");
-            moveCommand.Execute(); // Execute immediately
+            moveCommand.Execute();
         }
-        //else invoker.AddTurn(command);
     }
 
     public void AddEnemy(EnemyStateMachine enemy)
@@ -112,6 +122,11 @@ public class GameManager : MonoBehaviour
         enemies.Remove(enemy);
         aggroEnemies.Remove(enemy);
         Destroy(enemy.gameObject);
+    }
+
+    public void EnemyOutOfRange(EnemyStateMachine enemy)
+    {
+        aggroEnemies.Remove(enemy);
     }
 
     public bool CheckAggro()

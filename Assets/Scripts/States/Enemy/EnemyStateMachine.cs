@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,12 +28,14 @@ public class EnemyStateMachine : MonoBehaviour
 
     private bool _isMoving = false;
     private bool _isAggro = false;
+    private bool _isAlert = false;
     private bool _isNearPlayer = false;
 
     public EnemyBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool IsMoving { get { return _isMoving; } }
     public bool IsAggro {  get { return _isAggro; } }
     public bool IsNearPlayer {  get { return _isNearPlayer; } }
+    public bool IsAlert { get { return _isAlert; } }
     public PlayerStateMachine GetPlayer { get { return player; } }
 
     private void Awake()
@@ -47,7 +50,6 @@ public class EnemyStateMachine : MonoBehaviour
         _states = new EnemyStateFactory(this);
         _currentState = _states.Idle();
         _currentState.EnterState();
-
         GameManager.Instance.AddEnemy(this);
     }
 
@@ -63,11 +65,10 @@ public class EnemyStateMachine : MonoBehaviour
 
     void CheckReadyToAttack()
     {
-        if (_isMoving) return;
+        if (_isMoving || !_isAggro) return;
 
         _isNearPlayer = false;
         Vector3 currPos = transform.position;
-
         float distance = Vector3.Distance(currPos, player.transform.position);
 
         // Set _isNearPlayer to true if the enemy is within range to attack
@@ -84,23 +85,74 @@ public class EnemyStateMachine : MonoBehaviour
         //Debug.Log("cek player di: " + player.transform.position);
         if (_isAggro) return;
         Vector3 currPos = transform.position;
-        for(int i = -4; i <= 4; i+=2)
-        {
-            for(int j = -4; j <= 4; j+=2)
-            {
-                if (i == 0 && j == 0) continue;
+        float distance = Vector3.Distance(currPos, player.transform.position);
+        //Debug.Log("distance to player: " + distance);
 
-                Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
-                //Debug.Log("detecting player di: " + checkPos);
-                if (checkPos == player.transform.position)
-                {
-                    _isAggro = true;
-                    GameManager.Instance.AddAggro(this);
-                    //Debug.Log("adding aggro");
-                }
-            }
-            if (_isAggro) break;
+        if (distance <= 10f) // masuk ke alert distance
+        {
+            _isAlert = true;
+            GameManager.Instance.AddAggro(this);
         }
+        else
+        {
+            _isAlert = false;
+            GameManager.Instance.EnemyOutOfRange(this);
+        }
+
+        // Set _isNearPlayer to true if the enemy is within range to attack
+        //if (distance <= 4.6f) // Adjust the distance threshold as needed (e.g., 2 units)
+        //{
+        //    _isAggro = true;
+        //    HandleRotation(player.transform.position);
+        //    GameManager.Instance.AddAggro(this);
+        //}
+    }
+
+    public IEnumerator CheckLOS()// dijalanin lwt command krn masuk queue
+    {
+        Debug.Log("checking LOS");
+
+        Vector3 currPos = transform.position;
+        currPos.y = 2;
+        Vector3 playerPos = player.transform.position;
+
+        // Calculate direction from enemy to player
+        Vector3 directionToPlayer = (playerPos - currPos);
+        directionToPlayer.y = 0;
+        directionToPlayer.Normalize();
+        // Cast a ray from the enemy's position towards the player
+        RaycastHit hit;
+        float raycastDistance = 100f; // You can adjust this distance based on the range you want to check
+
+        // Perform the raycast
+        if (Physics.Raycast(currPos, directionToPlayer, out hit, raycastDistance))
+        {
+            Debug.DrawRay(currPos, directionToPlayer, Color.red);
+            Debug.Log(hit.collider.name);
+
+            // Check if the ray hits the player
+            if (hit.collider.CompareTag("Player"))
+            {
+                _isAggro = true;
+                HandleRotation(player.transform.position);
+                GameManager.Instance.AddAggro(this);
+                Debug.Log("Player in LOS and in aggro range");
+            }
+            else
+            {
+                Debug.Log("Player is out of line of sight due to obstruction");
+            }
+        }
+        //Vector3 currPos = transform.position;
+        //float distance = Vector3.Distance(currPos, player.transform.position);
+        //if (distance <= 4.6f) // Adjust the distance threshold as needed (e.g., 2 units)
+        //{
+        //    _isAggro = true;
+        //    HandleRotation(player.transform.position);
+        //    GameManager.Instance.AddAggro(this);
+        //}
+
+        yield return null;
     }
 
     public IEnumerator AttackPlayer()
