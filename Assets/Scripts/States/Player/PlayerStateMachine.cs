@@ -214,8 +214,13 @@ public class PlayerStateMachine : MonoBehaviour
         _animator.SetBool(attackAnimation, true);
         yield return new WaitForSeconds(0.2f);
         //enemy._animator.SetBool("IsHit", true);
+        //calculate damage
+        int damage = CalculateDamage(enemy);
         //kasi damage
-        enemy.GetComponent<EnemyDamageable>().DecreaseHealth(40);
+        enemy.GetComponent<EnemyDamageable>().DecreaseHealth(damage);
+        //kasi damage popup
+        //DamagePopup.Create(40, false, enemy.transform.position);
+        DamagePopUpGenerator.Instance.CreatePopUp(damage, false, enemy.transform.position);
         if (enemy.GetComponent<EnemyDamageable>().enemyStats.CurrentHP > 0)
         {
             enemy._animator.SetBool("IsHit", true);
@@ -236,6 +241,18 @@ public class PlayerStateMachine : MonoBehaviour
         Debug.Log("finished hitting enemy");
         _animator.SetBool(attackAnimation, false);
         hitEnemy = true;
+    }
+
+    int CalculateDamage(EnemyStateMachine enemy)
+    {
+        float defenseScalingFactor = Random.Range(50, 101);
+        Debug.Log("def scaling: " + defenseScalingFactor);
+        EnemyDamageable damageable = enemy.GetComponent<EnemyDamageable>();
+        float defense = damageable.enemyStats.Defense;
+        Debug.Log("defense: " + defense);
+        float defenseFactor = 1f - (defense / (defense + defenseScalingFactor));
+        Debug.Log("def factor: " + defenseFactor);
+        return Mathf.RoundToInt(40 * defenseFactor);
     }
 
     void HandleEnemyDrop(EnemyStateMachine enemy)
