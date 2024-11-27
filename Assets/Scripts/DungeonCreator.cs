@@ -7,6 +7,8 @@ public class DungeonCreator : MonoBehaviour
     [Header("Dungeon Settings")]
     public GameObject roomPrefab; // Prefab for a single room
     public GameObject corridorPrefab; // Prefab for a corridor
+
+    private List<GameObject> decorPrefabs = new List<GameObject>();
     public GameObject decorPrefab1;
     public GameObject decorPrefab2;
     public GameObject decorPrefab3;
@@ -74,6 +76,10 @@ public class DungeonCreator : MonoBehaviour
         dungeonGrid = new Node[gridWidth, gridHeight];
         GenerateRooms();
         ConnectRooms();
+        decorPrefabs.Add(decorPrefab1);
+        decorPrefabs.Add(decorPrefab2);
+        decorPrefabs.Add(decorPrefab3);
+        decorPrefabs.Add(decorPrefab4);
     }
 
     void Start()
@@ -161,7 +167,9 @@ public class DungeonCreator : MonoBehaviour
                     // spawn decor 
                     node.worldPosition.y = 1;
                     float randomRotation = 90f * Random.Range(1, 4);
-                    Instantiate(decorPrefab1, node.worldPosition, Quaternion.Euler(0, randomRotation, 0));
+                    int randomIndex = Random.Range(0, decorPrefabs.Count);
+                    GameObject decoration = decorPrefabs[randomIndex];
+                    Instantiate(decoration, node.worldPosition, Quaternion.Euler(0, randomRotation, 0));
                     decor++;
                 }
             } 

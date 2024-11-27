@@ -173,6 +173,7 @@
     <Compile Include="Assets\Scripts\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\DamagePopUpGenerator.cs" />
     <Compile Include="Assets\Scripts\DamagePopupAnimation.cs" />
+    <Compile Include="Assets\FollowMotion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

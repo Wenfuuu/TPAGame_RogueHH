@@ -64,14 +64,14 @@ public class PlayerStateMachine : MonoBehaviour
 
     void Update()
     {
-        if (_isNearEnemy)
-        {
-            Debug.Log("deket enemy");
-        }
-        else
-        {
-            Debug.Log("gak deket enemy");
-        }
+        //if (_isNearEnemy)
+        //{
+        //    Debug.Log("deket enemy");
+        //}
+        //else
+        //{
+        //    Debug.Log("gak deket enemy");
+        //}
 
         _currentState.UpdateStates();
         manager = GameManager.Instance;
@@ -210,7 +210,7 @@ public class PlayerStateMachine : MonoBehaviour
         int attackType = Random.Range(1, 4);
         string attackAnimation = $"IsAttacking{attackType}";
 
-        Debug.Log("start hitting enemy");
+        //Debug.Log("start hitting enemy");
         _animator.SetBool(attackAnimation, true);
         yield return new WaitForSeconds(0.2f);
         //enemy._animator.SetBool("IsHit", true);
@@ -238,7 +238,7 @@ public class PlayerStateMachine : MonoBehaviour
             yield return new WaitForSeconds(1.2f);
             HandleEnemyDeath(enemy);
         }
-        Debug.Log("finished hitting enemy");
+        //Debug.Log("finished hitting enemy");
         _animator.SetBool(attackAnimation, false);
         hitEnemy = true;
     }
@@ -246,13 +246,13 @@ public class PlayerStateMachine : MonoBehaviour
     int CalculateDamage(EnemyStateMachine enemy)
     {
         float defenseScalingFactor = Random.Range(50, 101);
-        Debug.Log("def scaling: " + defenseScalingFactor);
+        //Debug.Log("def scaling: " + defenseScalingFactor);
         EnemyDamageable damageable = enemy.GetComponent<EnemyDamageable>();
         float defense = damageable.enemyStats.Defense;
-        Debug.Log("defense: " + defense);
+        //Debug.Log("defense: " + defense);
         float defenseFactor = 1f - (defense / (defense + defenseScalingFactor));
-        Debug.Log("def factor: " + defenseFactor);
-        return Mathf.RoundToInt(40 * defenseFactor);
+        //Debug.Log("def factor: " + defenseFactor);
+        return Mathf.RoundToInt(80 * defenseFactor);
     }
 
     void HandleEnemyDrop(EnemyStateMachine enemy)

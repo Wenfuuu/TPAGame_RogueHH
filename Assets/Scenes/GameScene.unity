@@ -582,14 +582,14 @@ MonoBehaviour:
   roomPrefab: {fileID: 134512829445688732, guid: 74cb062c626c13f48bedede29a492dac, type: 3}
   corridorPrefab: {fileID: 134512829445688732, guid: 74cb062c626c13f48bedede29a492dac, type: 3}
   decorPrefab1: {fileID: 7067885458622928763, guid: 747748686b8c99f449f98a0220698841, type: 3}
-  decorPrefab2: {fileID: 0}
-  decorPrefab3: {fileID: 0}
-  decorPrefab4: {fileID: 0}
+  decorPrefab2: {fileID: 347836313415766545, guid: 7917f925e1856534aaf82f26dbc6a730, type: 3}
+  decorPrefab3: {fileID: 5815132513997453021, guid: 01209a935496cf34aa5daa3ddae06f4b, type: 3}
+  decorPrefab4: {fileID: 8626509456767278119, guid: d01bbd4ef364ec74b90311a9e524ff1c, type: 3}
   EnemyPrefab1: {fileID: 5807284121954939437, guid: 3f40420569fc2264fbf002cc96afe019, type: 3}
   EnemyCount: 3
-  gridWidth: 30
-  gridHeight: 30
-  numberOfRooms: 3
+  gridWidth: 40
+  gridHeight: 40
+  numberOfRooms: 5
   buffer: 3
   tileSize: 2
   grid: {fileID: 372436545}
@@ -651,8 +651,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.85882354, g: 0.8117647, b: 0.6862745, a: 1}
-  m_Intensity: 2.5
-  m_Range: 10
+  m_Intensity: 2
+  m_Range: 14
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

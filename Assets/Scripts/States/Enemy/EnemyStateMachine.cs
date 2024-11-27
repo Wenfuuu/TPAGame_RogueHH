@@ -53,7 +53,7 @@ public class EnemyStateMachine : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("ready atk: " + _isNearPlayer);
+        //Debug.Log("ready atk: " + _isNearPlayer);
         // jika dkt player jadi aggro & ngejar
         CheckPlayer();
         CheckReadyToAttack();
@@ -134,13 +134,49 @@ public class EnemyStateMachine : MonoBehaviour
         if (dest.isWalkable)
         {
             path = pathfinding.FindPath(transform.position, targetPosition);
+            Debug.Log("path count to player: " + path.Count);
 
             if (path != null && path.Count > 1)// klo 1 brti uda dkt player jadi skip
             {
                 yield return StartCoroutine(FollowPath());
+            }else if(path.Count == 0)
+            {
+                yield return StartCoroutine(AlternatePath());
             }
         }
         HandleRotation(player.transform.position);
+    }
+
+    IEnumerator AlternatePath()
+    {
+        Vector3 currPos = transform.position;
+        float minDistance = Vector3.Distance(currPos, player.transform.position);
+        Node alternate = null;
+
+        for (int i = -2; i <= 2; i += 2)
+        {
+            for (int j = -2; j <= 2; j += 2)
+            {
+                if (i == 0 && j == 0) continue;
+
+                Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
+                Node temp = pathfinding.grid.NodeFromWorldPoint(checkPos);
+                //Debug.Log("detecting player di: " + checkPos);
+                float dist = Vector3.Distance(checkPos, player.transform.position);
+                if(dist < minDistance && temp.isWalkable)
+                {
+                    minDistance = dist;
+                    alternate = temp;
+                }
+            }
+        }
+
+        if(alternate != null)
+        {
+            path = pathfinding.FindPath(transform.position, alternate.worldPosition);
+            yield return StartCoroutine(FollowPath());
+        }
+        else yield break;
     }
 
     IEnumerator FollowPath()
