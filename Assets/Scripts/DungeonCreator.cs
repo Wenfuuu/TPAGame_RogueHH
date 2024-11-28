@@ -150,7 +150,7 @@ public class DungeonCreator : MonoBehaviour
                 for (int y = startY; y < startY + roomHeight; y++)
                 {
                     Node node = dungeonGrid[x, y];
-                    if (node != null && !enemyTiles.Contains(node) && node.isWalkable && (node != playerTile))
+                    if (node != null && !enemyTiles.Contains(node) && !decoratedTiles.Contains(node) && node.isWalkable && (node != playerTile))
                     {
                         roomTiles.Add(node);
                     }
@@ -296,10 +296,11 @@ public class DungeonCreator : MonoBehaviour
         //Vector2Int initialRoomCenter = new Vector2Int(2, 3); //start at 0, 0, 0
         //PlaceRoom(initialRoomCenter, 5, 7);
         //roomCenters.Add(initialRoomCenter);
-        int width = 5;
-        int height = 7;
+        int []size = { 5, 7, 9 };
         for (int i = 0; i < numberOfRooms; i++)
         {
+            int width = size[Random.Range(0, size.Length)];
+            int height = size[Random.Range(0, size.Length)];
             bool roomPlaced = false;
 
             while (!roomPlaced)
