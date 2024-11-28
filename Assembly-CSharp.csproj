@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\AStar.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\HitType.cs" />
     <Compile Include="Assets\Scripts\Commands\ICommand.cs" />
+    <Compile Include="Assets\Scripts\UI\EnemyCountController.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\BaseActionHandler.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Extensions\AnimatorExtensions.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\DiveRoll.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\IgnoredCollider.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\CoroutineQueue.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyFactory.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerDamageable.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyDungeon\Demo Scenes\ScreenshotMaker.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerIdleState.cs" />
@@ -185,7 +187,6 @@
     <Compile Include="Assets\Scripts\UI\HPController.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyStateFactory.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperGround.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     private HashSet<EnemyStateMachine> aggroEnemies = new HashSet<EnemyStateMachine>();
     private PlayerStateMachine player;
 
+    public IntEventChannel UpdateEnemyCount;
 
     void Awake()
     {
@@ -29,6 +30,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    //private void Start()
+    //{
+    //    UpdateEnemyCount.RaiseEvent(enemies.Count);
+    //}
 
     private void Update()
     {
@@ -121,12 +127,20 @@ public class GameManager : MonoBehaviour
     {
         enemies.Remove(enemy);
         aggroEnemies.Remove(enemy);
+        ////atur UI
+        //UpdateEnemyCount.RaiseEvent(enemies.Count);
+
         Destroy(enemy.gameObject);
     }
 
     public void EnemyOutOfRange(EnemyStateMachine enemy)
     {
         aggroEnemies.Remove(enemy);
+    }
+
+    public int GetEnemyCount()
+    {
+        return enemies.Count;
     }
 
     public bool CheckAggro()

@@ -18,7 +18,7 @@ public static class EnemyFactory
         int zhenDrop = Mathf.RoundToInt(BaseZhenDrop * multiplier);
         int expDrop = Mathf.RoundToInt(BaseExpDrop * multiplier);
 
-        Debug.Log("enemy with type " + type + " got atk: " + attack);
+        //Debug.Log("enemy with type " + type + " got atk: " + attack);
 
         return new EnemyStats(maxHP, attack, defense, zhenDrop, expDrop);
     }

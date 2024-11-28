@@ -217,7 +217,7 @@ public class PlayerStateMachine : MonoBehaviour
         enemy.GetComponent<EnemyDamageable>().DecreaseHealth(damage);
         //kasi damage popup
         //DamagePopup.Create(40, false, enemy.transform.position);
-        DamagePopUpGenerator.Instance.CreatePopUp(damage, false, enemy.transform.position);
+        DamagePopUpGenerator.Instance.CreatePopUp(damage, true, enemy.transform.position);
         if (enemy.GetComponent<EnemyDamageable>().enemyStats.CurrentHP > 0)
         {
             enemy._animator.SetBool("IsHit", true);
@@ -227,12 +227,18 @@ public class PlayerStateMachine : MonoBehaviour
         }
         else
         {
+            //atur UI
+            manager.UpdateEnemyCount.RaiseEvent(manager.GetEnemyCount() - 1);
+
             enemy._animator.SetBool("IsDead", true);
+            //// set tile to walkable again
+            //Node temp = Grid.Instance.NodeFromWorldPoint(enemy.transform.position);
+            //temp.isWalkable = true;
+            HandleEnemyDrop(enemy);
+            yield return new WaitForSeconds(1.2f);
             // set tile to walkable again
             Node temp = Grid.Instance.NodeFromWorldPoint(enemy.transform.position);
             temp.isWalkable = true;
-            HandleEnemyDrop(enemy);
-            yield return new WaitForSeconds(1.2f);
             HandleEnemyDeath(enemy);
         }
         //Debug.Log("finished hitting enemy");

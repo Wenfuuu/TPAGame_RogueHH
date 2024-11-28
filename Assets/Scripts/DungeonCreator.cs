@@ -30,6 +30,7 @@ public class DungeonCreator : MonoBehaviour
 
     public Node[,] dungeonGrid; // 2D grid representing the dungeon layout
     private List<Vector2Int> roomCenters = new List<Vector2Int>(); // Center positions of rooms
+    private List<Room> rooms = new List<Room>();
 
     private PlayerStateMachine player;
 
@@ -94,6 +95,20 @@ public class DungeonCreator : MonoBehaviour
         GenerateEmptyTiles();
     }
 
+    public class Room
+    {
+        public Vector2Int roomCenter;
+        public int width;
+        public int height;
+
+        public Room(Vector2Int roomCenter, int width, int height)
+        {
+            this.roomCenter = roomCenter;
+            this.width = width;
+            this.height = height;
+        }
+    }
+
     void GenerateEmptyTiles()
     {
         for (int x = 0; x < gridWidth; x++)
@@ -112,117 +127,178 @@ public class DungeonCreator : MonoBehaviour
 
     void SpawnEnemy()
     {
-        List<Vector3> availableTiles = GetAllTileWorldPositions();
-        bool spawned = false;
+        GameManager.Instance.UpdateEnemyCount.RaiseEvent(EnemyCount);
 
-        int count = 0;
-        while (count < EnemyCount)
+        int enemiesPerRoom = EnemyCount / rooms.Count;
+        int remainingEnemies = EnemyCount % rooms.Count;
+
+        foreach (Room room in rooms)
         {
-            spawned = false;
-            float randomValue = Random.Range(0f, 100f);
-            GameObject selectedPrefab;
-            if (randomValue < 50) // 50% chance for enemyPrefab1
+            // Get room dimensions (5x7)
+            int roomWidth = room.width;
+            int roomHeight = room.height;
+
+            // Calculate room bounds
+            int startX = room.roomCenter.x - roomWidth / 2;
+            int startY = room.roomCenter.y - roomHeight / 2;
+
+            // Collect available tiles in the room
+            List<Node> roomTiles = new List<Node>();
+            Node playerTile = grid.NodeFromWorldPoint(player.gameObject.transform.position);
+            for (int x = startX; x < startX + roomWidth; x++)
             {
-                selectedPrefab = EnemyPrefab1;
+                for (int y = startY; y < startY + roomHeight; y++)
+                {
+                    Node node = dungeonGrid[x, y];
+                    if (node != null && !enemyTiles.Contains(node) && node.isWalkable && (node != playerTile))
+                    {
+                        roomTiles.Add(node);
+                    }
+                }
             }
-            else if (randomValue < 80) // 30% chance for enemyPrefab2
+
+            // Determine how many enemies to spawn in this room
+            int enemiesToSpawn = enemiesPerRoom + (remainingEnemies > 0 ? 1 : 0);
+            if (remainingEnemies > 0) remainingEnemies--;
+
+            // Spawn enemies
+            for (int i = 0; i < enemiesToSpawn; i++)
             {
-                selectedPrefab = EnemyPrefab2;
-            }
-            else // 20% chance for enemyPrefab3
-            {
-                selectedPrefab = EnemyPrefab3;
-            }
+                if (roomTiles.Count == 0) break;
 
-            while (!spawned)
-            {
-                int randomIndex = Random.Range(0, availableTiles.Count);
-                //Debug.Log(randomIndex);
-                Vector3 spawnPosition = availableTiles[randomIndex];
-                //Debug.Log(spawnPosition);
+                int randomIndex = Random.Range(0, roomTiles.Count);
+                Node selectedNode = roomTiles[randomIndex];
 
-                Node spawnTile = grid.NodeFromWorldPoint(spawnPosition);
-                Node playerTile = grid.NodeFromWorldPoint(player.gameObject.transform.position);
-                if (!spawnTile.isWalkable || (spawnTile == playerTile) || enemyTiles.Contains(spawnTile)) continue;
+                // Set as occupied
+                enemyTiles.Add(selectedNode);
+                roomTiles.RemoveAt(randomIndex);
 
-                spawned = true;
-                enemyTiles.Add(spawnTile);
-
-                Node unwalk = grid.NodeFromWorldPoint(spawnTile.worldPosition);
+                // Set as unwalkable
+                Node unwalk = grid.NodeFromWorldPoint(selectedNode.worldPosition);
                 if (unwalk != null) unwalk.isWalkable = false;
 
-                spawnPosition.y = 1;
-                Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
-            };
-            count++;
+                // Spawn enemy
+                selectedNode.worldPosition.y = 1;
+                float randomValue = Random.Range(0f, 100f);
+                GameObject selectedPrefab = (randomValue < 50) ? EnemyPrefab1 : (randomValue < 80 ? EnemyPrefab2 : EnemyPrefab3);
+                Instantiate(selectedPrefab, selectedNode.worldPosition, Quaternion.identity);
+            }
         }
+    }
+
+    Vector2Int GetGridPos(Node node)
+    {
+        int a = -1;
+        int b = -1;
+        for (int x = 0; x < gridHeight; x++)
+        {
+            for (int z = 0; z < gridWidth; z++)
+            {
+                if(dungeonGrid[x, z] == node)
+                {
+                    a = x;
+                    b = z;
+                }
+            }
+        }
+        return new Vector2Int(a, b);
+    }
+
+    bool IsBufferClear(Vector2Int tilePos)
+    {
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int z = -1; z <= 1; z++)
+            {
+                if (Mathf.Abs(x) == Mathf.Abs(z)) continue;
+
+                int neighborX = tilePos.x + x;
+                int neighborZ = tilePos.y + z;
+
+                if (neighborX < 0 || neighborZ < 0 || neighborX >= gridWidth || neighborZ >= gridHeight)
+                    continue;
+
+                Node neighborNode = dungeonGrid[neighborX, neighborZ];
+                if (decoratedTiles.Contains(neighborNode))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     void GenerateDecorations()
     {
         //Debug.Log("test");
-        int totalDecorations = Mathf.RoundToInt(totalTiles * 0.1f);
-        int decor = 0;
-        while(decor < totalDecorations)
+        foreach (Room room in rooms)
         {
-            bool checkBuffer = true;
+            // Get room dimensions (5x7)
+            int roomWidth = room.width;
+            int roomHeight = room.height;
 
-            int a = Random.Range(0, gridHeight);
-            int b = Random.Range(0, gridWidth);
+            // Calculate room bounds
+            int startX = room.roomCenter.x - roomWidth / 2;
+            int startY = room.roomCenter.y - roomHeight / 2;
 
-            Node node = dungeonGrid[a, b];
-            if(node != null && !corridors.Contains(node) && !atEntrance.Contains(node) && !decoratedTiles.Contains(node))
+            // Calculate the number of decorations (20% of tiles in the room)
+            int totalRoomTiles = roomWidth * roomHeight;
+            int totalDecorations = Mathf.RoundToInt(totalRoomTiles * 0.2f);
+            Debug.Log("total deco is: " + totalDecorations);
+
+            // Collect available tiles in the room
+            List<Node> roomTiles = new List<Node>();
+            for (int x = startX; x < startX + roomWidth; x++)
             {
-                //cek buffer
-                for (int x = -1; x <= 1; x++)
+                for (int y = startY; y < startY + roomHeight; y++)
                 {
-                    for (int y = -1; y <= 1; y++)
+                    Node node = dungeonGrid[x, y];
+                    if (node != null && !decoratedTiles.Contains(node) && !corridors.Contains(node) && !atEntrance.Contains(node))
                     {
-                        if (Mathf.Abs(x) == Mathf.Abs(y)) continue;
-
-                        int index1 = a + x;
-                        int index2 = b + y;
-                        if (index1 < 0 || index2 < 0 || index1 >= gridWidth || index2 >= gridHeight) continue;
-                        Node temp = dungeonGrid[index1, index2];
-                        //if(temp != null) Debug.Log("temp: " + temp.worldPosition);
-
-                        if(temp != null && decoratedTiles.Contains(temp))
-                        {
-                            //Debug.Log("ngecek di " + node.worldPosition + " neighbor sudah decorated di pos: " + temp.worldPosition);
-                            checkBuffer = false;
-                        }
+                        roomTiles.Add(node);
                     }
-                    if (!checkBuffer) break;
                 }
+            }
 
-                if(checkBuffer)
-                {
-                    // add to list
-                    decoratedTiles.Add(node);
+            // Place decorations randomly in the room
+            for (int i = 0; i < totalDecorations; i++)
+            {
+                if (roomTiles.Count == 0) break;
 
-                    //set to unwalkable
-                    Node unwalk = grid.NodeFromWorldPoint(node.worldPosition);
-                    if (unwalk != null) unwalk.isWalkable = false;
+                int randomIndex = Random.Range(0, roomTiles.Count);
+                Node selectedNode = roomTiles[randomIndex];
 
-                    // spawn decor 
-                    node.worldPosition.y = 1;
-                    float randomRotation = 90f * Random.Range(1, 4);
-                    int randomIndex = Random.Range(0, decorPrefabs.Count);
-                    GameObject decoration = decorPrefabs[randomIndex];
-                    Instantiate(decoration, node.worldPosition, Quaternion.Euler(0, randomRotation, 0));
-                    decor++;
-                }
-            } 
+                //cek buffer
+                //bool checkbuffer = true;
+                Vector2Int currGrid = GetGridPos(selectedNode);
+                bool checkbuffer = IsBufferClear(currGrid);
+                if (!checkbuffer) continue;
+
+                // Set node as decorated
+                decoratedTiles.Add(selectedNode);
+                roomTiles.RemoveAt(randomIndex);
+
+                // Set as unwalkable
+                Node unwalk = grid.NodeFromWorldPoint(selectedNode.worldPosition);
+                if (unwalk != null) unwalk.isWalkable = false;
+
+                // Spawn decoration
+                selectedNode.worldPosition.y = 1;
+                float randomRotation = 90f * Random.Range(1, 4);
+                int randomDecorIndex = Random.Range(0, decorPrefabs.Count);
+                Instantiate(decorPrefabs[randomDecorIndex], selectedNode.worldPosition, Quaternion.Euler(0, randomRotation, 0));
+            }
         }
     }
 
     void GenerateRooms()
     {
-        Vector2Int initialRoomCenter = new Vector2Int(2, 3); //start at 0, 0, 0
-        PlaceRoom(initialRoomCenter, 5, 7);
-        roomCenters.Add(initialRoomCenter);
-
-        for (int i = 1; i < numberOfRooms; i++)
+        //Vector2Int initialRoomCenter = new Vector2Int(2, 3); //start at 0, 0, 0
+        //PlaceRoom(initialRoomCenter, 5, 7);
+        //roomCenters.Add(initialRoomCenter);
+        int width = 5;
+        int height = 7;
+        for (int i = 0; i < numberOfRooms; i++)
         {
             bool roomPlaced = false;
 
@@ -233,10 +309,11 @@ public class DungeonCreator : MonoBehaviour
                     Random.Range(0 + buffer, gridHeight - buffer)
                 );
 
-                if (CanPlaceRoom(roomCenter, 5, 7))
+                if (CanPlaceRoom(roomCenter, width, height))
                 {
-                    PlaceRoom(roomCenter, 5, 7);
+                    PlaceRoom(roomCenter, width, height);
                     roomCenters.Add(roomCenter);
+                    rooms.Add(new Room(roomCenter, width, height));
                     roomPlaced = true;
                 }
             }

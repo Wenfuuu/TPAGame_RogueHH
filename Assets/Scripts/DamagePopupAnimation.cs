@@ -24,7 +24,7 @@ public class DamagePopupAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.color = new Color(1, 1, 1, opacityCurve.Evaluate(time));
+        text.color = new Color(text.color.r, text.color.g, text.color.b, opacityCurve.Evaluate(time));
         if(random == 0) transform.position = origin + new Vector3(0 + heightCurve.Evaluate(time), 1 + heightCurve.Evaluate(time), 0);
         else transform.position = origin + new Vector3(0 - heightCurve.Evaluate(time), 1 + heightCurve.Evaluate(time), 0);
         time += Time.deltaTime;

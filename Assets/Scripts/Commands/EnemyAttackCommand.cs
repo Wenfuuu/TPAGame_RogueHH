@@ -40,6 +40,7 @@ public class EnemyAttackCommand : ICommand
         PlayerDamageable damageable = _enemy.GetPlayer.gameObject.GetComponent<PlayerDamageable>();
         float defense = damageable.playerStats.Defense;
         float defenseFactor = 1f - (defense / (defense + defenseScalingFactor));
-        return Mathf.RoundToInt(80 * defenseFactor);
+        int atk = _enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.Attack;
+        return Mathf.RoundToInt(atk * defenseFactor);
     }
 }
