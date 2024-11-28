@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static BSPTree;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class DungeonCreator : MonoBehaviour
     public GameObject emptyPrefab;
 
     public GameObject EnemyPrefab1;
+    public GameObject EnemyPrefab2;
+    public GameObject EnemyPrefab3;
     public int EnemyCount = 5;
 
     public int gridWidth = 30; // Width of the dungeon grid
@@ -116,6 +119,21 @@ public class DungeonCreator : MonoBehaviour
         while (count < EnemyCount)
         {
             spawned = false;
+            float randomValue = Random.Range(0f, 100f);
+            GameObject selectedPrefab;
+            if (randomValue < 50) // 50% chance for enemyPrefab1
+            {
+                selectedPrefab = EnemyPrefab1;
+            }
+            else if (randomValue < 80) // 30% chance for enemyPrefab2
+            {
+                selectedPrefab = EnemyPrefab2;
+            }
+            else // 20% chance for enemyPrefab3
+            {
+                selectedPrefab = EnemyPrefab3;
+            }
+
             while (!spawned)
             {
                 int randomIndex = Random.Range(0, availableTiles.Count);
@@ -124,13 +142,17 @@ public class DungeonCreator : MonoBehaviour
                 //Debug.Log(spawnPosition);
 
                 Node spawnTile = grid.NodeFromWorldPoint(spawnPosition);
-                Node playerTile = grid.NodeFromWorldPoint(player.transform.position);
-                if (!spawnTile.isWalkable || (spawnTile == playerTile)) continue;
+                Node playerTile = grid.NodeFromWorldPoint(player.gameObject.transform.position);
+                if (!spawnTile.isWalkable || (spawnTile == playerTile) || enemyTiles.Contains(spawnTile)) continue;
 
                 spawned = true;
                 enemyTiles.Add(spawnTile);
+
+                Node unwalk = grid.NodeFromWorldPoint(spawnTile.worldPosition);
+                if (unwalk != null) unwalk.isWalkable = false;
+
                 spawnPosition.y = 1;
-                Instantiate(EnemyPrefab1, spawnPosition, Quaternion.identity);
+                Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
             };
             count++;
         }

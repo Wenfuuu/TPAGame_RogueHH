@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class EnemyStats
 {
     public int MaxHP;
@@ -11,14 +7,14 @@ public class EnemyStats
     public int ZhenDrop;
     public int ExpDrop;
 
-    public EnemyStats()
+    public EnemyStats(int maxHP, int attack, int defense, int zhenDrop, int expDrop)
     {
-        MaxHP = 100;
-        CurrentHP = 100;
-        Attack = 10;
-        Defense = 20;
-        ZhenDrop = 50;
-        ExpDrop = 50;
+        MaxHP = maxHP;
+        CurrentHP = maxHP;
+        Attack = attack;
+        Defense = defense;
+        ZhenDrop = zhenDrop;
+        ExpDrop = expDrop;
     }
 
     public void DecreaseHealth(int damage)

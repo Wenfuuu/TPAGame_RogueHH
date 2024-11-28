@@ -3254,6 +3254,8 @@ MonoBehaviour:
   decorPrefab4: {fileID: 8626509456767278119, guid: d01bbd4ef364ec74b90311a9e524ff1c, type: 3}
   emptyPrefab: {fileID: 3548951532723041536, guid: 71466d5918d81cd4e8e3af6756edf564, type: 3}
   EnemyPrefab1: {fileID: 5807284121954939437, guid: 3f40420569fc2264fbf002cc96afe019, type: 3}
+  EnemyPrefab2: {fileID: 5807284121954939437, guid: ac3103c195260a845ad5a1015e74fc55, type: 3}
+  EnemyPrefab3: {fileID: 5807284121954939437, guid: e6f346190e73b574f9f289d51b4dbb3d, type: 3}
   EnemyCount: 10
   gridWidth: 40
   gridHeight: 40

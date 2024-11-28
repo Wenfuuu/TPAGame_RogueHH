@@ -18,6 +18,8 @@ public class EnemyMoveCommand : ICommand
 
     public IEnumerator ExecuteCoroutine()
     {
+        if (_enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.CurrentHP <= 0) yield break;
+
         yield return _enemy.MoveToPlayer();
     }
 }

@@ -8,10 +8,12 @@ public class EnemyDamageable : MonoBehaviour
     public EnemyStats enemyStats;
     public Slider HPSlider;
 
+    public string Type;
+
     // Start is called before the first frame update
     void Start()
     {
-        enemyStats = new EnemyStats();
+        enemyStats = EnemyFactory.CreateEnemy(Type);
         HPSlider.maxValue = enemyStats.MaxHP;
         HPSlider.value = enemyStats.CurrentHP;
     }

@@ -138,11 +138,12 @@ public class PlayerStateMachine : MonoBehaviour
 
             if (dest.isWalkable && (currPos != targetPos))
             {
+                Vector3 prevPos = transform.position;
                 PlayerMoveCommand moveCommand = new PlayerMoveCommand(this, targetPos);
                 manager.QueueCommand(moveCommand);
 
                 // kalo ada enemy aggro & player brsn gerak
-                if (manager.CheckAggro())
+                if (manager.CheckAggro() && (transform.position != prevPos))
                 {
                     GameManager.isEnemyTurn = true;
                     //Debug.Log("ada enemy aggro");
@@ -158,6 +159,11 @@ public class PlayerStateMachine : MonoBehaviour
         targetPos.x = Mathf.RoundToInt(targetPos.x);
         targetPos.y = Mathf.RoundToInt(targetPos.y);
         targetPos.z = Mathf.RoundToInt(targetPos.z);
+
+        float distance = Vector3.Distance(transform.position, targetPos);
+        Debug.Log("distance to hit: " + distance);
+        if (distance > 2.2f) return;
+
         HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
         foreach (EnemyStateMachine enemy in enemies)
         {
