@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f39a0c7e3c6ab7488e0aab8b0c9f4f8, type: 3}
+  m_Name: PlayerStatsSO
+  m_EditorClassIdentifier: 
+  PlayerLevel: 9
+  MaxHP: 1861
+  CurrentHP: 1861
+  MaxEXP: 279
+  CurrentEXP: 85
+  Attack: 1312
+  Defense: 1312
+  CritRate: 10
+  CritDamage: 100
+  HPLevel: 1
+  AtkLevel: 1
+  DefLevel: 1
+  CRLevel: 1
+  CDLevel: 1
+  Zhen: 0
+  MaxHPMultiplier: 1.764
+  MaxEXPMultiplier: 1.662
+  AtkMultiplier: 1.687
+  DefMultiplier: 1.687

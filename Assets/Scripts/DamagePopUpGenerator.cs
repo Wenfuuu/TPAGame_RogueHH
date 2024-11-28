@@ -13,12 +13,6 @@ public class DamagePopUpGenerator : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void CreatePopUp(int damage, bool isCritical, Vector3 position)
     {
         position.y = 2.75f;

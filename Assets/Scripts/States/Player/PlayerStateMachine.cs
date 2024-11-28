@@ -64,15 +64,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     void Update()
     {
-        //if (_isNearEnemy)
-        //{
-        //    Debug.Log("deket enemy");
-        //}
-        //else
-        //{
-        //    Debug.Log("gak deket enemy");
-        //}
-
         _currentState.UpdateStates();
         manager = GameManager.Instance;
         if(manager.CheckAggro())
@@ -252,12 +243,17 @@ public class PlayerStateMachine : MonoBehaviour
         //Debug.Log("defense: " + defense);
         float defenseFactor = 1f - (defense / (defense + defenseScalingFactor));
         //Debug.Log("def factor: " + defenseFactor);
-        return Mathf.RoundToInt(80 * defenseFactor);
+        int atk = gameObject.GetComponent<PlayerDamageable>().playerStats.Attack;
+        return Mathf.RoundToInt(atk * defenseFactor);
     }
 
     void HandleEnemyDrop(EnemyStateMachine enemy)
     {
+        int zhenDrop = enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.ZhenDrop;
+        int expDrop = enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.ExpDrop;
 
+        gameObject.GetComponent<PlayerEXP>().IncreaseEXP(expDrop);
+        gameObject.GetComponent<PlayerZhen>().IncreaseZhen(zhenDrop);
     }
 
     void HandleEnemyDeath(EnemyStateMachine enemy)
@@ -288,26 +284,6 @@ public class PlayerStateMachine : MonoBehaviour
             }
             if(_isNearEnemy) break;
         }
-
-        //for (int i = -2; i <= 2; i += 2)
-        //{
-        //    for (int j = -2; j <= 2; j += 2)
-        //    {
-        //        if (i == 0 && j == 0) continue;
-        //        if (Mathf.Abs(i) == Mathf.Abs(j)) continue;
-
-        //        HashSet<EnemyStateMachine> enemies = manager.getAggroEnemies();
-        //        foreach(EnemyStateMachine enemy in enemies)
-        //        {
-        //            Vector3 checkPos = new Vector3(currPos.x + i, 1, currPos.z + j);
-        //            if (checkPos == enemy.transform.position)
-        //            {
-        //                _isNearEnemy = true;
-        //            }
-        //        }
-        //    }
-        //    if (_isNearEnemy) break;
-        //}
     }
 
     public void MoveTo(Vector3 targetPosition)

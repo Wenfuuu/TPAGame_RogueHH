@@ -122,7 +122,7 @@ public class EnemyStateMachine : MonoBehaviour
         directionToPlayer.Normalize();
         // Cast a ray from the enemy's position towards the player
         RaycastHit hit;
-        float raycastDistance = 100f; // You can adjust this distance based on the range you want to check
+        float raycastDistance = 200f; // You can adjust this distance based on the range you want to check
 
         // Perform the raycast
         if (Physics.Raycast(currPos, directionToPlayer, out hit, raycastDistance))
@@ -158,7 +158,7 @@ public class EnemyStateMachine : MonoBehaviour
     public IEnumerator AttackPlayer()
     {
         //Debug.Log("attacking player");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         //bikin animasi player gethit
         //player._animator.SetBool("IsHit", true);
     }

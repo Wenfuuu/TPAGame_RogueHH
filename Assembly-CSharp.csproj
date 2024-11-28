@@ -65,6 +65,7 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Knockdown.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\InstantActionHandler.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Demo Elements\Code\CameraController.cs" />
+    <Compile Include="Assets\Scripts\UI\EXPController.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\EmptyContext.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerBaseState.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Extensions\ControllerExtensions.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\CharacterState.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\SimpleStateMachine.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Idle.cs" />
+    <Compile Include="Assets\Scripts\DamagePopupAnimation.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCollision.cs" />
     <Compile Include="Assets\Scripts\Commands\EnemyAttackCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\PlayerMoveCommand.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\BaseActionHandler.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Extensions\AnimatorExtensions.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\DiveRoll.cs" />
+    <Compile Include="Assets\Scripts\States\Enemy\EnemyAlertState.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\PlayerInputController.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\MovementActionHandler.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Move.cs" />
@@ -102,10 +105,11 @@
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\IgnoredCollider.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\CoroutineQueue.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
-    <Compile Include="Assets\Scripts\PlayerDamageable.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerDamageable.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyDungeon\Demo Scenes\ScreenshotMaker.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerIdleState.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\DoubleJump.cs" />
+    <Compile Include="Assets\Scripts\EventChannel\TwoIntEventChannel.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\GetHit.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyIdleState.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\RPGCharacterWeaponController.cs" />
@@ -128,11 +132,16 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\TwoHandedSwordAttack.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Character\Attack.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Null.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\PlayerStatsSO.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyDungeon\Demo Scenes\MouseCamLook.cs" />
+    <Compile Include="Assets\Scripts\EnemyIndicator.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Knockback.cs" />
     <Compile Include="Assets\Scripts\StartMenu.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\IKHands.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\PlayerMachine.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerZhen.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyDamageable.cs" />
+    <Compile Include="Assets\Scripts\NameGenerator.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCollisionType.cs" />
     <Compile Include="Assets\Scripts\MouseInput.cs" />
@@ -143,40 +152,39 @@
     <Compile Include="Assets\Scripts\DungeonCreator.cs" />
     <Compile Include="Assets\Scripts\Grid.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\BSPTree.cs" />
+    <Compile Include="Assets\Scripts\UI\ZhenController.cs" />
     <Compile Include="Assets\Scripts\Commands\EnemyMoveCommand.cs" />
+    <Compile Include="Assets\Scripts\Billboard.cs" />
+    <Compile Include="Assets\Scripts\DamagePopUpGenerator.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Demo Elements\Code\NPC.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\UnarmedAttack.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Fall.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCollider.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\HitContext.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerEXP.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\AnimationParameters.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerAttackState.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\PlayerCamera.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\DebugDraw.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Character\SlowTime.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Navigation.cs" />
+    <Compile Include="Assets\Scripts\UI\LevelController.cs" />
+    <Compile Include="Assets\Scripts\EnemyStats.cs" />
     <Compile Include="Assets\Scripts\Commands\TurnInvoker.cs" />
     <Compile Include="Assets\Idle MoCap\DemoScene\idle_mocap_follow_player.cs" />
+    <Compile Include="Assets\Scripts\Commands\EnemyLOSCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\GameManager.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\TileCollision.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyBaseState.cs" />
     <Compile Include="Assets\Scripts\LightController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerLevel.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyAggroState.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyRunState.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCharacterController.cs" />
+    <Compile Include="Assets\Scripts\UI\HPController.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyStateFactory.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperGround.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyDamageable.cs" />
-    <Compile Include="Assets\Scripts\Billboard.cs" />
-    <Compile Include="Assets\Scripts\NameGenerator.cs" />
-    <Compile Include="Assets\Scripts\EnemyStats.cs" />
-    <Compile Include="Assets\Scripts\DamagePopUpGenerator.cs" />
-    <Compile Include="Assets\Scripts\DamagePopupAnimation.cs" />
-    <Compile Include="Assets\FollowMotion.cs" />
-    <Compile Include="Assets\Scripts\Commands\EnemyLOSCommand.cs" />
-    <Compile Include="Assets\Scripts\States\Enemy\EnemyAlertState.cs" />
-    <Compile Include="Assets\Scripts\EnemyIndicator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -1029,6 +1037,10 @@
     </Reference>
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.45f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.UI">
