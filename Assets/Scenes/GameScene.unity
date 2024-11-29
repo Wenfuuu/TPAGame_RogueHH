@@ -928,6 +928,7 @@ GameObject:
   - component: {fileID: 182026913}
   - component: {fileID: 182026915}
   - component: {fileID: 182026914}
+  - component: {fileID: 182026916}
   m_Layer: 5
   m_Name: Floor
   m_TagString: Untagged
@@ -994,6 +995,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182026912}
   m_CullTransparentMesh: 1
+--- !u!114 &182026916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182026912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8df7a14966d5224d9e7197c2f2a42f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FloorText: {fileID: 1097194767}
+  UpdateFloorText: {fileID: 11400000, guid: 445ade21f331aca42a166bed4238437d, type: 2}
 --- !u!1 &323210588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,7 +1081,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372436542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 65, y: 0, z: 65}
+  m_LocalPosition: {x: 80, y: 0, z: 80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1102,7 +1117,7 @@ MonoBehaviour:
   walkableMask:
     serializedVersion: 2
     m_Bits: 8
-  gridWorldSize: {x: 132, y: 132}
+  gridWorldSize: {x: 162, y: 162}
   nodeRadius: 1
 --- !u!1 &378122908
 GameObject:
@@ -2070,6 +2085,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStats: {fileID: 11400000, guid: 282fb54935df4fa41b3693c088ff726f, type: 2}
   UpdateZhen: {fileID: 11400000, guid: d07183d92fd932a48bad11402e7cecd3, type: 2}
+--- !u!114 &541550530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541550515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3646bde7deb061d4a83b8ba55a99da2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 11400000, guid: 282fb54935df4fa41b3693c088ff726f, type: 2}
+  UpdateFloorText: {fileID: 11400000, guid: 445ade21f331aca42a166bed4238437d, type: 2}
 --- !u!1 &584298754
 GameObject:
   m_ObjectHideFlags: 0
@@ -3272,10 +3301,6 @@ MonoBehaviour:
   EnemyPrefab1: {fileID: 5807284121954939437, guid: 3f40420569fc2264fbf002cc96afe019, type: 3}
   EnemyPrefab2: {fileID: 5807284121954939437, guid: ac3103c195260a845ad5a1015e74fc55, type: 3}
   EnemyPrefab3: {fileID: 5807284121954939437, guid: e6f346190e73b574f9f289d51b4dbb3d, type: 3}
-  EnemyCount: 30
-  gridWidth: 60
-  gridHeight: 60
-  numberOfRooms: 15
   buffer: 2
   tileSize: 2
   grid: {fileID: 372436545}

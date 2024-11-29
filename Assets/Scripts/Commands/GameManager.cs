@@ -33,14 +33,17 @@ public class GameManager : MonoBehaviour
 
     //private void Start()
     //{
-    //    UpdateEnemyCount.RaiseEvent(enemies.Count);
+    //    UpdateFloorText.RaiseEvent(PlayerStateMachine.Instance.gameObject.GetComponent<PlayerFloor>().playerStats.CurrentFloor);
     //}
 
     private void Update()
     {
         CheckTurn();
+    }
 
-        //Debug.Log("turn count is: " + invoker.GetTurnCount());
+    public void NextFloor()
+    {
+        player.gameObject.GetComponent<PlayerFloor>().IncreaseFloor();
     }
 
     private void CheckTurn()// bakal ngecek skrng turn player / enemies

@@ -25,6 +25,7 @@ public class EnemyAlertState : EnemyBaseState
     {
         if (_context.IsAggro)
         {
+            _context.GetComponent<EnemyIndicator>().OffAlert();
             SwitchStates(_states.Aggro());
         }
         if(!_context.IsAlert)

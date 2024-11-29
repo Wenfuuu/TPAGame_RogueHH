@@ -34,6 +34,7 @@ public class PlayerStatsSO : ScriptableObject
 
     [Header("Progress")]
     public int UnlockedFloor;
+    public int CurrentFloor;
     public bool IsSaved;
 
     public void DecreaseHealth(int damage)
@@ -64,5 +65,12 @@ public class PlayerStatsSO : ScriptableObject
     public void IncreaseZhen(int zhen)
     {
         Zhen += zhen;
+    }
+
+    public void IncreaseFloor()
+    {
+        CurrentFloor++;
+        if(UnlockedFloor < 101 && (UnlockedFloor == CurrentFloor))
+        UnlockedFloor++;
     }
 }

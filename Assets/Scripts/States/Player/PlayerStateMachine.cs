@@ -213,11 +213,18 @@ public class PlayerStateMachine : MonoBehaviour
         //enemy._animator.SetBool("IsHit", true);
         //calculate damage
         int damage = CalculateDamage(enemy);
+        //crit
+        bool crit = false;
+        float critDamage = 100f;
+        int randomVal = Random.Range(1, 101);
+        if (randomVal <= gameObject.GetComponent<PlayerDamageable>().playerStats.CritRate) crit = true;
+        if (crit) critDamage = gameObject.GetComponent<PlayerDamageable>().playerStats.CritDamage;
+        damage = Mathf.RoundToInt(damage * (critDamage / 100f));
         //kasi damage
         enemy.GetComponent<EnemyDamageable>().DecreaseHealth(damage);
         //kasi damage popup
         //DamagePopup.Create(40, false, enemy.transform.position);
-        DamagePopUpGenerator.Instance.CreatePopUp(damage, true, enemy.transform.position);
+        DamagePopUpGenerator.Instance.CreatePopUp(damage, crit, enemy.transform.position);
         if (enemy.GetComponent<EnemyDamageable>().enemyStats.CurrentHP > 0)
         {
             enemy._animator.SetBool("IsHit", true);

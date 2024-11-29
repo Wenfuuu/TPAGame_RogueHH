@@ -113,6 +113,7 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\DoubleJump.cs" />
     <Compile Include="Assets\Scripts\EventChannel\TwoIntEventChannel.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\GetHit.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerFloor.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyIdleState.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\RPGCharacterWeaponController.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyDungeon\Demo Scenes\PlayerMovement.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Assets\Scripts\Commands\GameManager.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\TileCollision.cs" />
+    <Compile Include="Assets\Scripts\UI\FloorController.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyBaseState.cs" />
     <Compile Include="Assets\Scripts\LightController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerLevel.cs" />

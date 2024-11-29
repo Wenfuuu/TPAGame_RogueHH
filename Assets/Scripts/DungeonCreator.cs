@@ -19,11 +19,12 @@ public class DungeonCreator : MonoBehaviour
     public GameObject EnemyPrefab1;
     public GameObject EnemyPrefab2;
     public GameObject EnemyPrefab3;
-    public int EnemyCount = 5;
 
-    public int gridWidth = 30; // Width of the dungeon grid
-    public int gridHeight = 30; // Height of the dungeon grid
-    public int numberOfRooms = 5; // Number of rooms to generate
+    private int EnemyCount;
+    private int gridWidth; // Width of the dungeon grid
+    private int gridHeight; // Height of the dungeon grid
+    private int numberOfRooms; // Number of rooms to generate
+
     public int buffer = 2; // Minimum buffer spacing between rooms
     public float tileSize = 2.0f; // Tile size for world coordinates
     public Grid grid;
@@ -39,7 +40,8 @@ public class DungeonCreator : MonoBehaviour
     private List<Node> decoratedTiles = new List<Node>();
     private List<Node> enemyTiles = new List<Node>();
 
-    private int totalTiles = 0;
+    //private int totalTiles = 0;
+    private int floor;
 
     public List<Vector3> GetAllTileWorldPositions()// untuk spawn player & enemy
     {
@@ -78,7 +80,15 @@ public class DungeonCreator : MonoBehaviour
 
     void Awake()
     {
+        player = PlayerStateMachine.Instance;
+        floor = player.GetComponent<PlayerFloor>().playerStats.CurrentFloor;
+        EnemyCount = 5 + (floor / 4);
+        gridWidth = 40 + (floor / 13 * 5);
+        gridHeight = 40 + (floor / 13 * 5);
+        numberOfRooms = 5 + (floor / 8);
+
         dungeonGrid = new Node[gridWidth, gridHeight];
+
         GenerateRooms();
         ConnectRooms();
         decorPrefabs.Add(decorPrefab1);
@@ -89,7 +99,7 @@ public class DungeonCreator : MonoBehaviour
 
     void Start()
     {
-        player = PlayerStateMachine.Instance;
+        //player = PlayerStateMachine.Instance;
         GenerateDecorations();
         SpawnEnemy();
         GenerateEmptyTiles();
@@ -179,9 +189,36 @@ public class DungeonCreator : MonoBehaviour
 
                 // Spawn enemy
                 selectedNode.worldPosition.y = 1;
+                float commonWeight = Mathf.Max(100 - floor, 10); // Common decreases as floor increases
+                float mediumWeight = Mathf.Max(floor * 1.5f, 10); // Medium increases moderately
+                float eliteWeight = Mathf.Max(floor * 2f - 50, 10); // Elite increases more sharply on higher floors
+
+                // Normalize weights
+                float totalWeight = commonWeight + mediumWeight + eliteWeight;
+                float commonChance = (commonWeight / totalWeight) * 100f;
+                float mediumChance = (mediumWeight / totalWeight) * 100f;
+                float eliteChance = (eliteWeight / totalWeight) * 100f;
+
+                // Determine enemy type
                 float randomValue = Random.Range(0f, 100f);
-                GameObject selectedPrefab = (randomValue < 50) ? EnemyPrefab1 : (randomValue < 80 ? EnemyPrefab2 : EnemyPrefab3);
+                GameObject selectedPrefab;
+                if (randomValue < commonChance)
+                {
+                    selectedPrefab = EnemyPrefab1; // Common enemy
+                }
+                else if (randomValue < commonChance + mediumChance)
+                {
+                    selectedPrefab = EnemyPrefab2; // Medium enemy
+                }
+                else
+                {
+                    selectedPrefab = EnemyPrefab3; // Elite enemy
+                }
+
                 Instantiate(selectedPrefab, selectedNode.worldPosition, Quaternion.identity);
+                //float randomValue = Random.Range(0f, 100f);
+                //GameObject selectedPrefab = (randomValue < 50) ? EnemyPrefab1 : (randomValue < 80 ? EnemyPrefab2 : EnemyPrefab3);
+                //Instantiate(selectedPrefab, selectedNode.worldPosition, Quaternion.identity);
             }
         }
     }
@@ -360,7 +397,7 @@ public class DungeonCreator : MonoBehaviour
                 dungeonGrid[x, y] = new Node(true, position, gridX, gridY); // Mark as occupied
                 Instantiate(roomPrefab, position, Quaternion.identity);
 
-                totalTiles++;
+                //totalTiles++;
             }
         }
     }

@@ -13,9 +13,11 @@ public class EnemyDamageable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyStats = EnemyFactory.CreateEnemy(Type);
+        int floor = PlayerStateMachine.Instance.gameObject.GetComponent<PlayerFloor>().playerStats.CurrentFloor;
+        enemyStats = EnemyFactory.CreateEnemy(Type, floor);
         HPSlider.maxValue = enemyStats.MaxHP;
         HPSlider.value = enemyStats.CurrentHP;
+        Debug.Log("current floor is " + floor);
     }
 
     public void DecreaseHealth(int damage)
