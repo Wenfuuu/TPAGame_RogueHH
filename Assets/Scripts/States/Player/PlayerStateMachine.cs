@@ -73,11 +73,16 @@ public class PlayerStateMachine : MonoBehaviour
 
         //if (_isNearEnemy) Debug.Log("near enemy ready to attack");
 
+        //skill
+
+
         CheckReadyToAttack();
 
         if (Input.GetKeyDown(KeyCode.Space))// skip turn
         {
             Debug.Log("skipping turn");
+            GetComponent<PlayerSkills>().ReduceCooldown();
+            GetComponent<PlayerSkills>().ApplyAllBuff();
             GameManager.isEnemyTurn = true;
         }
 
@@ -146,6 +151,7 @@ public class PlayerStateMachine : MonoBehaviour
                 if (manager.CheckAggro() && (transform.position != prevPos))
                 {
                     GameManager.isEnemyTurn = true;
+                    //GetComponent<PlayerSkills>().ReduceCooldown();
                     //Debug.Log("ada enemy aggro");
                 }
             }
@@ -189,6 +195,8 @@ public class PlayerStateMachine : MonoBehaviour
     IEnumerator HandleAttack(EnemyStateMachine enemy)
     {
         executing = true;
+        GetComponent<PlayerSkills>().ReduceCooldown();
+        GetComponent<PlayerSkills>().ApplyAllBuff();
         sword.SetActive(true);
         yield return StartCoroutine(HitEnemy(enemy));
         sword.SetActive(false);
@@ -200,6 +208,7 @@ public class PlayerStateMachine : MonoBehaviour
         //// Switch to the enemy turn after the attack finishes
         //Debug.Log("Attack finished. Switching to enemy turn.");
         GameManager.isEnemyTurn = true;
+        //GetComponent<PlayerSkills>().ReduceCooldown();
     }
 
     IEnumerator HitEnemy(EnemyStateMachine enemy)
@@ -218,8 +227,11 @@ public class PlayerStateMachine : MonoBehaviour
         float critDamage = 100f;
         int randomVal = Random.Range(1, 101);
         if (randomVal <= gameObject.GetComponent<PlayerDamageable>().playerStats.CritRate) crit = true;
-        if (crit) critDamage = gameObject.GetComponent<PlayerDamageable>().playerStats.CritDamage;
-        damage = Mathf.RoundToInt(damage * (critDamage / 100f));
+        if (crit)
+        {
+            critDamage = gameObject.GetComponent<PlayerDamageable>().playerStats.CritDamage;
+            damage += Mathf.RoundToInt(damage * (critDamage / 100f));
+        }
         //kasi damage
         enemy.GetComponent<EnemyDamageable>().DecreaseHealth(damage);
         //kasi damage popup
@@ -358,6 +370,8 @@ public class PlayerStateMachine : MonoBehaviour
                 yield return null;
             }
 
+            GetComponent<PlayerSkills>().ReduceCooldown();
+            GetComponent<PlayerSkills>().ApplyAllBuff();
             currentTargetIndex++;
 
             if (_inBattle) break;

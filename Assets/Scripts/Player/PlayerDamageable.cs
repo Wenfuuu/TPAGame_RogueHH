@@ -17,6 +17,13 @@ public class PlayerDamageable : MonoBehaviour
         UpdateHPText.RaiseEvent(playerStats.CurrentHP, playerStats.MaxHP);
     }
 
+    public void IncreaseHealth(int heal)
+    {
+        playerStats.IncreaseHealth(heal);
+        UpdateHPPlayer.RaiseEvent(playerStats.CurrentHP);
+        UpdateHPText.RaiseEvent(playerStats.CurrentHP, playerStats.MaxHP);
+    }
+
     public void DecreaseHealth(int damage)
     {
         playerStats.DecreaseHealth(damage);

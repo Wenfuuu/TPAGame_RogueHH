@@ -247,7 +247,7 @@ public class DungeonCreator : MonoBehaviour
         {
             for (int z = -1; z <= 1; z++)
             {
-                if (Mathf.Abs(x) == Mathf.Abs(z)) continue;
+                //if (Mathf.Abs(x) == Mathf.Abs(z)) continue;
 
                 int neighborX = tilePos.x + x;
                 int neighborZ = tilePos.y + z;

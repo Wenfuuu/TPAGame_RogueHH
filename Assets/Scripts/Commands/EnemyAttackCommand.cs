@@ -31,9 +31,11 @@ public class EnemyAttackCommand : ICommand
         float critDamage = 100f;
         int randomVal = Random.Range(1, 101);
         if (randomVal <= _enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.CritRate) crit = true;
-        if (crit) critDamage = _enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.CritDamage;
-        damage = Mathf.RoundToInt(damage * (critDamage/100f));
-
+        if (crit)
+        {
+            critDamage = _enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.CritDamage;
+            damage += Mathf.RoundToInt(damage * (critDamage / 100f));
+        }
         _enemy.GetPlayer.gameObject.GetComponent<PlayerDamageable>().DecreaseHealth(damage);
 
         DamagePopUpGenerator.Instance.CreatePopUp(damage, crit, _enemy.GetPlayer.transform.position);

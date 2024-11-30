@@ -37,6 +37,11 @@ public class PlayerStatsSO : ScriptableObject
     public int CurrentFloor;
     public bool IsSaved;
 
+    public void IncreaseHealth(int heal)
+    {
+        CurrentHP += heal;
+    }
+
     public void DecreaseHealth(int damage)
     {
         CurrentHP -= damage;
@@ -58,7 +63,7 @@ public class PlayerStatsSO : ScriptableObject
             MaxHP = Mathf.RoundToInt(MaxHP * MaxHPMultiplier);
             Attack = Mathf.RoundToInt(Attack * AtkMultiplier);
             Defense = Mathf.RoundToInt(Defense * DefMultiplier);
-            CurrentHP = MaxHP;
+            //CurrentHP = MaxHP;
         }
     }
 

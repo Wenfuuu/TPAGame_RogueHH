@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     public static bool isEnemyTurn = false;
     //public static bool isPlayerTurn = true;
-    private bool executing = false;
+    public bool executing = false;
 
     private List<EnemyStateMachine> enemies = new List<EnemyStateMachine>();
     private HashSet<EnemyStateMachine> aggroEnemies = new HashSet<EnemyStateMachine>();

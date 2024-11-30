@@ -23,6 +23,7 @@ public class PlayerEXP : MonoBehaviour
         // level up
         if(playerStats.CurrentEXP >= playerStats.MaxEXP)
         {
+            LevelPopUpGenerator.Instance.CreatePopUp(transform.position);
             gameObject.GetComponent<PlayerLevel>().IncreaseLevel();
             gameObject.GetComponent<PlayerDamageable>().UpdateHealth();
         }

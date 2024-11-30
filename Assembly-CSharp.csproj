@@ -189,6 +189,15 @@
     <Compile Include="Assets\Scripts\UI\HPController.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyStateFactory.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperGround.cs" />
+    <Compile Include="Assets\Scripts\LevelPopUpGenerator.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\SkillSO.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\BuffSkillSO.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerSkills.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\ActiveSkillSO.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\HealSkillSO.cs" />
+    <Compile Include="Assets\Scripts\UI\SkillController.cs" />
+    <Compile Include="Assets\Scripts\EventChannel\BoolEventChannel.cs" />
+    <Compile Include="Assets\Scripts\HealPopUpGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
