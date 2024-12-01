@@ -9,6 +9,18 @@ public abstract class BuffSkillSO : SkillSO
     public bool IsActive = false;
 
     public BoolEventChannel DurationSkill;// only buff
+    public IntEventChannel UpdateDurationText;
+
+    public void OnDuration()
+    {
+        DurationSkill.RaiseEvent(true);
+        UpdateDurationText.RaiseEvent(CurrentDuration);
+    }
+
+    public void OffDuration()
+    {
+        DurationSkill.RaiseEvent(false);
+    }
 
     public abstract void ApplyBuff(GameObject player);
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSkills : MonoBehaviour
@@ -22,20 +23,17 @@ public class PlayerSkills : MonoBehaviour
                 skill.Unlock();
             }
             else skill.Lock();
-        }
-        //cek semua ready
-        foreach (SkillSO skill in skills)
-        {
-            if(skill.CurrentCooldown == 0)
-            {
-                skill.IsReady = true;
-            }
+
+            //bikin semua ready
+            skill.CurrentCooldown = 0;
+            skill.IsReady = true;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        selectedIndex = -1;
         level = gameObject.GetComponent<PlayerDamageable>().playerStats.PlayerLevel;
         foreach (SkillSO skill in skills)
         {
@@ -46,7 +44,11 @@ public class PlayerSkills : MonoBehaviour
             }
             else skill.Lock();
 
-            if (!skill.IsReady) skill.OnCooldown();
+            if (!skill.IsReady)
+            {
+                skill.OnCooldown();
+                if(skill is BuffSkillSO temp && temp.CurrentDuration > -1) temp.OnDuration();
+            }
         }
 
         for (int i = 1; i <= 9; i++)
@@ -77,7 +79,8 @@ public class PlayerSkills : MonoBehaviour
 
         foreach (SkillSO skill in skills)
         {
-            if (skill.CurrentCooldown == 0) break;
+            if (skill.CurrentCooldown == 0) continue;
+
             skill.CurrentCooldown--;
             if(skill.CurrentCooldown == 0)
             {
@@ -99,6 +102,23 @@ public class PlayerSkills : MonoBehaviour
                     temp.Use(gameObject);
                     temp.CurrentDuration--;
                 }
+                if (temp.CurrentDuration <= 0)
+                {
+                    Debug.Log("removing duration");
+                    temp.OffDuration();
+                }
+            }
+        }
+    }
+
+    public void CheckActiveSkills()
+    {
+        foreach(SkillSO skill in skills)
+        {
+            if(skill is ActiveSkillSO temp)
+            {
+                if(temp.IsSelected) temp.Attack(gameObject);
+                else temp.FinishAttack(gameObject);
             }
         }
     }

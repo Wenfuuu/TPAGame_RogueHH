@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "HealSkillSO", menuName = "Skill/Buff Skill/Heal")]
 public class HealSkillSO : BuffSkillSO
 {
-    public GameObject healPrefab;
-
     int healAmount;//10% of player MaxHP
 
     public override void ApplyBuff(GameObject player)
@@ -29,8 +27,10 @@ public class HealSkillSO : BuffSkillSO
         if (CurrentCooldown == 0)
         {
             OnCooldown();
+            OnDuration();
             CurrentCooldown = Cooldown;
             CurrentDuration = Duration;
+            Debug.Log("curr duration jadi " + CurrentDuration);
         }
 
         ApplyBuff(player);
@@ -38,6 +38,7 @@ public class HealSkillSO : BuffSkillSO
         {
             IsActive = false;
             Debug.Log("deactivating heal effect");
+            OffDuration();
             player.GetComponent<PlayerSkills>().healEffect.SetActive(false);
         }
         else

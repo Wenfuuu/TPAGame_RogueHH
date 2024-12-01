@@ -195,9 +195,11 @@
     <Compile Include="Assets\Scripts\Player\PlayerSkills.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\ActiveSkillSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\HealSkillSO.cs" />
-    <Compile Include="Assets\Scripts\UI\SkillController.cs" />
     <Compile Include="Assets\Scripts\EventChannel\BoolEventChannel.cs" />
     <Compile Include="Assets\Scripts\HealPopUpGenerator.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\SlashSkillSO.cs" />
+    <Compile Include="Assets\Scripts\UI\ActiveSkillController.cs" />
+    <Compile Include="Assets\Scripts\UI\BuffSkillController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

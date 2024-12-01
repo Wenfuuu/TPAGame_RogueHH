@@ -4594,7 +4594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathfinding: {fileID: 0}
-  moveSpeed: 4
+  moveSpeed: 3
   _animator: {fileID: 0}
 --- !u!114 &3901268833968151489
 MonoBehaviour:

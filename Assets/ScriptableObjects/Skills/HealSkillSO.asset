@@ -17,7 +17,7 @@ MonoBehaviour:
   UnlockLevel: 3
   IsLocked: 0
   Cooldown: 10
-  CurrentCooldown: 4
+  CurrentCooldown: 3
   IsReady: 0
   LockSkill: {fileID: 11400000, guid: 264e440aa37db37459421b9a5abd253b, type: 2}
   CooldownSkill: {fileID: 11400000, guid: c3caa60297b27004ca52bc9d825ce01e, type: 2}
@@ -25,5 +25,5 @@ MonoBehaviour:
   Duration: 5
   CurrentDuration: -1
   IsActive: 0
-  DurationSkill: {fileID: 0}
-  healPrefab: {fileID: 0}
+  DurationSkill: {fileID: 11400000, guid: 28602689c4ad71940be19bd32ae3c837, type: 2}
+  UpdateDurationText: {fileID: 11400000, guid: a601dc84ac1d73645b71ddcdd15b8fa5, type: 2}

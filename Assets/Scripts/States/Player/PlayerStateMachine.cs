@@ -36,6 +36,7 @@ public class PlayerStateMachine : MonoBehaviour
     private bool _isNearEnemy = false;
 
     public GameObject sword;
+    public GameObject SwordEffect;
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool IsMoving { get { return _isMoving; } }
@@ -197,9 +198,13 @@ public class PlayerStateMachine : MonoBehaviour
         executing = true;
         GetComponent<PlayerSkills>().ReduceCooldown();
         GetComponent<PlayerSkills>().ApplyAllBuff();
+        GetComponent<PlayerSkills>().CheckActiveSkills();
         sword.SetActive(true);
+        //SwordEffect.SetActive(true);
         yield return StartCoroutine(HitEnemy(enemy));
         sword.SetActive(false);
+        //SwordEffect.SetActive(false);
+        GetComponent<PlayerSkills>().CheckActiveSkills();
         executing = false;
         //enemy._animator.SetBool("IsHit", true);
         //yield return new WaitForSeconds(0.3f);

@@ -20,7 +20,7 @@ public abstract class SkillSO : ScriptableObject
     public IntEventChannel UpdateCooldownText;
 
     public abstract void Use(GameObject player);
-    
+
     public void OnCooldown()
     {
         Debug.Log("skill is on cooldown");

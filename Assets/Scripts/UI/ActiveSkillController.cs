@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class SkillController : MonoBehaviour
+public class ActiveSkillController : MonoBehaviour
 {
     public GameObject LockOverlay;
     public GameObject LockedText;
+
     public GameObject CooldownOverlay;
     public GameObject CooldownTextOverlay;
     public TextMeshProUGUI CooldownText;
 
+    public GameObject SelectedOverlay;
+
     public BoolEventChannel LockSkill;
     public BoolEventChannel CooldownSkill;
     public IntEventChannel UpdateCooldownText;
-    public BoolEventChannel DurationSkill;// only buff
-    public BoolEventChannel SelectedSkill;// only active
+    public BoolEventChannel SelectedSkill;// only active (yang oren)
 
     private void OnEnable()
     {
         LockSkill.OnEventRaised += LockSkillOverlay;
         CooldownSkill.OnEventRaised += CooldownSkillOverlay;
         UpdateCooldownText.OnEventRaised += UpdateCooldown;
+        SelectedSkill.OnEventRaised += UpdateSelected;
     }
 
     private void OnDisable()
@@ -29,6 +32,7 @@ public class SkillController : MonoBehaviour
         LockSkill.OnEventRaised -= LockSkillOverlay;
         CooldownSkill.OnEventRaised -= CooldownSkillOverlay;
         UpdateCooldownText.OnEventRaised -= UpdateCooldown;
+        SelectedSkill.OnEventRaised -= UpdateSelected;
     }
 
     private void LockSkillOverlay(bool value)
@@ -46,5 +50,10 @@ public class SkillController : MonoBehaviour
     private void UpdateCooldown(int cooldown)
     {
         CooldownText.text = cooldown.ToString();
+    }
+
+    private void UpdateSelected(bool value)
+    {
+        SelectedOverlay.SetActive(value);
     }
 }
