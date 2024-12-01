@@ -13,6 +13,12 @@ public class SlashSkillSO : ActiveSkillSO
         atkBuff = Mathf.RoundToInt(player.GetComponent<PlayerDamageable>().playerStats.Attack * 0.2f);
         player.GetComponent<PlayerDamageable>().playerStats.Attack += atkBuff;
 
+        // add effect
+        TrailRenderer t = player.GetComponent<PlayerStateMachine>().trail;
+        t.startColor = Color.red;
+        t.endColor = Color.yellow;
+
+        JustUsed = true;
         IsSelected = false;
         OffSelected();
         //OnCooldown();
@@ -22,6 +28,11 @@ public class SlashSkillSO : ActiveSkillSO
     public override void FinishAttack(GameObject player)
     {
         player.GetComponent<PlayerDamageable>().playerStats.Attack -= atkBuff;
+
+        //remove effect
+        TrailRenderer t = player.GetComponent<PlayerStateMachine>().trail;
+        t.startColor = Color.white;
+        t.endColor = Color.gray;
 
         OnCooldown();
         CurrentCooldown = Cooldown;

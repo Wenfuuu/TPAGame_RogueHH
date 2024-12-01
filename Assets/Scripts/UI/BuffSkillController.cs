@@ -17,7 +17,10 @@ public class BuffSkillController : MonoBehaviour
     public GameObject DurationTextOverlay;
     public TextMeshProUGUI DurationText;
 
+    public TextMeshProUGUI DescriptionText;
+
     public BoolEventChannel LockSkill;
+    public DescEventChannel LockDesc;
     public BoolEventChannel CooldownSkill;
     public IntEventChannel UpdateCooldownText;
     public BoolEventChannel DurationSkill;// only buff (yang diatas)
@@ -26,6 +29,7 @@ public class BuffSkillController : MonoBehaviour
     private void OnEnable()
     {
         LockSkill.OnEventRaised += LockSkillOverlay;
+        LockDesc.OnEventRaised += LockSkillDesc;
         CooldownSkill.OnEventRaised += CooldownSkillOverlay;
         UpdateCooldownText.OnEventRaised += UpdateCooldown;
         DurationSkill.OnEventRaised += DurationSkillOverlay;
@@ -35,10 +39,23 @@ public class BuffSkillController : MonoBehaviour
     private void OnDisable()
     {
         LockSkill.OnEventRaised -= LockSkillOverlay;
+        LockDesc.OnEventRaised -= LockSkillDesc;
         CooldownSkill.OnEventRaised -= CooldownSkillOverlay;
         UpdateCooldownText.OnEventRaised -= UpdateCooldown;
         DurationSkill.OnEventRaised -= DurationSkillOverlay;
         UpdateDurationText.OnEventRaised -= UpdateDuration;
+    }
+
+    private void LockSkillDesc(bool value, string desc, int unlocklvl)
+    {
+        if (!value)
+        {
+            DescriptionText.text = desc;
+        }
+        else
+        {
+            DescriptionText.text = $"Unlocked at level {unlocklvl}";
+        }
     }
 
     private void LockSkillOverlay(bool value)

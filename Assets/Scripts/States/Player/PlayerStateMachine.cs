@@ -36,6 +36,7 @@ public class PlayerStateMachine : MonoBehaviour
     private bool _isNearEnemy = false;
 
     public GameObject sword;
+    public TrailRenderer trail;
     public GameObject SwordEffect;
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }

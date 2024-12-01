@@ -17,11 +17,12 @@ MonoBehaviour:
   UnlockLevel: 3
   IsLocked: 0
   Cooldown: 10
-  CurrentCooldown: 3
-  IsReady: 0
+  CurrentCooldown: 0
+  IsReady: 1
   LockSkill: {fileID: 11400000, guid: 264e440aa37db37459421b9a5abd253b, type: 2}
   CooldownSkill: {fileID: 11400000, guid: c3caa60297b27004ca52bc9d825ce01e, type: 2}
   UpdateCooldownText: {fileID: 11400000, guid: 0c1c5bf11bec4bc4c90d3d25d1804abc, type: 2}
+  LockDesc: {fileID: 11400000, guid: f481f62ff9adb184c986e12915c59b73, type: 2}
   Duration: 5
   CurrentDuration: -1
   IsActive: 0

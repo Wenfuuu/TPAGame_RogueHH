@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f39a0c7e3c6ab7488e0aab8b0c9f4f8, type: 3}
   m_Name: PlayerStatsSO
   m_EditorClassIdentifier: 
-  PlayerLevel: 31
-  MaxHP: 25786
-  CurrentHP: 25786
-  MaxEXP: 43830
-  CurrentEXP: 33740
-  Attack: 28286
-  Defense: 5820
+  PlayerLevel: 5
+  MaxHP: 48949
+  CurrentHP: 43564
+  MaxEXP: 33750
+  CurrentEXP: 10050
+  Attack: 335773
+  Defense: 6493
   CritRate: 80
   CritDamage: 150
   HPLevel: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
   DefLevel: 1
   CRLevel: 1
   CDLevel: 1
-  Zhen: 820159
+  Zhen: 1916009
   MaxHPMultiplier: 1.06
   MaxEXPMultiplier: 1.5
   AtkMultiplier: 1.025

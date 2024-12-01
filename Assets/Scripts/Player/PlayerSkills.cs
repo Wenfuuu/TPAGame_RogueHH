@@ -118,7 +118,12 @@ public class PlayerSkills : MonoBehaviour
             if(skill is ActiveSkillSO temp)
             {
                 if(temp.IsSelected) temp.Attack(gameObject);
-                else temp.FinishAttack(gameObject);
+                //else temp.FinishAttack(gameObject);
+                else if (temp.JustUsed)
+                {
+                    temp.FinishAttack(gameObject);
+                    temp.JustUsed = false;
+                }
             }
         }
     }

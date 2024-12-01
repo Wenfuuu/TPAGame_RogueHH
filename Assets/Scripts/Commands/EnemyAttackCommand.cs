@@ -18,7 +18,7 @@ public class EnemyAttackCommand : ICommand
 
     public IEnumerator ExecuteCoroutine()
     {
-        if(_enemy.gameObject.GetComponent<EnemyDamageable>().enemyStats.CurrentHP <= 0) yield break;
+        if(_enemy == null) yield break;
 
         _enemy._animator.SetBool("IsAttacking", true);
         yield return new WaitForSeconds(0.3f);

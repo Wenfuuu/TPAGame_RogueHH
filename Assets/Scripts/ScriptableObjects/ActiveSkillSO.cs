@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class ActiveSkillSO : SkillSO
 {
     public bool IsSelected = false;// active skill
+    public bool JustUsed = false;
 
     public BoolEventChannel SelectedSkill;// only active
 

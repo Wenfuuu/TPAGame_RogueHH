@@ -16,11 +16,13 @@ MonoBehaviour:
   Description: Bash lu pny lanciao a
   UnlockLevel: 4
   IsLocked: 0
-  Cooldown: 5
-  CurrentCooldown: 0
-  IsReady: 1
+  Cooldown: 2
+  CurrentCooldown: 2
+  IsReady: 0
   LockSkill: {fileID: 11400000, guid: ce7f6e38213806743aec67e7d1a93b2d, type: 2}
   CooldownSkill: {fileID: 11400000, guid: 1ef9fe126811de8488c7854f6130c224, type: 2}
   UpdateCooldownText: {fileID: 11400000, guid: a537444b50339cd45a6a824384af3ff0, type: 2}
+  LockDesc: {fileID: 11400000, guid: 66bcdf292424dd2409f6b0bc0ff8d368, type: 2}
   IsSelected: 0
+  JustUsed: 0
   SelectedSkill: {fileID: 11400000, guid: 5d76b54b69a839f4eae8ac4609b49ef8, type: 2}

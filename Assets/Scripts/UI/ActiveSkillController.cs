@@ -14,7 +14,10 @@ public class ActiveSkillController : MonoBehaviour
 
     public GameObject SelectedOverlay;
 
+    public TextMeshProUGUI DescriptionText;
+
     public BoolEventChannel LockSkill;
+    public DescEventChannel LockDesc;
     public BoolEventChannel CooldownSkill;
     public IntEventChannel UpdateCooldownText;
     public BoolEventChannel SelectedSkill;// only active (yang oren)
@@ -22,6 +25,7 @@ public class ActiveSkillController : MonoBehaviour
     private void OnEnable()
     {
         LockSkill.OnEventRaised += LockSkillOverlay;
+        LockDesc.OnEventRaised += LockSkillDesc;
         CooldownSkill.OnEventRaised += CooldownSkillOverlay;
         UpdateCooldownText.OnEventRaised += UpdateCooldown;
         SelectedSkill.OnEventRaised += UpdateSelected;
@@ -30,9 +34,22 @@ public class ActiveSkillController : MonoBehaviour
     private void OnDisable()
     {
         LockSkill.OnEventRaised -= LockSkillOverlay;
+        LockDesc.OnEventRaised -= LockSkillDesc;
         CooldownSkill.OnEventRaised -= CooldownSkillOverlay;
         UpdateCooldownText.OnEventRaised -= UpdateCooldown;
         SelectedSkill.OnEventRaised -= UpdateSelected;
+    }
+
+    private void LockSkillDesc(bool value, string desc, int unlocklvl)
+    {
+        if(!value)
+        {
+            DescriptionText.text = desc;
+        }
+        else
+        {
+            DescriptionText.text = $"Unlocked at level {unlocklvl}";
+        }
     }
 
     private void LockSkillOverlay(bool value)
@@ -56,4 +73,5 @@ public class ActiveSkillController : MonoBehaviour
     {
         SelectedOverlay.SetActive(value);
     }
+
 }

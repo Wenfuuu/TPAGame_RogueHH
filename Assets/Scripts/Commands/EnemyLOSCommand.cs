@@ -6,6 +6,8 @@ public class EnemyLOSCommand : ICommand
 {
     private EnemyStateMachine _enemy;
 
+    public EnemyStateMachine Enemy { get { return _enemy; } }
+
     public EnemyLOSCommand(EnemyStateMachine enemy)
     {
         _enemy = enemy;

@@ -200,6 +200,7 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\SlashSkillSO.cs" />
     <Compile Include="Assets\Scripts\UI\ActiveSkillController.cs" />
     <Compile Include="Assets\Scripts\UI\BuffSkillController.cs" />
+    <Compile Include="Assets\Scripts\EventChannel\DescEventChannel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
