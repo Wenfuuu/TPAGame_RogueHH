@@ -27,6 +27,7 @@ public class PlayerSkills : MonoBehaviour
             //bikin semua ready
             skill.CurrentCooldown = 0;
             skill.IsReady = true;
+            if (skill is BuffSkillSO temp) temp.IsActive = false;
         }
     }
 
@@ -117,10 +118,14 @@ public class PlayerSkills : MonoBehaviour
         {
             if(skill is ActiveSkillSO temp)
             {
-                if(temp.IsSelected) temp.Attack(gameObject);
-                //else temp.FinishAttack(gameObject);
+                if (temp.IsSelected)
+                {
+                    temp.Attack(gameObject);
+                    GetComponent<PlayerStateMachine>().IsUsingSkill = true;
+                }
                 else if (temp.JustUsed)
                 {
+                    GetComponent<PlayerStateMachine>().IsUsingSkill = false;
                     temp.FinishAttack(gameObject);
                     temp.JustUsed = false;
                 }

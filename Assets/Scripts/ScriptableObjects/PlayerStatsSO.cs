@@ -72,10 +72,20 @@ public class PlayerStatsSO : ScriptableObject
         Zhen += zhen;
     }
 
+    public void DecreaseZhen(int zhen)
+    {
+        Zhen -= zhen;
+    }
+
     public void IncreaseFloor()
     {
         CurrentFloor++;
         if(UnlockedFloor < 101 && (UnlockedFloor == CurrentFloor))
         UnlockedFloor++;
+    }
+
+    public void UnlockAllFloor()
+    {
+        UnlockedFloor = 101;
     }
 }

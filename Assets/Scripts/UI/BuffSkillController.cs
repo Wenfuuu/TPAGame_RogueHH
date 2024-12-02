@@ -46,11 +46,11 @@ public class BuffSkillController : MonoBehaviour
         UpdateDurationText.OnEventRaised -= UpdateDuration;
     }
 
-    private void LockSkillDesc(bool value, string desc, int unlocklvl)
+    private void LockSkillDesc(bool value, string name, string desc, int unlocklvl)
     {
         if (!value)
         {
-            DescriptionText.text = desc;
+            DescriptionText.text = name + " - " + desc;
         }
         else
         {

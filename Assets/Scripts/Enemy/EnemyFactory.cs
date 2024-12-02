@@ -12,6 +12,11 @@ public static class EnemyFactory
 
     public static EnemyStats CreateEnemy(string type, int floor)
     {
+        if(type == "Boss")
+        {
+            return new EnemyStats(9999, 9999, 9999, 100, 500, 99999, 99999);
+        }
+
         float multiplier = GetMultiplier(type);
 
         int maxHP = Mathf.RoundToInt(BaseMaxHP * multiplier * floor);

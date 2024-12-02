@@ -133,6 +133,7 @@ public class EnemyStateMachine : MonoBehaviour
             // Check if the ray hits the player
             if (hit.collider.CompareTag("Player"))
             {
+                SFXManager.Instance.PlayRandomSFX(Sounds.Instance.AlertSFX, transform, 1f);
                 _isAggro = true;
                 HandleRotation(player.transform.position);
                 GameManager.Instance.AddAggro(this);
@@ -265,6 +266,7 @@ public class EnemyStateMachine : MonoBehaviour
                 yield return null;
             }
 
+            SFXManager.Instance.PlayRandomSFX(Sounds.Instance.StepSFX, transform, 1f);
             currentTargetIndex++;
         }
 

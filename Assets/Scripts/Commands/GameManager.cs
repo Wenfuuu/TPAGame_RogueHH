@@ -9,11 +9,16 @@ public class GameManager : MonoBehaviour
 
     public static bool isEnemyTurn = false;
     //public static bool isPlayerTurn = true;
-    public bool executing = false;
+    [HideInInspector] public bool executing = false;
+
+    public GameObject GameOver;
+    public GameObject FloorClear;
 
     private List<EnemyStateMachine> enemies = new List<EnemyStateMachine>();
     private HashSet<EnemyStateMachine> aggroEnemies = new HashSet<EnemyStateMachine>();
     private PlayerStateMachine player;
+    private bool dead = false;
+    private bool clear = false;
 
     public IntEventChannel UpdateEnemyCount;
 
@@ -24,6 +29,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
             invoker = new TurnInvoker();
             player = PlayerStateMachine.Instance;
+            GameOver.SetActive(false);
+            FloorClear.SetActive(false);
         }
         else
         {
@@ -38,7 +45,48 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if(player.GetComponent<PlayerDamageable>().playerStats.CurrentHP <= 0)
+        {
+            if (dead) return;
+            dead = true;
+            invoker.ClearCommand();
+            LockPlayerInput(true);
+            StartCoroutine(PlayerDeath());
+            // show gameover
+            //GameOver.SetActive(true);
+        }
+
+        if(GetEnemyCount() == 0)// win and go to next floor
+        {
+            if (clear) return;
+            clear = true;
+            NextFloor();
+            LockPlayerInput(true);
+            // show floor clear
+            FloorClear.SetActive(true);
+        }
+
         CheckTurn();
+    }
+
+    private IEnumerator PlayerDeath()
+    {
+        SFXManager.Instance.PlayRandomSFX(Sounds.Instance.DeathSFX, player.transform, 1f);
+        player._animator.SetBool("IsDead", true);
+        yield return new WaitForSeconds(2f);
+        GameOver.SetActive(true);
+    }
+
+    private void LockPlayerInput(bool locked)
+    {
+        if (player != null)
+        {
+            var controller = player.GetComponent<PlayerStateMachine>();
+            if (controller != null)
+            {
+                controller.enabled = !locked;
+            }
+        }
     }
 
     public void NextFloor()
@@ -130,8 +178,6 @@ public class GameManager : MonoBehaviour
     {
         enemies.Remove(enemy);
         aggroEnemies.Remove(enemy);
-        ////atur UI
-        //UpdateEnemyCount.RaiseEvent(enemies.Count);
 
         Destroy(enemy.gameObject);
     }
@@ -154,5 +200,17 @@ public class GameManager : MonoBehaviour
     public HashSet<EnemyStateMachine> getAggroEnemies()
     {
         return aggroEnemies;
+    }
+
+    public bool CheckBattle()
+    {
+        foreach (EnemyStateMachine enemy in aggroEnemies)
+        {
+            if (enemy.IsAggro)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

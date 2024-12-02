@@ -41,7 +41,7 @@ public abstract class SkillSO : ScriptableObject
         Debug.Log("locking skill");
         IsLocked = true;
         LockSkill.RaiseEvent(true);
-        LockDesc.RaiseEvent(true, Description, UnlockLevel);
+        LockDesc.RaiseEvent(true, Name, Description, UnlockLevel);
     }
 
     public void Unlock()
@@ -49,6 +49,6 @@ public abstract class SkillSO : ScriptableObject
         Debug.Log("unlocking skill");
         IsLocked = false;
         LockSkill.RaiseEvent(false);
-        LockDesc.RaiseEvent(false, Description, UnlockLevel);
+        LockDesc.RaiseEvent(false, Name, Description, UnlockLevel);
     }
 }

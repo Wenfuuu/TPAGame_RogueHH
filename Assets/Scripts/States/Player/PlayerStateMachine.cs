@@ -34,6 +34,7 @@ public class PlayerStateMachine : MonoBehaviour
     private bool _isMoving = false;
     private bool _inBattle = false;
     private bool _isNearEnemy = false;
+    private bool _isUsingSkill = false;
 
     public GameObject sword;
     public TrailRenderer trail;
@@ -43,6 +44,8 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsMoving { get { return _isMoving; } }
     public bool InBattle { get { return _inBattle; } }// untuk batasin gerak 1 tile
     public bool NearEnemy { get { return _isNearEnemy; } }// untuk cek ready to attack
+
+    public bool IsUsingSkill { get { return _isUsingSkill; } set { _isUsingSkill = value; } }//untuk cek sfx
 
     private void Awake()
     {
@@ -105,7 +108,7 @@ public class PlayerStateMachine : MonoBehaviour
                 }
             }
         }
-        else if(Input.mousePosition != null && _isMoving)// highlight 1 tile
+        else if (Input.mousePosition != null && _isMoving)// highlight 1 tile
         {
             ChangeOneColor();
         }
@@ -237,21 +240,31 @@ public class PlayerStateMachine : MonoBehaviour
         {
             critDamage = gameObject.GetComponent<PlayerDamageable>().playerStats.CritDamage;
             damage += Mathf.RoundToInt(damage * (critDamage / 100f));
+            CameraShake.Instance.Shake();
+            SFXManager.Instance.PlayRandomSFX(Sounds.Instance.CriticalSFX, enemy.transform, 1f);
         }
         //kasi damage
         enemy.GetComponent<EnemyDamageable>().DecreaseHealth(damage);
+        //kasi sfx
+        if (_isUsingSkill)
+        {
+            SFXManager.Instance.PlaySFX(Sounds.Instance.BashSFX, enemy.transform, 1f);
+        }
+        else SFXManager.Instance.PlayRandomSFX(Sounds.Instance.SwordSFX, enemy.transform, 1f);
         //kasi damage popup
         //DamagePopup.Create(40, false, enemy.transform.position);
         DamagePopUpGenerator.Instance.CreatePopUp(damage, crit, enemy.transform.position);
         if (enemy.GetComponent<EnemyDamageable>().enemyStats.CurrentHP > 0)
         {
             enemy._animator.SetBool("IsHit", true);
+            SFXManager.Instance.PlayRandomSFX(Sounds.Instance.GruntSFX, enemy.transform, 1f);
             yield return new WaitForSeconds(0.3f);
             enemy._animator.SetBool("IsHit", false);
             yield return new WaitForSeconds(0.1f);
         }
         else
         {
+            SFXManager.Instance.PlayRandomSFX(Sounds.Instance.DeathSFX, enemy.transform, 1f);
             //atur UI
             manager.UpdateEnemyCount.RaiseEvent(manager.GetEnemyCount() - 1);
 
@@ -378,6 +391,7 @@ public class PlayerStateMachine : MonoBehaviour
 
             GetComponent<PlayerSkills>().ReduceCooldown();
             GetComponent<PlayerSkills>().ApplyAllBuff();
+            SFXManager.Instance.PlayRandomSFX(Sounds.Instance.StepSFX, transform, 1f);
             currentTargetIndex++;
 
             if (_inBattle) break;

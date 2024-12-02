@@ -21,6 +21,7 @@ public class EnemyCountController : MonoBehaviour
 
     private void UpdateEnemy(int enemyCount)
     {
+        Debug.Log("updating enemy count");
         string text = $"Enemy left: {enemyCount}";
         EnemyCountText.text = text;
     }

@@ -5,13 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SlashSkillSO", menuName = "Skill/Active Skill/Slash")]
 public class SlashSkillSO : ActiveSkillSO
 {
-    int atkBuff;//increase atk 20%
+    int atkBuff;//increase atk 99%
+    int cdBuff = 99;
 
     public override void Attack(GameObject player)
     {
         // apply effect
-        atkBuff = Mathf.RoundToInt(player.GetComponent<PlayerDamageable>().playerStats.Attack * 0.2f);
+        atkBuff = Mathf.RoundToInt(player.GetComponent<PlayerDamageable>().playerStats.Attack * 0.99f);
         player.GetComponent<PlayerDamageable>().playerStats.Attack += atkBuff;
+        player.GetComponent<PlayerDamageable>().playerStats.CritDamage += cdBuff;
 
         // add effect
         TrailRenderer t = player.GetComponent<PlayerStateMachine>().trail;
@@ -28,6 +30,7 @@ public class SlashSkillSO : ActiveSkillSO
     public override void FinishAttack(GameObject player)
     {
         player.GetComponent<PlayerDamageable>().playerStats.Attack -= atkBuff;
+        player.GetComponent<PlayerDamageable>().playerStats.CritDamage -= cdBuff;
 
         //remove effect
         TrailRenderer t = player.GetComponent<PlayerStateMachine>().trail;

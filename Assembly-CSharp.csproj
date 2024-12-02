@@ -201,6 +201,16 @@
     <Compile Include="Assets\Scripts\UI\ActiveSkillController.cs" />
     <Compile Include="Assets\Scripts\UI\BuffSkillController.cs" />
     <Compile Include="Assets\Scripts\EventChannel\DescEventChannel.cs" />
+    <Compile Include="Assets\Scripts\CameraShake.cs" />
+    <Compile Include="Assets\Scripts\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\BGMManager.cs" />
+    <Compile Include="Assets\Scripts\ButtonTrigger.cs" />
+    <Compile Include="Assets\Scripts\SFXManager.cs" />
+    <Compile Include="Assets\Scripts\Sounds.cs" />
+    <Compile Include="Assets\Scripts\UpgradeMenu.cs" />
+    <Compile Include="Assets\DropdownFiller.cs" />
+    <Compile Include="Assets\Cheatcode.cs" />
+    <Compile Include="Assets\Scripts\EventChannel\EventChannel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

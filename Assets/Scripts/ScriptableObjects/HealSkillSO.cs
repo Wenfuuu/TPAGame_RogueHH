@@ -26,6 +26,7 @@ public class HealSkillSO : BuffSkillSO
 
         if (CurrentCooldown == 0)
         {
+            SFXManager.Instance.PlaySFX(Sounds.Instance.HealSFX, player.transform, 1f);
             OnCooldown();
             OnDuration();
             CurrentCooldown = Cooldown;

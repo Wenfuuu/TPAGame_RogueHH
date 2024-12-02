@@ -19,6 +19,7 @@ public class DungeonCreator : MonoBehaviour
     public GameObject EnemyPrefab1;
     public GameObject EnemyPrefab2;
     public GameObject EnemyPrefab3;
+    public GameObject BossPrefab;
 
     private int EnemyCount;
     private int gridWidth; // Width of the dungeon grid
@@ -82,11 +83,20 @@ public class DungeonCreator : MonoBehaviour
     {
         player = PlayerStateMachine.Instance;
         floor = player.GetComponent<PlayerFloor>().playerStats.CurrentFloor;
-        EnemyCount = 5 + (floor / 4);
-        gridWidth = 40 + (floor / 13 * 5);
-        gridHeight = 40 + (floor / 13 * 5);
-        numberOfRooms = 5 + (floor / 8);
-
+        if(floor == 0)// boss
+        {
+            EnemyCount = 1;
+            gridWidth = 40;
+            gridHeight = 40;
+            numberOfRooms = 1;
+        }
+        else
+        {
+            EnemyCount = 5 + (floor / 4);
+            gridWidth = 40 + (floor / 13 * 5);
+            gridHeight = 40 + (floor / 13 * 5);
+            numberOfRooms = 5 + (floor / 8);
+        }
         dungeonGrid = new Node[gridWidth, gridHeight];
 
         GenerateRooms();
@@ -101,7 +111,12 @@ public class DungeonCreator : MonoBehaviour
     {
         //player = PlayerStateMachine.Instance;
         GenerateDecorations();
-        SpawnEnemy();
+        if(floor == 0)
+        {
+            //spawn boss
+            SpawnBoss();
+        }
+        else SpawnEnemy();
         GenerateEmptyTiles();
     }
 
@@ -131,6 +146,60 @@ public class DungeonCreator : MonoBehaviour
                     Vector3 position = new Vector3(x * tileSize, 1, z * tileSize);
                     Instantiate(emptyPrefab, position, Quaternion.identity);
                 }
+            }
+        }
+    }
+
+    void SpawnBoss()
+    {
+        GameManager.Instance.UpdateEnemyCount.RaiseEvent(EnemyCount);
+
+        foreach (Room room in rooms)
+        {
+            // Get room dimensions (5x7)
+            int roomWidth = room.width;
+            int roomHeight = room.height;
+
+            // Calculate room bounds
+            int startX = room.roomCenter.x - roomWidth / 2;
+            int startY = room.roomCenter.y - roomHeight / 2;
+
+            // Collect available tiles in the room
+            List<Node> roomTiles = new List<Node>();
+            Node playerTile = grid.NodeFromWorldPoint(player.gameObject.transform.position);
+            for (int x = startX; x < startX + roomWidth; x++)
+            {
+                for (int y = startY; y < startY + roomHeight; y++)
+                {
+                    Node node = dungeonGrid[x, y];
+                    if (node != null && !enemyTiles.Contains(node) && !decoratedTiles.Contains(node) && node.isWalkable && (node != playerTile))
+                    {
+                        roomTiles.Add(node);
+                    }
+                }
+            }
+
+            // Determine how many enemies to spawn in this room
+            int enemiesToSpawn = 1;
+            // Spawn enemies
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                if (roomTiles.Count == 0) break;
+
+                int randomIndex = Random.Range(0, roomTiles.Count);
+                Node selectedNode = roomTiles[randomIndex];
+
+                // Set as occupied
+                enemyTiles.Add(selectedNode);
+                roomTiles.RemoveAt(randomIndex);
+
+                // Set as unwalkable
+                Node unwalk = grid.NodeFromWorldPoint(selectedNode.worldPosition);
+                if (unwalk != null) unwalk.isWalkable = false;
+
+                Vector3 temp = selectedNode.worldPosition;
+                temp.y = 2;
+                Instantiate(BossPrefab, temp, Quaternion.identity);
             }
         }
     }
@@ -338,6 +407,13 @@ public class DungeonCreator : MonoBehaviour
         {
             int width = size[Random.Range(0, size.Length)];
             int height = size[Random.Range(0, size.Length)];
+
+            if(floor == 0)
+            {
+                width = 9;
+                height = 9;
+            }
+
             bool roomPlaced = false;
 
             while (!roomPlaced)
