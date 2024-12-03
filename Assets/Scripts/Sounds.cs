@@ -13,6 +13,7 @@ public class Sounds : MonoBehaviour
     public AudioClip[] DeathSFX;
     public AudioClip[] AlertSFX;
     public AudioClip[] StepSFX;
+    public AudioClip[] PurchaseSFX;
     public AudioClip BashSFX;
     public AudioClip HealSFX;
     public AudioClip InventoryOpenSFX;

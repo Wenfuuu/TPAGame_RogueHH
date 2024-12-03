@@ -211,6 +211,8 @@
     <Compile Include="Assets\DropdownFiller.cs" />
     <Compile Include="Assets\Cheatcode.cs" />
     <Compile Include="Assets\Scripts\EventChannel\EventChannel.cs" />
+    <Compile Include="Assets\UpgradeController.cs" />
+    <Compile Include="Assets\Scripts\ScriptableObjects\UpgradeDetailSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

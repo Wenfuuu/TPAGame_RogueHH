@@ -22,20 +22,37 @@ public class PlayerStatsSO : ScriptableObject
     public int DefLevel;
     public int CRLevel;
     public int CDLevel;
+    public int TotalUpgrade;
 
     [Header("Resources")]
     public int Zhen;
 
     [Header("Multiplier")]
-    public float MaxHPMultiplier = 1.764f;
-    public float MaxEXPMultiplier = 1.662f;
-    public float AtkMultiplier = 1.687f;
-    public float DefMultiplier = 1.687f;
+    public float MaxHPMultiplier;
+    public float MaxEXPMultiplier;
+    public float AtkMultiplier;
+    public float DefMultiplier;
 
     [Header("Progress")]
     public int UnlockedFloor;
     public int CurrentFloor;
     public bool IsSaved;
+
+    public void ResetStats()
+    {
+        MaxHP = 20;
+        CurrentHP = MaxHP;
+        Attack = 5;
+        Defense = 5;
+        CritRate = 5;
+        CritDamage = 150;
+        HPLevel = 0;
+        AtkLevel = 0;
+        DefLevel = 0;
+        CRLevel = 0;
+        CDLevel = 0;
+        TotalUpgrade = 0;
+}
 
     public void IncreaseHealth(int heal)
     {

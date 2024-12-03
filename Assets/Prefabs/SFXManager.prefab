@@ -103,6 +103,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 266f92bfe54b9a2478aa8f7953dffa0f, type: 3}
   - {fileID: 8300000, guid: 02bf058961b3b684ab647ad319c95308, type: 3}
   - {fileID: 8300000, guid: d47a7578700b7574fb027bf840ac3ddd, type: 3}
+  PurchaseSFX:
+  - {fileID: 8300000, guid: 65aeee62c48bbab468500280c21b1963, type: 3}
+  - {fileID: 8300000, guid: 86f98f880ea5f99408321b17c61e0c3d, type: 3}
+  - {fileID: 8300000, guid: 7c862e90eceb6c54a9c2d281a97bc5fa, type: 3}
+  - {fileID: 8300000, guid: 906896c1800b7904f8fcbb17e7600a90, type: 3}
   BashSFX: {fileID: 8300000, guid: 3e00ca13970b4564aa77fb5b6d383606, type: 3}
   HealSFX: {fileID: 8300000, guid: c593b0221867b1549a98dcc0089fb133, type: 3}
   InventoryOpenSFX: {fileID: 8300000, guid: 74194e16aaa488e4e809a743591c3063, type: 3}

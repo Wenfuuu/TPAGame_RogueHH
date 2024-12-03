@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2095c5421d66db94a98f8001041415cb, type: 3}
   m_Name: HealSkillSO
   m_EditorClassIdentifier: 
-  Name: Heal
-  Description: Healing for everyone
+  Name: Healing for everyone
+  Description: Heal 10% of your max health every time it's your turn for 5 turns
   UnlockLevel: 3
   IsLocked: 0
   Cooldown: 10
