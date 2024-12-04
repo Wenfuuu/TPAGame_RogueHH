@@ -27,7 +27,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public Animator _animator;
 
-    // States variables
     PlayerBaseState _currentState;
     PlayerStateFactory _states;
 
@@ -58,10 +57,8 @@ public class PlayerStateMachine : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Get animator component
         _animator = GetComponent<Animator>();
 
-        // Setup states
         _states = new PlayerStateFactory(this);
         _currentState = _states.Idle();
         _currentState.EnterState();
@@ -77,10 +74,6 @@ public class PlayerStateMachine : MonoBehaviour
         }else _inBattle = false;
 
         //if (_isNearEnemy) Debug.Log("near enemy ready to attack");
-
-        //skill
-
-
         CheckReadyToAttack();
 
         if (Input.GetKeyDown(KeyCode.Space))// skip turn
@@ -91,7 +84,7 @@ public class PlayerStateMachine : MonoBehaviour
             GameManager.isEnemyTurn = true;
         }
 
-        if (Input.mousePosition != null && !_isMoving)// show highlight path
+        if (Input.mousePosition != null && !_isMoving)// highlight path
         {
             Vector3 startPos = transform.position;
             Vector3 targetPos = GetMapPosition();
@@ -119,9 +112,8 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
         if (GameManager.isEnemyTurn) return;
-        if (Input.GetMouseButtonDown(0) && !_isMoving)// any clickable player action
+        if (Input.GetMouseButtonDown(0) && !_isMoving)
         {
-            //Vector3 startPos = transform.position;
             Vector3 targetPos = GetMapPosition();
 
             if (_isNearEnemy)// kalo lagi deket musuh cek tile yang diklik ada musuh atau tidak
@@ -187,13 +179,10 @@ public class PlayerStateMachine : MonoBehaviour
             if (targetPos == enemyPos)
             {
                 //Debug.Log("hitting enemy");// works tinggal tambahin animasi atk buat player
-                //if (executing) return;
                 HandleRotation(targetPos);
                 StartCoroutine(HandleAttack(enemy));
                 return;
-                //hitEnemy = true;
             }
-            //if (hitEnemy) break;
         }
     }
 
@@ -204,20 +193,12 @@ public class PlayerStateMachine : MonoBehaviour
         GetComponent<PlayerSkills>().ApplyAllBuff();
         GetComponent<PlayerSkills>().CheckActiveSkills();
         sword.SetActive(true);
-        //SwordEffect.SetActive(true);
         yield return StartCoroutine(HitEnemy(enemy));
         sword.SetActive(false);
-        //SwordEffect.SetActive(false);
         GetComponent<PlayerSkills>().CheckActiveSkills();
         executing = false;
-        //enemy._animator.SetBool("IsHit", true);
-        //yield return new WaitForSeconds(0.3f);
-        //enemy._animator.SetBool("IsHit", false);
 
-        //// Switch to the enemy turn after the attack finishes
-        //Debug.Log("Attack finished. Switching to enemy turn.");
         GameManager.isEnemyTurn = true;
-        //GetComponent<PlayerSkills>().ReduceCooldown();
     }
 
     IEnumerator HitEnemy(EnemyStateMachine enemy)
@@ -252,7 +233,6 @@ public class PlayerStateMachine : MonoBehaviour
         }
         else SFXManager.Instance.PlayRandomSFX(Sounds.Instance.SwordSFX, enemy.transform, 1f);
         //kasi damage popup
-        //DamagePopup.Create(40, false, enemy.transform.position);
         DamagePopUpGenerator.Instance.CreatePopUp(damage, crit, enemy.transform.position);
         if (enemy.GetComponent<EnemyDamageable>().enemyStats.CurrentHP > 0)
         {
@@ -270,12 +250,8 @@ public class PlayerStateMachine : MonoBehaviour
 
             enemy._animator.SetBool("IsDead", true);
             enemy.IsDead = true;
-            //// set tile to walkable again
-            //Node temp = Grid.Instance.NodeFromWorldPoint(enemy.transform.position);
-            //temp.isWalkable = true;
             HandleEnemyDrop(enemy);
             yield return new WaitForSeconds(1.2f);
-            // set tile to walkable again
             Node temp = Grid.Instance.NodeFromWorldPoint(enemy.transform.position);
             temp.isWalkable = true;
             HandleEnemyDeath(enemy);
@@ -329,7 +305,7 @@ public class PlayerStateMachine : MonoBehaviour
         {
             float distance = Vector3.Distance(currPos, enemy.transform.position);
 
-            if (distance <= 2.2f) // Adjust the distance threshold as needed (e.g., 2 units)
+            if (distance <= 2.2f)
             {
                 _isNearEnemy = true;
             }
@@ -376,10 +352,8 @@ public class PlayerStateMachine : MonoBehaviour
             Vector3 targetPosition = targetNode.worldPosition;
             targetPosition.y = 1;
 
-            // Calculate the direction needed to move on X and Z
             Vector3 currentPosition = transform.position;
 
-            // handle rotation
             HandleRotation(targetPosition);
 
             float travelPercent = 0f;
@@ -398,7 +372,7 @@ public class PlayerStateMachine : MonoBehaviour
             if (_inBattle) break;
         }
 
-        path.Clear(); // Clear the path once the target is reached
+        path.Clear(); 
         _isMoving = false;
 
         isClicked = false;
@@ -410,7 +384,6 @@ public class PlayerStateMachine : MonoBehaviour
         Vector3 tilePos = GetMapPosition();
         Node tileTarget = pathfinding.grid.NodeFromWorldPoint(tilePos);
 
-        // Reset all materials
         foreach (Node node in pathfinding.grid.grid)
         {
             if (node == null) continue;
@@ -422,7 +395,6 @@ public class PlayerStateMachine : MonoBehaviour
             tile.GetComponentInChildren<Renderer>().material.color = Color.gray;
         }
 
-        // Change one tile
         Collider[] collide = Physics.OverlapSphere(tileTarget.worldPosition, 0.1f);
         foreach (Collider col in collide)
         {
@@ -433,19 +405,17 @@ public class PlayerStateMachine : MonoBehaviour
 
     void ChangeColor()
     {
-        // Reset all materials
         foreach (Node node in pathfinding.grid.grid)
         {
             if (node == null) continue;
 
             Collider[] colliders = Physics.OverlapSphere(node.worldPosition, 0.1f);
-            if (colliders.Length == 0) continue; // Skip if no colliders are found.
+            if (colliders.Length == 0) continue;
 
             GameObject tile = colliders[0].gameObject;
             tile.GetComponentInChildren<Renderer>().material.color = Color.gray;
         }
 
-        // Change material for the path
         foreach (Node node in highlightPath)
         {
             Collider[] colliders = Physics.OverlapSphere(node.worldPosition, 0.1f);

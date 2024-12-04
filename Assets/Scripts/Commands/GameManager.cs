@@ -38,11 +38,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //private void Start()
-    //{
-    //    UpdateFloorText.RaiseEvent(PlayerStateMachine.Instance.gameObject.GetComponent<PlayerFloor>().playerStats.CurrentFloor);
-    //}
-
     private void Update()
     {
         if(player.GetComponent<PlayerDamageable>().playerStats.CurrentHP <= 0)
@@ -96,20 +91,11 @@ public class GameManager : MonoBehaviour
 
     private void CheckTurn()// bakal ngecek skrng turn player / enemies
     {
-        //if(isEnemyTurn)
-        //{
-        //    Debug.Log("turn enemy");
-        //}
-        //else
-        //{
-        //    Debug.Log("turn player");
-        //}
         if (!isEnemyTurn) return;
 
         if (!player.IsMoving && isEnemyTurn)// kalo player ga gerak & lagi turn enemy
         {
             if (executing) return;
-            //StartEnemyTurn();// masukin semua command enemy ke invoker
             AddEnemyCommand();
             StartCoroutine(StartEnemyTurn());
         }
@@ -149,7 +135,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartEnemyTurn()
     {
         //Debug.Log("turn count is: " + invoker.GetTurnCount());
-        // Execute all enemy commands sequentially
         yield return invoker.ExecuteAllCoroutines();
 
         executing = false;

@@ -22,7 +22,6 @@ public class EnemyStateMachine : MonoBehaviour
 
     public Animator _animator;
 
-    // States variables
     EnemyBaseState _currentState;
     EnemyStateFactory _states;
 
@@ -45,10 +44,8 @@ public class EnemyStateMachine : MonoBehaviour
         player = PlayerStateMachine.Instance;
         pathfinding = PathFinding.Instance;
 
-        // Get animator component
         _animator = GetComponent<Animator>();
 
-        // Setup states
         _states = new EnemyStateFactory(this);
         _currentState = _states.Idle();
         _currentState.EnterState();
@@ -73,8 +70,7 @@ public class EnemyStateMachine : MonoBehaviour
         Vector3 currPos = transform.position;
         float distance = Vector3.Distance(currPos, player.transform.position);
 
-        // Set _isNearPlayer to true if the enemy is within range to attack
-        if (distance <= 2.2f) // Adjust the distance threshold as needed (e.g., 2 units)
+        if (distance <= 2.2f)
         {
             _isNearPlayer = true;
             HandleRotation(player.transform.position);
@@ -101,7 +97,6 @@ public class EnemyStateMachine : MonoBehaviour
             GameManager.Instance.EnemyOutOfRange(this);
         }
 
-        // Set _isNearPlayer to true if the enemy is within range to attack
         //if (distance <= 4.6f) // Adjust the distance threshold as needed (e.g., 2 units)
         //{
         //    _isAggro = true;
@@ -118,21 +113,17 @@ public class EnemyStateMachine : MonoBehaviour
         currPos.y = 2;
         Vector3 playerPos = player.transform.position;
 
-        // Calculate direction from enemy to player
         Vector3 directionToPlayer = (playerPos - currPos);
         directionToPlayer.y = 0;
         directionToPlayer.Normalize();
-        // Cast a ray from the enemy's position towards the player
         RaycastHit hit;
-        float raycastDistance = 200f; // You can adjust this distance based on the range you want to check
+        float raycastDistance = 200f;
 
-        // Perform the raycast
         if (Physics.Raycast(currPos, directionToPlayer, out hit, raycastDistance))
         {
             Debug.DrawRay(currPos, directionToPlayer, Color.red);
             Debug.Log(hit.collider.name);
 
-            // Check if the ray hits the player
             if (hit.collider.CompareTag("Player"))
             {
                 SFXManager.Instance.PlayRandomSFX(Sounds.Instance.AlertSFX, transform, 1f);
@@ -272,7 +263,7 @@ public class EnemyStateMachine : MonoBehaviour
             currentTargetIndex++;
         }
 
-        path.Clear(); // Clear the path once the target is reached
+        path.Clear();
         _isMoving = false;
     }
 

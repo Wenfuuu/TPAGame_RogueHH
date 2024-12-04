@@ -71,6 +71,10 @@ public class PlayerStatsSO : ScriptableObject
         UnlockedFloor = 1;
     }
 
+    public void ResetHP(){
+        CurrentHP = MaxHP;
+    }
+
     public void IncreaseHealth(int heal)
     {
         CurrentHP += heal;
@@ -97,6 +101,8 @@ public class PlayerStatsSO : ScriptableObject
             MaxHP = Mathf.RoundToInt(MaxHP * MaxHPMultiplier);
             Attack = Mathf.RoundToInt(Attack * AtkMultiplier);
             Defense = Mathf.RoundToInt(Defense * DefMultiplier);
+            CritRate += 5;
+            CritDamage += 5;
             //CurrentHP = MaxHP;
         }
     }

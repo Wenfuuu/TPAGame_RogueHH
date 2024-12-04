@@ -6,8 +6,6 @@ using static BSPTree;
 public class DungeonCreator : MonoBehaviour
 {
     [Header("Dungeon Settings")]
-    //public GameObject roomPrefab; // Prefab for a single room
-    //public GameObject corridorPrefab; // Prefab for a corridor
     public GameObject[] tilesPrefab;
 
     private List<GameObject> decorPrefabs = new List<GameObject>();
@@ -23,16 +21,16 @@ public class DungeonCreator : MonoBehaviour
     public GameObject BossPrefab;
 
     private int EnemyCount;
-    private int gridWidth; // Width of the dungeon grid
-    private int gridHeight; // Height of the dungeon grid
-    private int numberOfRooms; // Number of rooms to generate
+    private int gridWidth;
+    private int gridHeight;
+    private int numberOfRooms;
 
-    public int buffer = 2; // Minimum buffer spacing between rooms
-    public float tileSize = 2.0f; // Tile size for world coordinates
+    public int buffer = 2;
+    public float tileSize = 2.0f;
     public Grid grid;
 
-    public Node[,] dungeonGrid; // 2D grid representing the dungeon layout
-    private List<Vector2Int> roomCenters = new List<Vector2Int>(); // Center positions of rooms
+    public Node[,] dungeonGrid;
+    private List<Vector2Int> roomCenters = new List<Vector2Int>();
     private List<Room> rooms = new List<Room>();
 
     private PlayerStateMachine player;
@@ -110,7 +108,6 @@ public class DungeonCreator : MonoBehaviour
 
     void Start()
     {
-        //player = PlayerStateMachine.Instance;
         GenerateDecorations();
         if(floor == 0)
         {
@@ -157,15 +154,12 @@ public class DungeonCreator : MonoBehaviour
 
         foreach (Room room in rooms)
         {
-            // Get room dimensions (5x7)
             int roomWidth = room.width;
             int roomHeight = room.height;
 
-            // Calculate room bounds
             int startX = room.roomCenter.x - roomWidth / 2;
             int startY = room.roomCenter.y - roomHeight / 2;
 
-            // Collect available tiles in the room
             List<Node> roomTiles = new List<Node>();
             Node playerTile = grid.NodeFromWorldPoint(player.gameObject.transform.position);
             for (int x = startX; x < startX + roomWidth; x++)
@@ -180,9 +174,7 @@ public class DungeonCreator : MonoBehaviour
                 }
             }
 
-            // Determine how many enemies to spawn in this room
             int enemiesToSpawn = 1;
-            // Spawn enemies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 if (roomTiles.Count == 0) break;
@@ -190,11 +182,9 @@ public class DungeonCreator : MonoBehaviour
                 int randomIndex = Random.Range(0, roomTiles.Count);
                 Node selectedNode = roomTiles[randomIndex];
 
-                // Set as occupied
                 enemyTiles.Add(selectedNode);
                 roomTiles.RemoveAt(randomIndex);
 
-                // Set as unwalkable
                 Node unwalk = grid.NodeFromWorldPoint(selectedNode.worldPosition);
                 if (unwalk != null) unwalk.isWalkable = false;
 
@@ -214,15 +204,12 @@ public class DungeonCreator : MonoBehaviour
 
         foreach (Room room in rooms)
         {
-            // Get room dimensions (5x7)
             int roomWidth = room.width;
             int roomHeight = room.height;
 
-            // Calculate room bounds
             int startX = room.roomCenter.x - roomWidth / 2;
             int startY = room.roomCenter.y - roomHeight / 2;
 
-            // Collect available tiles in the room
             List<Node> roomTiles = new List<Node>();
             Node playerTile = grid.NodeFromWorldPoint(player.gameObject.transform.position);
             for (int x = startX; x < startX + roomWidth; x++)
@@ -237,11 +224,9 @@ public class DungeonCreator : MonoBehaviour
                 }
             }
 
-            // Determine how many enemies to spawn in this room
             int enemiesToSpawn = enemiesPerRoom + (remainingEnemies > 0 ? 1 : 0);
             if (remainingEnemies > 0) remainingEnemies--;
 
-            // Spawn enemies
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 if (roomTiles.Count == 0) break;
@@ -249,46 +234,38 @@ public class DungeonCreator : MonoBehaviour
                 int randomIndex = Random.Range(0, roomTiles.Count);
                 Node selectedNode = roomTiles[randomIndex];
 
-                // Set as occupied
                 enemyTiles.Add(selectedNode);
                 roomTiles.RemoveAt(randomIndex);
 
-                // Set as unwalkable
                 Node unwalk = grid.NodeFromWorldPoint(selectedNode.worldPosition);
                 if (unwalk != null) unwalk.isWalkable = false;
 
-                // Spawn enemy
                 selectedNode.worldPosition.y = 1;
-                float commonWeight = Mathf.Max(100 - floor, 10); // Common decreases as floor increases
-                float mediumWeight = Mathf.Max(floor * 1.5f, 10); // Medium increases moderately
-                float eliteWeight = Mathf.Max(floor * 2f - 50, 10); // Elite increases more sharply on higher floors
+                float commonWeight = Mathf.Max(100 - floor, 10); // Common 
+                float mediumWeight = Mathf.Max(floor * 1.5f, 10); // Medium 
+                float eliteWeight = Mathf.Max(floor * 2f - 50, 10); // Elite
 
-                // Normalize weights
                 float totalWeight = commonWeight + mediumWeight + eliteWeight;
                 float commonChance = (commonWeight / totalWeight) * 100f;
                 float mediumChance = (mediumWeight / totalWeight) * 100f;
                 float eliteChance = (eliteWeight / totalWeight) * 100f;
 
-                // Determine enemy type
                 float randomValue = Random.Range(0f, 100f);
                 GameObject selectedPrefab;
                 if (randomValue < commonChance)
                 {
-                    selectedPrefab = EnemyPrefab1; // Common enemy
+                    selectedPrefab = EnemyPrefab1; // Common
                 }
                 else if (randomValue < commonChance + mediumChance)
                 {
-                    selectedPrefab = EnemyPrefab2; // Medium enemy
+                    selectedPrefab = EnemyPrefab2; // Medium 
                 }
                 else
                 {
-                    selectedPrefab = EnemyPrefab3; // Elite enemy
+                    selectedPrefab = EnemyPrefab3; // Elite 
                 }
 
                 Instantiate(selectedPrefab, selectedNode.worldPosition, Quaternion.identity);
-                //float randomValue = Random.Range(0f, 100f);
-                //GameObject selectedPrefab = (randomValue < 50) ? EnemyPrefab1 : (randomValue < 80 ? EnemyPrefab2 : EnemyPrefab3);
-                //Instantiate(selectedPrefab, selectedNode.worldPosition, Quaternion.identity);
             }
         }
     }
@@ -340,20 +317,16 @@ public class DungeonCreator : MonoBehaviour
         //Debug.Log("test");
         foreach (Room room in rooms)
         {
-            // Get room dimensions (5x7)
             int roomWidth = room.width;
             int roomHeight = room.height;
 
-            // Calculate room bounds
             int startX = room.roomCenter.x - roomWidth / 2;
             int startY = room.roomCenter.y - roomHeight / 2;
 
-            // Calculate the number of decorations (20% of tiles in the room)
             int totalRoomTiles = roomWidth * roomHeight;
             int totalDecorations = Mathf.RoundToInt(totalRoomTiles * 0.2f);
             Debug.Log("total deco is: " + totalDecorations);
 
-            // Collect available tiles in the room
             List<Node> roomTiles = new List<Node>();
             for (int x = startX; x < startX + roomWidth; x++)
             {
@@ -367,7 +340,6 @@ public class DungeonCreator : MonoBehaviour
                 }
             }
 
-            // Place decorations randomly in the room
             for (int i = 0; i < totalDecorations; i++)
             {
                 if (roomTiles.Count == 0) break;
@@ -376,20 +348,16 @@ public class DungeonCreator : MonoBehaviour
                 Node selectedNode = roomTiles[randomIndex];
 
                 //cek buffer
-                //bool checkbuffer = true;
                 Vector2Int currGrid = GetGridPos(selectedNode);
                 bool checkbuffer = IsBufferClear(currGrid);
                 if (!checkbuffer) continue;
 
-                // Set node as decorated
                 decoratedTiles.Add(selectedNode);
                 roomTiles.RemoveAt(randomIndex);
 
-                // Set as unwalkable
                 Node unwalk = grid.NodeFromWorldPoint(selectedNode.worldPosition);
                 if (unwalk != null) unwalk.isWalkable = false;
 
-                // Spawn decoration
                 selectedNode.worldPosition.y = 1;
                 float randomRotation = 90f * Random.Range(1, 4);
                 int randomDecorIndex = Random.Range(0, decorPrefabs.Count);
@@ -400,9 +368,6 @@ public class DungeonCreator : MonoBehaviour
 
     void GenerateRooms()
     {
-        //Vector2Int initialRoomCenter = new Vector2Int(2, 3); //start at 0, 0, 0
-        //PlaceRoom(initialRoomCenter, 5, 7);
-        //roomCenters.Add(initialRoomCenter);
         int []size = { 5, 7, 9 };
         for (int i = 0; i < numberOfRooms; i++)
         {
@@ -449,7 +414,7 @@ public class DungeonCreator : MonoBehaviour
         {
             for (int y = startY; y <= endY; y++)
             {
-                if (dungeonGrid[x, y] != null) return false; // Overlaps with existing room
+                if (dungeonGrid[x, y] != null) return false;
             }
         }
 
@@ -465,13 +430,12 @@ public class DungeonCreator : MonoBehaviour
         {
             for (int y = startY; y < startY + height; y++)
             {
-                // Instantiate room tiles
                 Vector3 position = new Vector3(x * tileSize, 0, y * tileSize);
 
                 int gridX = Mathf.RoundToInt(position.x / tileSize);
                 int gridY = Mathf.RoundToInt(position.z / tileSize);
 
-                dungeonGrid[x, y] = new Node(true, position, gridX, gridY); // Mark as occupied
+                dungeonGrid[x, y] = new Node(true, position, gridX, gridY);
                 int idx = Random.Range(0, tilesPrefab.Length);
                 GameObject tile = tilesPrefab[idx];
                 Instantiate(tile, position, Quaternion.identity);
@@ -483,7 +447,6 @@ public class DungeonCreator : MonoBehaviour
 
     void ConnectRooms()
     {
-        // Use Prim's algorithm to connect rooms with corridors
         HashSet<Vector2Int> connected = new HashSet<Vector2Int> { roomCenters[0] };
         HashSet<Vector2Int> unconnected = new HashSet<Vector2Int>(roomCenters);
         unconnected.Remove(roomCenters[0]);
@@ -508,7 +471,6 @@ public class DungeonCreator : MonoBehaviour
                 }
             }
 
-            // Connect the nearest connected and unconnected rooms
             CreateCorridor(nearestConnected, nearestUnconnected);
             connected.Add(nearestUnconnected);
             unconnected.Remove(nearestUnconnected);
@@ -519,14 +481,12 @@ public class DungeonCreator : MonoBehaviour
     {
         Vector2Int current = start;
 
-        // Horizontal corridor
         while (current.x != end.x)
         {
             current.x += (end.x > current.x) ? 1 : -1;
             PlaceCorridorTile(current);
         }
 
-        // Vertical corridor
         while (current.y != end.y)
         {
             current.y += (end.y > current.y) ? 1 : -1;
@@ -538,19 +498,16 @@ public class DungeonCreator : MonoBehaviour
     {
         if (dungeonGrid[position.x, position.y] == null)
         {
-            // Instantiate corridor tile
             Vector3 worldPosition = new Vector3(position.x * tileSize, 0, position.y * tileSize);
 
             int gridX = Mathf.RoundToInt(worldPosition.x / tileSize);
             int gridY = Mathf.RoundToInt(worldPosition.z / tileSize);
 
             dungeonGrid[position.x, position.y] = new Node(true, worldPosition, gridX, gridY);
-            //Instantiate(corridorPrefab, worldPosition, Quaternion.identity);
             int idx = Random.Range(0, tilesPrefab.Length);
             GameObject tile = tilesPrefab[idx];
             Instantiate(tile, worldPosition, Quaternion.identity);
 
-            // add to corridors list
             corridors.Add(dungeonGrid[position.x, position.y]);
 
             CheckAtEntrance(position);

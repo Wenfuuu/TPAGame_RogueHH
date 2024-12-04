@@ -39,7 +39,7 @@ public class UpgradeMenu : MonoBehaviour
             BGMManager.Instance.PlayBGM(sceneBGM);
             BGMManager.Instance.FadeInBGM();
         }
-        playerStats.CurrentHP = playerStats.MaxHP;
+        playerStats.ResetHP();
         //raise event for UI (anggap script ini kyk player di game)
         UpdateZhen.RaiseEvent(playerStats.Zhen);
         UpdateHPLevel.RaiseEvent(playerStats.HPLevel);
@@ -97,6 +97,7 @@ public class UpgradeMenu : MonoBehaviour
         SFXManager.Instance.PlayRandomSFX(Sounds.Instance.PurchaseSFX, transform, 1f);
         //naikin stat + level
         playerStats.MaxHP += 10;
+        playerStats.CurrentHP = playerStats.MaxHP;
         playerStats.HPLevel++;
         playerStats.TotalUpgrade++;
         //raise event untuk UI

@@ -16,7 +16,6 @@ public class TileCollision : MonoBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             //Debug.Log("ada enemy di " + transform.position);
-
             Node temp = gridRef.NodeFromWorldPoint(transform.position);
             gridRef.grid[temp.gridX, temp.gridY].isWalkable = false;
         }

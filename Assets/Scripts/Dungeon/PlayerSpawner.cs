@@ -12,7 +12,6 @@ public class PlayerSpawner : MonoBehaviour
 
     void Start()
     {
-        // Find the DungeonCreator and get available tiles
         dungeonCreator = GetComponent<DungeonCreator>();
         if (dungeonCreator != null)
         {

@@ -57,6 +57,7 @@ public class StartMenu : MonoBehaviour
 
     public void PlayNewGame()
     {
+        SFXManager.Instance.PlaySFX(Sounds.Instance.InventoryCloseSFX, transform, 1f);
         SaveSystem.DeleteSave();
         playerStats.ResetStats();
         LoadScene(1);
@@ -64,20 +65,22 @@ public class StartMenu : MonoBehaviour
 
     public void ShowAlert()
     {
+        SFXManager.Instance.PlaySFX(Sounds.Instance.InventoryOpenSFX, transform, 1f);
         Alert.SetActive(true);
     }
 
     public void HideAlert()
     {
         Alert.SetActive(false);
+        SFXManager.Instance.PlaySFX(Sounds.Instance.InventoryCloseSFX, transform, 1f);
     }
 
     public void NewGame()
     {
-        if (playerStats.IsSaved)
+        if (SaveSystem.SaveFileExists())
         {
             ShowAlert();
-        }else UpgradeMenu();
+        }else PlayNewGame();
     }
 
     public void ExitGame()

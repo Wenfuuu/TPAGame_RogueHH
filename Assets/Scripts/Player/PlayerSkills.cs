@@ -54,9 +54,9 @@ public class PlayerSkills : MonoBehaviour
 
         for (int i = 1; i <= 9; i++)
         {
-            if (Input.GetKeyDown(i.ToString())) // Detect number key press
+            if (Input.GetKeyDown(i.ToString()))
             {
-                selectedIndex = i - 1; // Convert to zero-based index
+                selectedIndex = i - 1;
             }
         }
         if(selectedIndex < 0 || selectedIndex >= skills.Count) return;

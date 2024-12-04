@@ -70,7 +70,7 @@ public class PauseMenu : MonoBehaviour
         var player = GameObject.FindWithTag("Player");
         if (player != null)
         {
-            var controller = player.GetComponent<PlayerStateMachine>(); // Replace with your script name
+            var controller = player.GetComponent<PlayerStateMachine>();
             if (controller != null)
             {
                 controller.enabled = !locked;

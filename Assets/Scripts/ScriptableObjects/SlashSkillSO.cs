@@ -6,7 +6,7 @@ using UnityEngine;
 public class SlashSkillSO : ActiveSkillSO
 {
     int atkBuff;//increase atk 99%
-    int cdBuff = 99;
+    int cdBuff = 99;//increase cd 99%
 
     public override void Attack(GameObject player)
     {

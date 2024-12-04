@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -11,22 +10,44 @@ public class DamagePopupAnimation : MonoBehaviour
     private TextMeshProUGUI text;
     private float time = 0;
     private Vector3 origin;
+    private string poolKey;
 
     private int random;
 
     void Awake()
     {
         text = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        origin = transform.position;
         random = Random.Range(0, 2);
     }
 
-    // Update is called once per frame
+    public void Initialize(Vector3 newOrigin, string key)
+    {
+        origin = newOrigin;
+        poolKey = key; 
+        time = 0;
+        gameObject.SetActive(true); 
+    }
+
     void Update()
     {
+        if (time > opacityCurve.keys[opacityCurve.length - 1].time)
+        {
+            StartCoroutine(ReturnToPool());
+            return;
+        }
+
         text.color = new Color(text.color.r, text.color.g, text.color.b, opacityCurve.Evaluate(time));
-        if(random == 0) transform.position = origin + new Vector3(0 + heightCurve.Evaluate(time), 1 + heightCurve.Evaluate(time), 0);
-        else transform.position = origin + new Vector3(0 - heightCurve.Evaluate(time), 1 + heightCurve.Evaluate(time), 0);
+        if (random == 0)
+            transform.position = origin + new Vector3(0 + heightCurve.Evaluate(time), 1 + heightCurve.Evaluate(time), 0);
+        else
+            transform.position = origin + new Vector3(0 - heightCurve.Evaluate(time), 1 + heightCurve.Evaluate(time), 0);
+
         time += Time.deltaTime;
+    }
+
+    private IEnumerator ReturnToPool()
+    {
+        yield return null; 
+        ObjectPool.EnqueueObject(gameObject, poolKey);
     }
 }
