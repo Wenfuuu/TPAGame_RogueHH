@@ -18,7 +18,7 @@ public class EnemyAttackCommand : ICommand
 
     public IEnumerator ExecuteCoroutine()
     {
-        if(_enemy == null) yield break;
+        if(_enemy.IsDead) yield break;
 
         _enemy._animator.SetBool("IsAttacking", true);
         yield return new WaitForSeconds(0.3f);
@@ -39,7 +39,8 @@ public class EnemyAttackCommand : ICommand
             CameraShake.Instance.Shake();
             SFXManager.Instance.PlayRandomSFX(Sounds.Instance.CriticalSFX, _enemy.GetPlayer.transform, 1f);
         }
-        _enemy.GetPlayer.gameObject.GetComponent<PlayerDamageable>().DecreaseHealth(damage);
+        int mindamage = Mathf.Min(damage, _enemy.GetPlayer.GetComponent<PlayerDamageable>().playerStats.CurrentHP);
+        _enemy.GetPlayer.gameObject.GetComponent<PlayerDamageable>().DecreaseHealth(mindamage);
         SFXManager.Instance.PlayRandomSFX(Sounds.Instance.PunchSFX, _enemy.GetPlayer.transform, 1f);
         DamagePopUpGenerator.Instance.CreatePopUp(damage, crit, _enemy.GetPlayer.transform.position);
         yield return _enemy.AttackPlayer();

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class StartMenu : MonoBehaviour
 {
     public Button ContinueButton;
-    public PlayerStatsSO player;
+    public PlayerStatsSO playerStats;
 
     public GameObject Alert;
 
@@ -22,13 +22,15 @@ public class StartMenu : MonoBehaviour
             BGMManager.Instance.FadeInBGM();
         }
 
-        if (player.IsSaved)
+        if (SaveSystem.SaveFileExists())
         {
             ContinueButton.interactable = true;
+            playerStats.IsSaved = true;
         }
         else
         {
             ContinueButton.interactable = false;
+            playerStats.IsSaved = false;
         }
     }
 
@@ -37,6 +39,8 @@ public class StartMenu : MonoBehaviour
         BGMManager.Instance.FadeOutBGM();
 
         yield return new WaitForSeconds(BGMManager.Instance.fadeDuration);
+        SaveSystem.LoadPlayerStats(playerStats);
+        Debug.Log("Game data loaded!");
 
         SceneManager.LoadScene(buildidx);
     }
@@ -46,9 +50,16 @@ public class StartMenu : MonoBehaviour
         StartCoroutine(TransitionToScene(buildidx));
     }
 
-    public void PlayGame()
+    public void UpgradeMenu()
     {
-       LoadScene(2);
+       LoadScene(1);
+    }
+
+    public void PlayNewGame()
+    {
+        SaveSystem.DeleteSave();
+        playerStats.ResetStats();
+        LoadScene(1);
     }
 
     public void ShowAlert()
@@ -63,10 +74,10 @@ public class StartMenu : MonoBehaviour
 
     public void NewGame()
     {
-        if (player.IsSaved)
+        if (playerStats.IsSaved)
         {
             ShowAlert();
-        }else PlayGame();
+        }else UpgradeMenu();
     }
 
     public void ExitGame()

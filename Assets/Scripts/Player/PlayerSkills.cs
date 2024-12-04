@@ -67,11 +67,20 @@ public class PlayerSkills : MonoBehaviour
             if (skills[selectedIndex] is BuffSkillSO temp)
             {
                 temp.IsActive = true;
+                StartCoroutine(HandleBuff(selectedIndex));
             }
-            skills[selectedIndex].Use(gameObject);
+            else skills[selectedIndex].Use(gameObject);
         }
         //reset
         selectedIndex = -1;
+    }
+
+    IEnumerator HandleBuff(int selectedIndex)
+    {
+        gameObject.GetComponent<PlayerStateMachine>()._animator.SetBool("UsingSkill", true);
+        skills[selectedIndex].Use(gameObject);
+        yield return new WaitForSeconds(0.75f);
+        gameObject.GetComponent<PlayerStateMachine>()._animator.SetBool("UsingSkill", false);
     }
 
     public void ReduceCooldown()

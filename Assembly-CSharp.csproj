@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>UNITY_2021_3_45;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2021_3_45;UNITY_2021_3;UNITY_2021;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;USG0001</NoWarn>
@@ -69,14 +69,14 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\EmptyContext.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerBaseState.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Extensions\ControllerExtensions.cs" />
-    <Compile Include="Assets\Scripts\PathFinding.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\PathFinding.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\AnimatorTrigger.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperStateMachine.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\RPGCharacterMovementController.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\CharacterState.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\SimpleStateMachine.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Idle.cs" />
-    <Compile Include="Assets\Scripts\DamagePopupAnimation.cs" />
+    <Compile Include="Assets\Scripts\Utils\DamagePopupAnimation.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCollision.cs" />
     <Compile Include="Assets\Scripts\Commands\EnemyAttackCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\PlayerMoveCommand.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\KnockdownType.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\CollisionSphere.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperMath.cs" />
-    <Compile Include="Assets\Scripts\AStar.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\AStar.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\HitType.cs" />
     <Compile Include="Assets\Scripts\Commands\ICommand.cs" />
     <Compile Include="Assets\Scripts\UI\EnemyCountController.cs" />
@@ -101,11 +101,11 @@
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\PlayerInputController.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\MovementActionHandler.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Move.cs" />
-    <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\PlayerSpawner.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\DiveRollType.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\IgnoredCollider.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\CoroutineQueue.cs" />
-    <Compile Include="Assets\Scripts\FollowPlayer.cs" />
+    <Compile Include="Assets\Scripts\Utils\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyFactory.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerDamageable.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyDungeon\Demo Scenes\ScreenshotMaker.cs" />
@@ -137,28 +137,27 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Null.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\PlayerStatsSO.cs" />
     <Compile Include="Assets\BrokenVector\LowPolyDungeon\Demo Scenes\MouseCamLook.cs" />
-    <Compile Include="Assets\Scripts\EnemyIndicator.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyIndicator.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Knockback.cs" />
-    <Compile Include="Assets\Scripts\StartMenu.cs" />
+    <Compile Include="Assets\Scripts\Menu\StartMenu.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\IKHands.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\PlayerMachine.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerZhen.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyDamageable.cs" />
-    <Compile Include="Assets\Scripts\NameGenerator.cs" />
+    <Compile Include="Assets\Scripts\Utils\NameGenerator.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperCollisionType.cs" />
-    <Compile Include="Assets\Scripts\MouseInput.cs" />
     <Compile Include="Assets\Scripts\States\Player\PlayerRunState.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyReadyState.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Jump.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Weapon\SwitchWeapon.cs" />
-    <Compile Include="Assets\Scripts\DungeonCreator.cs" />
-    <Compile Include="Assets\Scripts\Grid.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\DungeonCreator.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\Grid.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\BSPTree.cs" />
     <Compile Include="Assets\Scripts\UI\ZhenController.cs" />
     <Compile Include="Assets\Scripts\Commands\EnemyMoveCommand.cs" />
-    <Compile Include="Assets\Scripts\Billboard.cs" />
-    <Compile Include="Assets\Scripts\DamagePopUpGenerator.cs" />
+    <Compile Include="Assets\Scripts\Utils\Billboard.cs" />
+    <Compile Include="Assets\Scripts\Utils\DamagePopUpGenerator.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Demo Elements\Code\NPC.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\UnarmedAttack.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\Fall.cs" />
@@ -166,7 +165,6 @@
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Movement\HitContext.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerEXP.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\AnimationParameters.cs" />
-    <Compile Include="Assets\Scripts\States\Player\PlayerAttackState.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Examples\PlayerCamera.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\DebugDraw.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Actions\Character\SlowTime.cs" />
@@ -177,11 +175,11 @@
     <Compile Include="Assets\Idle MoCap\DemoScene\idle_mocap_follow_player.cs" />
     <Compile Include="Assets\Scripts\Commands\EnemyLOSCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Node.cs" />
-    <Compile Include="Assets\Scripts\TileCollision.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\Node.cs" />
+    <Compile Include="Assets\Scripts\Utils\TileCollision.cs" />
     <Compile Include="Assets\Scripts\UI\FloorController.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyBaseState.cs" />
-    <Compile Include="Assets\Scripts\LightController.cs" />
+    <Compile Include="Assets\Scripts\Save\LightController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerLevel.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyAggroState.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyRunState.cs" />
@@ -189,30 +187,32 @@
     <Compile Include="Assets\Scripts\UI\HPController.cs" />
     <Compile Include="Assets\Scripts\States\Enemy\EnemyStateFactory.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\SuperGround.cs" />
-    <Compile Include="Assets\Scripts\LevelPopUpGenerator.cs" />
+    <Compile Include="Assets\Scripts\Utils\LevelPopUpGenerator.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\SkillSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\BuffSkillSO.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerSkills.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\ActiveSkillSO.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\HealSkillSO.cs" />
     <Compile Include="Assets\Scripts\EventChannel\BoolEventChannel.cs" />
-    <Compile Include="Assets\Scripts\HealPopUpGenerator.cs" />
+    <Compile Include="Assets\Scripts\Utils\HealPopUpGenerator.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\SlashSkillSO.cs" />
     <Compile Include="Assets\Scripts\UI\ActiveSkillController.cs" />
     <Compile Include="Assets\Scripts\UI\BuffSkillController.cs" />
     <Compile Include="Assets\Scripts\EventChannel\DescEventChannel.cs" />
-    <Compile Include="Assets\Scripts\CameraShake.cs" />
-    <Compile Include="Assets\Scripts\PauseMenu.cs" />
-    <Compile Include="Assets\Scripts\BGMManager.cs" />
-    <Compile Include="Assets\Scripts\ButtonTrigger.cs" />
-    <Compile Include="Assets\Scripts\SFXManager.cs" />
-    <Compile Include="Assets\Scripts\Sounds.cs" />
-    <Compile Include="Assets\Scripts\UpgradeMenu.cs" />
-    <Compile Include="Assets\DropdownFiller.cs" />
-    <Compile Include="Assets\Cheatcode.cs" />
+    <Compile Include="Assets\Scripts\Camera\CameraShake.cs" />
+    <Compile Include="Assets\Scripts\Menu\PauseMenu.cs" />
+    <Compile Include="Assets\Scripts\Audio\BGMManager.cs" />
+    <Compile Include="Assets\Scripts\Utils\ButtonTrigger.cs" />
+    <Compile Include="Assets\Scripts\Audio\SFXManager.cs" />
+    <Compile Include="Assets\Scripts\Audio\Sounds.cs" />
+    <Compile Include="Assets\Scripts\Menu\UpgradeMenu.cs" />
+    <Compile Include="Assets\Scripts\Utils\DropdownFiller.cs" />
+    <Compile Include="Assets\Scripts\Utils\Cheatcode.cs" />
     <Compile Include="Assets\Scripts\EventChannel\EventChannel.cs" />
-    <Compile Include="Assets\UpgradeController.cs" />
+    <Compile Include="Assets\Scripts\UI\UpgradeController.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\UpgradeDetailSO.cs" />
+    <Compile Include="Assets\Scripts\Save\SaveSystem.cs" />
+    <Compile Include="Assets\Scripts\Save\PlayerData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -1164,6 +1164,14 @@
     <ProjectReference Include="Unity.EditorCoroutines.Editor.csproj">
       <Project>{AB8D1A81-39C6-0D43-7467-3AFB6F0FFC1D}</Project>
       <Name>Unity.EditorCoroutines.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
+      <Project>{D1D74397-6DC6-280C-C748-03C6F2850FE6}</Project>
+      <Name>Unity.Postprocessing.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
+      <Project>{2C9AC492-23C2-9ABE-FDE8-1748F28A2DA4}</Project>
+      <Name>Unity.Postprocessing.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

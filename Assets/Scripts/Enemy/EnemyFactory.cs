@@ -3,8 +3,8 @@ using UnityEngine;
 public static class EnemyFactory
 {
     private const int BaseMaxHP = 20;
-    private const int BaseAttack = 10;
-    private const int BaseDefense = 10;
+    private const int BaseAttack = 5;
+    private const int BaseDefense = 5;
     private const int BaseCritRate = 20;
     private const int BaseCritDamage = 110;
     private const int BaseZhenDrop = 50;

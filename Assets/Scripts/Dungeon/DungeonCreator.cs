@@ -6,8 +6,9 @@ using static BSPTree;
 public class DungeonCreator : MonoBehaviour
 {
     [Header("Dungeon Settings")]
-    public GameObject roomPrefab; // Prefab for a single room
-    public GameObject corridorPrefab; // Prefab for a corridor
+    //public GameObject roomPrefab; // Prefab for a single room
+    //public GameObject corridorPrefab; // Prefab for a corridor
+    public GameObject[] tilesPrefab;
 
     private List<GameObject> decorPrefabs = new List<GameObject>();
     public GameObject decorPrefab1;
@@ -471,7 +472,9 @@ public class DungeonCreator : MonoBehaviour
                 int gridY = Mathf.RoundToInt(position.z / tileSize);
 
                 dungeonGrid[x, y] = new Node(true, position, gridX, gridY); // Mark as occupied
-                Instantiate(roomPrefab, position, Quaternion.identity);
+                int idx = Random.Range(0, tilesPrefab.Length);
+                GameObject tile = tilesPrefab[idx];
+                Instantiate(tile, position, Quaternion.identity);
 
                 //totalTiles++;
             }
@@ -542,7 +545,10 @@ public class DungeonCreator : MonoBehaviour
             int gridY = Mathf.RoundToInt(worldPosition.z / tileSize);
 
             dungeonGrid[position.x, position.y] = new Node(true, worldPosition, gridX, gridY);
-            Instantiate(corridorPrefab, worldPosition, Quaternion.identity);
+            //Instantiate(corridorPrefab, worldPosition, Quaternion.identity);
+            int idx = Random.Range(0, tilesPrefab.Length);
+            GameObject tile = tilesPrefab[idx];
+            Instantiate(tile, worldPosition, Quaternion.identity);
 
             // add to corridors list
             corridors.Add(dungeonGrid[position.x, position.y]);

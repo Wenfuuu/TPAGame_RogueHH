@@ -30,12 +30,14 @@ public class EnemyStateMachine : MonoBehaviour
     private bool _isAggro = false;
     private bool _isAlert = false;
     private bool _isNearPlayer = false;
+    private bool _isDead = false;
 
     public EnemyBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public bool IsMoving { get { return _isMoving; } }
     public bool IsAggro {  get { return _isAggro; } }
     public bool IsNearPlayer {  get { return _isNearPlayer; } }
     public bool IsAlert { get { return _isAlert; } }
+    public bool IsDead { get { return _isDead; } set { _isDead = value; } }
     public PlayerStateMachine GetPlayer { get { return player; } }
 
     private void Awake()

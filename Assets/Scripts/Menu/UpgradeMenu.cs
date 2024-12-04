@@ -39,7 +39,7 @@ public class UpgradeMenu : MonoBehaviour
             BGMManager.Instance.PlayBGM(sceneBGM);
             BGMManager.Instance.FadeInBGM();
         }
-
+        playerStats.CurrentHP = playerStats.MaxHP;
         //raise event for UI (anggap script ini kyk player di game)
         UpdateZhen.RaiseEvent(playerStats.Zhen);
         UpdateHPLevel.RaiseEvent(playerStats.HPLevel);
@@ -56,6 +56,25 @@ public class UpgradeMenu : MonoBehaviour
         int price = 10 + playerStats.HPLevel * 40 + playerStats.TotalUpgrade * 10;
         UpgradePrice.RaiseEvent(price);
         ShowAlert.RaiseEvent(false);
+    }
+
+    public void SavePriceToSO()
+    {
+        int price;
+        price = 10 + playerStats.HPLevel * 40 + playerStats.TotalUpgrade * 10;
+        playerStats.HPCost = price;
+
+        price = 10 + playerStats.AtkLevel * 40 + playerStats.TotalUpgrade * 10;
+        playerStats.AtkCost = price;
+
+        price = 10 + playerStats.DefLevel * 40 + playerStats.TotalUpgrade * 10;
+        playerStats.DefCost = price;
+
+        price = 10 + playerStats.CRLevel * 40 + playerStats.TotalUpgrade * 10;
+        playerStats.CRCost = price;
+
+        price = 10 + playerStats.CDLevel * 40 + playerStats.TotalUpgrade * 10;
+        playerStats.CDCost = price;
     }
 
     public void UpgradeHP()// klik upgrade button
@@ -85,6 +104,9 @@ public class UpgradeMenu : MonoBehaviour
         UpgradeHPStats.RaiseEvent(playerStats.MaxHP);
         price = 10 + playerStats.HPLevel * 40 + playerStats.TotalUpgrade * 10;
         UpgradePrice.RaiseEvent(price);
+        //set new price to SO
+        //playerStats.HPCost = price;
+        SavePriceToSO();
         //sisa event utk buat Lvl1/45
         UpdateHPLevel.RaiseEvent(playerStats.HPLevel);
     }
@@ -120,6 +142,8 @@ public class UpgradeMenu : MonoBehaviour
         UpgradeAtkStats.RaiseEvent(playerStats.Attack);//ganti
         price = 10 + playerStats.AtkLevel * 40 + playerStats.TotalUpgrade * 10;//ganti
         UpgradePrice.RaiseEvent(price);
+        //playerStats.AtkCost = price;
+        SavePriceToSO();
         UpdateAtkLevel.RaiseEvent(playerStats.AtkLevel);//ganti
     }
 
@@ -154,6 +178,8 @@ public class UpgradeMenu : MonoBehaviour
         UpgradeDefStats.RaiseEvent(playerStats.Defense);//ganti
         price = 10 + playerStats.DefLevel * 40 + playerStats.TotalUpgrade * 10;//ganti
         UpgradePrice.RaiseEvent(price);
+        //playerStats.DefCost = price;
+        SavePriceToSO();
         UpdateDefLevel.RaiseEvent(playerStats.DefLevel);//ganti
     }
 
@@ -188,6 +214,8 @@ public class UpgradeMenu : MonoBehaviour
         UpgradeCRStats.RaiseEvent(playerStats.CritRate);//ganti 2
         price = 10 + playerStats.CRLevel * 40 + playerStats.TotalUpgrade * 10;//ganti
         UpgradePrice.RaiseEvent(price);
+        //playerStats.CRCost = price;
+        SavePriceToSO();
         UpdateCRLevel.RaiseEvent(playerStats.CRLevel);//ganti 2
     }
 
@@ -222,6 +250,8 @@ public class UpgradeMenu : MonoBehaviour
         UpgradeCDStats.RaiseEvent(playerStats.CritDamage);//ganti 2
         price = 10 + playerStats.CDLevel * 40 + playerStats.TotalUpgrade * 10;//ganti
         UpgradePrice.RaiseEvent(price);
+        //playerStats.CDCost = price;
+        SavePriceToSO();
         UpdateCDLevel.RaiseEvent(playerStats.CDLevel);//ganti 2
     }
 
@@ -240,6 +270,7 @@ public class UpgradeMenu : MonoBehaviour
         BGMManager.Instance.FadeOutBGM();
 
         yield return new WaitForSeconds(BGMManager.Instance.fadeDuration);
+        SaveSystem.SavePlayerStats(playerStats);
 
         SceneManager.LoadScene(buildidx);
     }

@@ -24,6 +24,13 @@ public class PlayerStatsSO : ScriptableObject
     public int CDLevel;
     public int TotalUpgrade;
 
+    [Header("Upgrade Cost")]
+    public int HPCost;
+    public int AtkCost;
+    public int DefCost;
+    public int CRCost;
+    public int CDCost;
+
     [Header("Resources")]
     public int Zhen;
 
@@ -40,8 +47,11 @@ public class PlayerStatsSO : ScriptableObject
 
     public void ResetStats()
     {
+        PlayerLevel = 1;
         MaxHP = 20;
         CurrentHP = MaxHP;
+        MaxEXP = 5;
+        CurrentEXP = 0;
         Attack = 5;
         Defense = 5;
         CritRate = 5;
@@ -52,7 +62,14 @@ public class PlayerStatsSO : ScriptableObject
         CRLevel = 0;
         CDLevel = 0;
         TotalUpgrade = 0;
-}
+        HPCost = 10;
+        AtkCost = 10;
+        DefCost = 10;
+        CRCost = 10;
+        CDCost = 10;
+        Zhen = 0;
+        UnlockedFloor = 1;
+    }
 
     public void IncreaseHealth(int heal)
     {

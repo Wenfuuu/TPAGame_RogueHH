@@ -18,7 +18,7 @@ public class EnemyMoveCommand : ICommand
 
     public IEnumerator ExecuteCoroutine()
     {
-        if (_enemy == null) yield break;
+        if (_enemy.IsDead) yield break;
 
         yield return _enemy.MoveToPlayer();
     }

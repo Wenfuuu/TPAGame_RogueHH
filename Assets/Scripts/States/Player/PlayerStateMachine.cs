@@ -269,6 +269,7 @@ public class PlayerStateMachine : MonoBehaviour
             manager.UpdateEnemyCount.RaiseEvent(manager.GetEnemyCount() - 1);
 
             enemy._animator.SetBool("IsDead", true);
+            enemy.IsDead = true;
             //// set tile to walkable again
             //Node temp = Grid.Instance.NodeFromWorldPoint(enemy.transform.position);
             //temp.isWalkable = true;

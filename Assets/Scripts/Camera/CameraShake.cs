@@ -30,10 +30,10 @@ public class CameraShake : MonoBehaviour
             transform.localPosition = initialPos;
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            Shake();
-        }
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    Shake();
+        //}
     }
 
     public void Shake()

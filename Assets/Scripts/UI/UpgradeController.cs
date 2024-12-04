@@ -148,9 +148,7 @@ public class UpgradeController : MonoBehaviour
     {
         if (IsActive) return;
         IsActive = true;
-        //set active all, mskin gameobject dlu
         detail.SetActive(true);
-        //dont have enough jd inactive
         alert.SetActive(false);
     }
 
@@ -168,6 +166,7 @@ public class UpgradeController : MonoBehaviour
 
     private void ShowAtkDetail()
     {
+        SetActive();
         imageIcon.sprite = atkDetail.image;
         title.text = atkDetail.title;
         description.text = atkDetail.description;
@@ -179,6 +178,7 @@ public class UpgradeController : MonoBehaviour
 
     private void ShowDefDetail()
     {
+        SetActive();
         imageIcon.sprite = defDetail.image;
         title.text = defDetail.title;
         description.text = defDetail.description;
@@ -190,6 +190,7 @@ public class UpgradeController : MonoBehaviour
 
     private void ShowCRDetail()
     {
+        SetActive();
         imageIcon.sprite = crDetail.image;
         title.text = crDetail.title;
         description.text = crDetail.description;
@@ -201,6 +202,7 @@ public class UpgradeController : MonoBehaviour
 
     private void ShowCDDetail()
     {
+        SetActive();
         imageIcon.sprite = cdDetail.image;
         title.text = cdDetail.title;
         description.text = cdDetail.description;

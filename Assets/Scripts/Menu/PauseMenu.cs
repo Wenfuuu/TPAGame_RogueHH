@@ -109,11 +109,17 @@ public class PauseMenu : MonoBehaviour
 
     public void ExitToMenu()
     {
+        SaveSystem.SavePlayerStats(PlayerStateMachine.Instance.gameObject.GetComponent<PlayerDamageable>().playerStats);
         LoadScene(0);
     }
 
     public void NextFloor()
     {
-        LoadScene(2);
+        PlayerStateMachine player = PlayerStateMachine.Instance;
+        if(player.GetComponent<PlayerDamageable>().playerStats.CurrentFloor == 1)
+        {
+            BackToUpgrade();
+        }
+        else LoadScene(2);
     }
 }

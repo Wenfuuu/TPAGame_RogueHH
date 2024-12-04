@@ -33,7 +33,7 @@ public class PlayerSpawner : MonoBehaviour
             if (!spawnTile.isWalkable) continue;
 
             spawned = true;
-            spawnPosition.y = 1;
+            spawnPosition.y = 2;
             playerPrefab.transform.position = spawnPosition;
         };
     }
