@@ -120,7 +120,7 @@ public class PlayerStatsSO : ScriptableObject
     public void IncreaseFloor()
     {
         CurrentFloor++;
-        if(UnlockedFloor < 101 && (UnlockedFloor == CurrentFloor))
+        if(UnlockedFloor < 101 && (UnlockedFloor < CurrentFloor))
         UnlockedFloor++;
     }
 

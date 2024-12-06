@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlashSkillSO
   m_EditorClassIdentifier: 
   Name: Bash
-  Description: Increase your Attack and Critical Damage by 50%
+  Description: Increase your Attack and Critical Damage by 99%
   UnlockLevel: 4
   IsLocked: 0
   Cooldown: 2

@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\Dungeon\PlayerSpawner.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\Lookups\Animations\DiveRollType.cs" />
     <Compile Include="Assets\ExplosiveLLC\SuperCharacterController\Code\Core\IgnoredCollider.cs" />
+    <Compile Include="Assets\Scripts\Utils\PopupAnimation.cs" />
     <Compile Include="Assets\ExplosiveLLC\RPG Character Mecanim Animation Pack FREE\Code\CoroutineQueue.cs" />
     <Compile Include="Assets\Scripts\Utils\FollowPlayer.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyFactory.cs" />
